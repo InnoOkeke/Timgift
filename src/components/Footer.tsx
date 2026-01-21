@@ -1,0 +1,184 @@
+"use client";
+
+import Link from "next/link";
+
+const CATEGORIES = ["SMARTPHONES", "SMARTWATCHES", "COMPUTERS", "SMART GADGETS"];
+
+export default function Footer() {
+    const currentYear = new Date().getFullYear();
+
+    return (
+        <footer style={{ backgroundColor: "var(--bg-secondary)", borderTop: "1px solid var(--border)" }}>
+            <div className="container py-12 md:py-16">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-y-12 lg:gap-8">
+                    {/* Brand */}
+                    <div className="flex flex-col items-start text-left">
+                        <Link href="/" className="flex items-center gap-3 mb-6">
+                            {/* Green square logo icon */}
+                            <div
+                                style={{
+                                    width: "48px",
+                                    height: "48px",
+                                    backgroundColor: "#16A34A",
+                                    borderRadius: "10px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    color: "white",
+                                    fontFamily: "var(--font-display)",
+                                    fontWeight: 800,
+                                    fontSize: "22px",
+                                    flexShrink: 0
+                                }}
+                            >
+                                TG
+                            </div>
+                            <div>
+                                <span
+                                    className="font-bold block leading-tight"
+                                    style={{ color: "var(--text)", fontFamily: "var(--font-display)", fontSize: "20px" }}
+                                >
+                                    Tim Gift
+                                </span>
+                                <span
+                                    className="font-medium uppercase tracking-wider"
+                                    style={{ color: "var(--primary)", fontSize: "10px" }}
+                                >
+                                    Premium Gadgets
+                                </span>
+                            </div>
+                        </Link>
+                        <p className="text-sm leading-relaxed mb-6 max-w-sm" style={{ color: "var(--text-secondary)" }}>
+                            Your trusted source for quality new and gently used electronics at wholesale prices.
+                            Amazing deals delivered nationwide.
+                        </p>
+
+                        {/* Social Links */}
+                        <div className="flex gap-3">
+                            <a
+                                href="#"
+                                className="flex items-center justify-center transition-colors hover:scale-105"
+                                style={{
+                                    width: "40px",
+                                    height: "40px",
+                                    borderRadius: "8px",
+                                    backgroundColor: "var(--bg)",
+                                    border: "1px solid var(--border)",
+                                    fontSize: "18px"
+                                }}
+                            >
+                                𝕏
+                            </a>
+                            <a
+                                href="#"
+                                className="flex items-center justify-center transition-colors hover:scale-105"
+                                style={{
+                                    width: "40px",
+                                    height: "40px",
+                                    borderRadius: "8px",
+                                    backgroundColor: "var(--bg)",
+                                    border: "1px solid var(--border)",
+                                    fontSize: "18px"
+                                }}
+                            >
+                                📸
+                            </a>
+                            <a
+                                href="https://wa.me/2348090529117"
+                                className="flex items-center justify-center transition-colors hover:scale-105"
+                                style={{
+                                    width: "40px",
+                                    height: "40px",
+                                    borderRadius: "8px",
+                                    backgroundColor: "var(--bg)",
+                                    border: "1px solid var(--border)",
+                                    fontSize: "18px"
+                                }}
+                            >
+                                💬
+                            </a>
+                        </div>
+                    </div>
+
+                    {/* Categories */}
+                    <div className="flex flex-col items-start text-left">
+                        <h3 className="font-semibold mb-5 text-base" style={{ color: "var(--text)" }}>Categories</h3>
+                        <ul className="space-y-3 w-full" style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                            {CATEGORIES.map((cat) => (
+                                <li key={cat}>
+                                    <Link
+                                        href={`/products?category=${encodeURIComponent(cat)}`}
+                                        className="text-sm transition-colors hover:text-primary hover:pl-1 block"
+                                        style={{ color: "var(--text-secondary)", transition: "all 0.2s" }}
+                                    >
+                                        {cat}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Quick Links */}
+                    <div className="flex flex-col items-start text-left">
+                        <h3 className="font-semibold mb-5 text-base" style={{ color: "var(--text)" }}>Quick Links</h3>
+                        <ul className="space-y-3 w-full" style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                            {[
+                                { label: "All Products", href: "/products" },
+                                { label: "Pre-Order", href: "/products?status=PRE_ORDER" },
+                                { label: "About Us", href: "/about" },
+                                { label: "Contact Us", href: "/contact" },
+                            ].map((link) => (
+                                <li key={link.href}>
+                                    <Link
+                                        href={link.href}
+                                        className="text-sm transition-colors hover:text-primary hover:pl-1 block"
+                                        style={{ color: "var(--text-secondary)", transition: "all 0.2s" }}
+                                    >
+                                        {link.label}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Contact */}
+                    <div className="flex flex-col items-start text-left">
+                        <h3 className="font-semibold mb-5 text-base" style={{ color: "var(--text)" }}>Contact Us</h3>
+                        <ul className="space-y-4 w-full" style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                            <li className="flex items-start gap-3 text-sm" style={{ color: "var(--text-secondary)" }}>
+                                <span className="mt-0.5">📍</span>
+                                <span className="flex-1">5, Oshitelu St, GTBank Plaza, Ikeja Lagos</span>
+                            </li>
+                            <li className="flex items-center gap-3 text-sm" style={{ color: "var(--text-secondary)" }}>
+                                <span>📞</span>
+                                <a href="tel:08090529117" className="transition-colors hover:text-primary">
+                                    08090529117
+                                </a>
+                            </li>
+                            <li className="flex items-center gap-3 text-sm" style={{ color: "var(--text-secondary)" }}>
+                                <span>💬</span>
+                                <a href="https://wa.me/2348090529117" className="transition-colors hover:text-primary">
+                                    WhatsApp Us
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            {/* Bottom Bar */}
+            <div style={{ borderTop: "1px solid var(--border)" }}>
+                <div className="container py-6">
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+                        <p className="text-sm" style={{ color: "var(--text-muted)" }}>
+                            © {currentYear} TIMGIFT01 TECHNOLOGIES. All rights reserved.
+                        </p>
+                        <p className="text-sm" style={{ color: "var(--text-muted)" }}>
+                            Premium Gadgets Store
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    );
+}

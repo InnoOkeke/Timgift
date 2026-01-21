@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Product {
+  id            Int      @id @default(autoincrement())
+  name          String
+  slug          String   @unique
+  description   String
+  price         Float
+  category      String
+  status        String   @default("IN_STOCK") // IN_STOCK, PRE_ORDER
+  media         String   // JSON string: Array of { type: 'image' | 'video', url: string }
+  stockQuantity Int      @default(0)
+  featured      Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Order {
+  id              Int      @id @default(autoincrement())
+  customerName    String
+  customerPhone   String
+  customerAddress String
+  items           String   // JSON string: Array of stored cart items with price snapshots
+  totalAmount     Float
+  status          String   @default("PENDING") // PENDING, COMPLETED, CANCELLED
+  paymentStatus   String   @default("UNPAID")   // UNPAID, PAID
+  createdAt       DateTime @default(now())
+}

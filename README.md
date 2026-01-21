@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tim Gift | Premium Gadgets Store
 
-## Getting Started
+Tim Gift is a premium e-commerce platform for sourcing quality new and gently used electronics at wholesale prices. The application is built with modern web technologies to provide a sleek, Apple-inspired user experience.
 
-First, run the development server:
+![Tim Gift Home](/images/screenshots/home-preview.png)
+*(Note: Add actual screenshots to `public/images/screenshots`)*
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Tech Stack
+
+- **Framework:** [Next.js 15](https://nextjs.org/) (App Router)
+- **Language:** TypeScript
+- **Database:** SQLite (via Prisma ORM)
+- **Styling:** Vanilla CSS (CSS Variables, Glassmorphism, Responsive Design)
+- **State Management:** React Context API (Cart, Toast)
+
+## ✨ Key Features
+
+### 🛒 Customer Experience
+- **Premium UI/UX:** A visually stunning interface with glassmorphism effects, smooth animations, and a clean, minimalist design.
+- **Product Catalog:** Browse products by categories (Smartphones, Smartwatches, Computers, etc.).
+- **Smart Cart System:** 
+  - Persistent cart using Local Storage.
+  - Real-time total calculation.
+  - Quantity management.
+- **WhatsApp Checkout:** Seamless order submission that redirects users to WhatsApp with a pre-formatted message containing their order details.
+- **Invoice Generation:** Automatic invoice preview during checkout.
+
+### 🛡️ Admin Dashboard
+- **Product Management:** Create, read, update, and delete (CRUD) products.
+- **Media Upload:** Support for uploading multiple product images and videos.
+- **Inventory Control:** Manage stock availability (In Stock / Pre-Order) and pricing.
+- **Real-time Updates:** Changes in the admin panel reflect immediately on the storefront.
+
+### ⚙️ Technical Highlights
+- **Toast Notifications:** Custom-built, animated toast notification system for user feedback.
+- **Responsive Design:** Fully optimized for mobile, tablet, and desktop devices.
+- **API Routes:** Robust backend logic handled via Next.js API Routes.
+
+## 🛠️ Getting Started
+
+### Prerequisites
+- Node.js 18+ installed on your machine.
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/timgift.git
+   cd timgift
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Database Setup**
+   Initialize the Prisma database:
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
+
+4. **Run the Development Server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open the App**
+   Visit [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 📂 Project Structure
+
+```
+timgift/
+├── prisma/               # Database schema and SQLite file
+├── public/               # Static assets (images, icons)
+├── src/
+│   ├── app/              # Next.js App Router pages & API routes
+│   │   ├── admin/        # Admin dashboard pages
+│   │   ├── api/          # Backend API endpoints
+│   │   ├── checkout/     # Checkout flow
+│   │   ├── product/      # Product details
+│   │   └── page.tsx      # Homepage
+│   ├── components/       # Reusable React components
+│   │   ├── Toast.tsx     # Toast notification system
+│   │   ├── CartProvider.tsx # Cart context logic
+│   │   └── ...
+│   └── types.ts          # TypeScript definitions
+└── ...
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🤝 Contributing
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📄 License
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is proprietary software. All rights reserved.
