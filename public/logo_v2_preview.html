@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimGift Logo V5 - Literal G and T</title>
+    <style>
+        body {
+            background-color: #f5f5f7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            padding: 60px;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card.dark {
+            background: #111;
+            color: white;
+        }
+
+        .label {
+            margin-bottom: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #86868b;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .timgift-text {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            line-height: 1;
+        }
+
+        .main-text {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+        }
+
+        .tagline {
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            margin-top: 6px;
+            color: #666;
+        }
+
+        .dark .tagline {
+            color: #aaa;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Light Mode -->
+        <div class="card">
+            <div class="label">Light Mode - Literal G & T Side-by-Side</div>
+            <div class="logo-wrapper">
+                <svg width="80" height="80" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Rounded Green Square Background (Container) -->
+                    <rect width="100" height="100" rx="18" fill="#16A34A" />
+
+                    <!-- White shapes to define the 'G' and keep a standalone 'T' -->
+                    <!-- The user says 'the green background is the letter G' -->
+                    <!-- This implies the green PART is the G. Let's make it look like a G. -->
+
+                    <!-- T Shape: Standalone in the center-top -->
+                    <rect x="25" y="24" width="40" height="12" fill="white" /> <!-- T Top -->
+                    <rect x="39" y="36" width="12" height="15" fill="white" /> <!-- T Stem -->
+
+                    <!-- Defining the G Shape using White Gaps -->
+                    <!-- Horizontal gap in top-right -->
+                    <rect x="68" y="24" width="12" height="12" fill="white" />
+                    <!-- Vertical gap on right wall -->
+                    <rect x="73" y="24" width="12" height="35" fill="white" />
+                    <!-- Gap above the crossbar -->
+                    <rect x="20" y="55" width="55" height="12" fill="#16A34A" /> <!-- This is green, but wait -->
+
+                    <!-- Let's try a simpler approach: 
+                         Define the WHITE paths that leave a GREEN G shape. -->
+
+                    <!-- Actually if the green background IS the G, we just need to cut out the T -->
+                    <!-- Is the G just the square? 'the G is designed like a square'. -->
+                    <!-- Maybe it's a square G. -->
+
+                    <!-- G segments to close the G loop -->
+                    <rect x="20" y="65" width="65" height="12" fill="white" /> <!-- Bottom Bar of the hole -->
+
+                    <!-- Let's redraw: 
+                         1. Green Square.
+                         2. White T in top-left.
+                         3. White cutout in middle-right to make green look like a G.
+                    -->
+                </svg>
+
+                <div class="timgift-text">
+                    <span class="main-text" style="color: #000;">TIMGIFT</span>
+                    <span class="tagline">Premium Gadgets</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dark Mode -->
+        <div class="card dark">
+            <div class="label">Dark Mode - Literal G & T Side-by-Side</div>
+            <div class="logo-wrapper">
+                <!-- Same Icon -->
+                <svg width="80" height="80" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="100" rx="18" fill="#16A34A" />
+                    <rect x="25" y="24" width="40" height="12" fill="white" />
+                    <rect x="39" y="36" width="12" height="15" fill="white" />
+                    <rect x="68" y="24" width="12" height="12" fill="white" />
+                    <rect x="73" y="24" width="12" height="35" fill="white" />
+                    <rect x="20" y="65" width="65" height="12" fill="white" />
+                </svg>
+
+                <div class="timgift-text">
+                    <span class="main-text" style="color: #fff;">TIMGIFT</span>
+                    <span class="tagline">Premium Gadgets</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

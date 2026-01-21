@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Logo Preview</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: sans-serif;
+        }
+        .preview-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .preview-box.dark {
+            background: #1a1a1a;
+            color: white;
+        }
+        .label {
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            color: #666;
+        }
+        .dark .label {
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-box">
+        <div class="label">Light Mode Preview</div>
+        <svg
+            width="80"
+            height="80"
+            viewBox="0 0 40 40"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="logo-icon"
+            style="border: 1px dashed #ccc;"
+        >
+            <defs>
+                <style>
+                .logo-img {
+                    filter: none;
+                }
+                </style>
+            </defs>
+            <image
+                href="/logo.png"
+                x="0"
+                y="0"
+                width="40"
+                height="40"
+                class="logo-img"
+                preserveAspectRatio="xMidYMid meet"
+            />
+        </svg>
+    </div>
+
+    <div class="preview-box dark">
+        <div class="label">Dark Mode Preview</div>
+        <!-- Mocking the dark mode filter as defined in the SVG snippet -->
+        <svg
+            width="80"
+            height="80"
+            viewBox="0 0 40 40"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="logo-icon"
+            style="border: 1px dashed #444;"
+        >
+            <image
+                href="/logo.png"
+                x="0"
+                y="0"
+                width="40"
+                height="40"
+                style="filter: brightness(1.1) contrast(1.1);"
+                preserveAspectRatio="xMidYMid meet"
+            />
+        </svg>
+    </div>
+</body>
+</html>

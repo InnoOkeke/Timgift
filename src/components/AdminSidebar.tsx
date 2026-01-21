@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Logo from "./Logo";
 
 export default function AdminSidebar() {
     const pathname = usePathname();
@@ -26,39 +27,7 @@ export default function AdminSidebar() {
             <div className="p-8">
                 {/* Frontend Consistent Logo */}
                 <Link href="/" className="flex items-center gap-3 flex-shrink-0 group">
-                    <div
-                        style={{
-                            width: "52px",
-                            height: "52px",
-                            backgroundColor: "#16A34A",
-                            borderRadius: "10px",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            color: "white",
-                            fontFamily: "var(--font-display)",
-                            fontWeight: 800,
-                            fontSize: "24px",
-                            boxShadow: "0 4px 15px rgba(22, 163, 74, 0.2)"
-                        }}
-                        className="transition-transform group-hover:scale-105"
-                    >
-                        TG
-                    </div>
-                    <div>
-                        <span
-                            className="font-bold block leading-tight"
-                            style={{ color: "var(--text)", fontFamily: "var(--font-display)", fontSize: "22px" }}
-                        >
-                            Tim Gift
-                        </span>
-                        <span
-                            className="font-medium uppercase tracking-wider"
-                            style={{ color: "var(--primary)", fontSize: "11px" }}
-                        >
-                            Admin Portal
-                        </span>
-                    </div>
+                    <Logo tagline="Admin Portal" />
                 </Link>
             </div>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Logo from "./Logo";
 
 const CATEGORIES = ["SMARTPHONES", "SMARTWATCHES", "COMPUTERS", "SMART GADGETS"];
 
@@ -13,40 +14,8 @@ export default function Footer() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-y-12 lg:gap-8">
                     {/* Brand */}
                     <div className="flex flex-col items-start text-left">
-                        <Link href="/" className="flex items-center gap-3 mb-6">
-                            {/* Green square logo icon */}
-                            <div
-                                style={{
-                                    width: "48px",
-                                    height: "48px",
-                                    backgroundColor: "#16A34A",
-                                    borderRadius: "10px",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    color: "white",
-                                    fontFamily: "var(--font-display)",
-                                    fontWeight: 800,
-                                    fontSize: "22px",
-                                    flexShrink: 0
-                                }}
-                            >
-                                TG
-                            </div>
-                            <div>
-                                <span
-                                    className="font-bold block leading-tight"
-                                    style={{ color: "var(--text)", fontFamily: "var(--font-display)", fontSize: "20px" }}
-                                >
-                                    Tim Gift
-                                </span>
-                                <span
-                                    className="font-medium uppercase tracking-wider"
-                                    style={{ color: "var(--primary)", fontSize: "10px" }}
-                                >
-                                    Premium Gadgets
-                                </span>
-                            </div>
+                        <Link href="/" className="mb-6">
+                            <Logo variant="dark" />
                         </Link>
                         <p className="text-sm leading-relaxed mb-6 max-w-sm" style={{ color: "var(--text-secondary)" }}>
                             Your trusted source for quality new and gently used electronics at wholesale prices.

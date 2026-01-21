@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "./ThemeProvider";
 import { useCart } from "./CartProvider";
+import Logo from "./Logo";
 
 const CATEGORIES = ["SMARTPHONES", "SMARTWATCHES", "COMPUTERS", "SMART GADGETS"];
 
@@ -44,37 +45,7 @@ export default function Navbar() {
                 <div className="flex items-center justify-between gap-4" style={{ height: "80px" }}>
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-3 flex-shrink-0">
-                        <div
-                            style={{
-                                width: "52px",
-                                height: "52px",
-                                backgroundColor: "#16A34A",
-                                borderRadius: "10px",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                color: "white",
-                                fontFamily: "var(--font-display)",
-                                fontWeight: 800,
-                                fontSize: "24px"
-                            }}
-                        >
-                            TG
-                        </div>
-                        <div>
-                            <span
-                                className="font-bold block leading-tight"
-                                style={{ color: "var(--text)", fontFamily: "var(--font-display)", fontSize: "22px" }}
-                            >
-                                Tim Gift
-                            </span>
-                            <span
-                                className="font-medium uppercase tracking-wider"
-                                style={{ color: "var(--primary)", fontSize: "11px" }}
-                            >
-                                Premium Gadgets
-                            </span>
-                        </div>
+                        <Logo />
                     </Link>
 
                     {/* Desktop Search */}

@@ -1,4 +1,5 @@
 import { Product } from "@/types";
+import Logo from "./Logo";
 
 interface InvoiceProps {
     customerName: string;
@@ -32,45 +33,9 @@ export default function Invoice({ customerName, customerAddress, items, totalAmo
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <div>
                         <div style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '12px',
                             marginBottom: '12px'
                         }}>
-                            <div style={{
-                                width: '44px',
-                                height: '44px',
-                                backgroundColor: '#16A34A',
-                                borderRadius: '10px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                color: 'white',
-                                fontWeight: 800,
-                                fontSize: '16px',
-                                fontFamily: 'var(--font-display)',
-                            }}>
-                                TG
-                            </div>
-                            <div>
-                                <div style={{
-                                    fontWeight: 700,
-                                    fontSize: '18px',
-                                    color: 'var(--text)',
-                                    fontFamily: 'var(--font-display)',
-                                }}>
-                                    Tim Gift
-                                </div>
-                                <div style={{
-                                    fontSize: '11px',
-                                    color: 'var(--text-muted)',
-                                    textTransform: 'uppercase',
-                                    letterSpacing: '0.05em',
-                                    fontWeight: 600,
-                                }}>
-                                    Premium Gadgets
-                                </div>
-                            </div>
+                            <Logo variant="dark" />
                         </div>
                     </div>
                     <div style={{ textAlign: 'right' }}>

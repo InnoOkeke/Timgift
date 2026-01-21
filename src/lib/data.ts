@@ -38,6 +38,7 @@ export const getProductById = async (id: string | number) => {
 export const getFeaturedProducts = async () => {
     try {
         const products = await prisma.product.findMany({
+            where: { featured: true },
             take: 4,
             orderBy: { createdAt: 'desc' }
         });

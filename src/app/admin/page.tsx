@@ -7,6 +7,7 @@ import Link from "next/link";
 export default function AdminDashboard() {
     interface Product {
         id: number;
+        stockQuantity: number;
     }
 
     interface Order {
@@ -53,10 +54,12 @@ export default function AdminDashboard() {
                         .filter((o) => o.status === 'COMPLETED')
                         .reduce((acc, o) => acc + o.totalAmount, 0);
 
+                    const totalInventory = products.reduce((acc, p) => acc + (p.stockQuantity || 0), 0);
+
                     setStats({
                         totalSales,
                         activeOrders,
-                        totalProducts: products.length
+                        totalProducts: totalInventory
                     });
                     setRecentOrders(orders.slice(0, 5));
                 }

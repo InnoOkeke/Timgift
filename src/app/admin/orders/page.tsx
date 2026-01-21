@@ -119,8 +119,26 @@ export default function AdminOrders() {
                                                     style={{ color: getStatusColor(order.status) }}
                                                     defaultValue={order.status}
                                                     onChange={async (e) => {
-                                                        // Update status logic could go here
-                                                        console.log("Update status to:", e.target.value);
+                                                        const newStatus = e.target.value;
+                                                        try {
+                                                            const res = await fetch('/api/orders', {
+                                                                method: 'PATCH',
+                                                                headers: { 'Content-Type': 'application/json' },
+                                                                body: JSON.stringify({ id: order.id, status: newStatus })
+                                                            });
+                                                            if (res.ok) {
+                                                                // Optimistic/Local state update
+                                                                setOrders(prev => prev.map(o =>
+                                                                    o.id === order.id ? { ...o, status: newStatus } : o
+                                                                ));
+                                                            } else {
+                                                                alert("Failed to update status");
+                                                                // Revert UI if needed (though defaultValue handles it mostly)
+                                                            }
+                                                        } catch (error) {
+                                                            console.error("Update Status Error:", error);
+                                                            alert("An error occurred while updating status");
+                                                        }
                                                     }}
                                                 >
                                                     <option value="PENDING">Pending</option>
