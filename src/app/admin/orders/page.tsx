@@ -119,7 +119,7 @@ export default function AdminOrders() {
                                                     style={{ color: getStatusColor(order.status) }}
                                                     defaultValue={order.status}
                                                     onChange={async (e) => {
-                                                        const newStatus = e.target.value;
+                                                        const newStatus = e.target.value as Order['status'];
                                                         try {
                                                             const res = await fetch('/api/orders', {
                                                                 method: 'PATCH',

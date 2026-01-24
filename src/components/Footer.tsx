@@ -15,7 +15,7 @@ export default function Footer() {
                     {/* Brand */}
                     <div className="flex flex-col items-start text-left">
                         <Link href="/" className="mb-6">
-                            <Logo variant="dark" />
+                            <Logo variant="footer" />
                         </Link>
                         <p className="text-sm leading-relaxed mb-6 max-w-sm" style={{ color: "var(--text-secondary)" }}>
                             Your trusted source for quality new and gently used electronics at wholesale prices.
