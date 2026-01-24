@@ -8,11 +8,13 @@ type LogoVariant = "header" | "footer" | "custom" | "dark";
 type LogoProps = {
     variant?: LogoVariant;
     className?: string;
+    tagline?: string;
 };
 
 export default function Logo({
     variant = "header",
     className = "",
+    tagline,
 }: LogoProps) {
     const { theme } = useTheme();
 
@@ -59,10 +61,17 @@ export default function Logo({
                 )}
             </svg>
 
-            <div className={`font-bold tracking-tight ${config.textSize}`}>
-                <span className={`${textColor} uppercase`}>
-                    TIMGIFT
-                </span>
+            <div className={`flex flex-col ${tagline ? '-mt-1' : ''}`}>
+                <div className={`font-bold tracking-tight ${config.textSize}`}>
+                    <span className={`${textColor} uppercase`}>
+                        TIMGIFT
+                    </span>
+                </div>
+                {tagline && (
+                    <span className={`text-[10px] uppercase tracking-widest font-semibold ${variant === "dark" || !isDark ? 'text-zinc-500' : 'text-zinc-400'}`}>
+                        {tagline}
+                    </span>
+                )}
             </div>
         </div>
     );
