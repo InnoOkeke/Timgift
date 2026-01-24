@@ -3,7 +3,7 @@
 import React from "react";
 import { useTheme } from "./ThemeProvider";
 
-type LogoVariant = "header" | "footer" | "custom";
+type LogoVariant = "header" | "footer" | "custom" | "dark";
 
 type LogoProps = {
     variant?: LogoVariant;
@@ -20,10 +20,13 @@ export default function Logo({
         header: { icon: 38, textSize: "text-xl", gap: "gap-3" },
         footer: { icon: 32, textSize: "text-lg", gap: "gap-2.5" },
         custom: { icon: 24, textSize: "text-base", gap: "gap-2" },
+        dark: { icon: 38, textSize: "text-xl", gap: "gap-3" },
     };
 
     const config = sizeMap[variant] ?? sizeMap.header;
-    const isDark = theme === "dark";
+    // If variant is 'dark', we force the light-mode (green/dark) logo regardless of theme
+    const isDark = variant === "dark" ? false : theme === "dark";
+    const textColor = variant === "dark" ? "text-zinc-900" : "text-zinc-900 dark:text-white";
 
     return (
         <div className={`flex items-center select-none ${config.gap} ${className}`}>
@@ -57,7 +60,7 @@ export default function Logo({
             </svg>
 
             <div className={`font-bold tracking-tight ${config.textSize}`}>
-                <span className="text-zinc-900 dark:text-white uppercase">
+                <span className={`${textColor} uppercase`}>
                     TIMGIFT
                 </span>
             </div>
