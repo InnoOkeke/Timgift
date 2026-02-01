@@ -325,7 +325,7 @@ export default async function Home() {
                   </p>
                   <p>
                     We are one of the best ICT sourcing and procurement platforms for MSMEs, Schools,
-                    and Public & Private organizations.
+                    Public & Private organizations.
                   </p>
                 </div>
 
