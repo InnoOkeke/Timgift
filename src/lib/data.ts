@@ -70,5 +70,23 @@ export const getPreOrderProducts = async () => {
     }
 };
 
+export const getLatestProducts = async (limit: number = 8) => {
+    try {
+        const products = await prisma.product.findMany({
+            where: { status: 'IN_STOCK' },
+            take: limit,
+            orderBy: { createdAt: 'desc' }
+        });
+
+        return products.map(p => ({
+            ...p,
+            media: p.media ? JSON.parse(p.media) : []
+        })) as Product[];
+    } catch (error) {
+        console.error("Error fetching latest products:", error);
+        return [];
+    }
+};
+
 // We keep the PRODUCTS constant as a fallback or for development reference
 export const PRODUCTS: Product[] = []; 

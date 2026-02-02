@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
 // GET /api/products/[id] - Fetch a single product
 export async function GET(
@@ -48,9 +49,13 @@ export async function PUT(
                 status,
                 media: JSON.stringify(media),
                 stockQuantity: parseInt(stockQuantity),
-                featured: Boolean(featured)
             }
         });
+
+        revalidatePath('/');
+        revalidatePath('/products');
+        revalidatePath(`/product/${id}`);
+        revalidatePath('/admin/products');
 
         return NextResponse.json(product);
     } catch (error) {
@@ -69,6 +74,10 @@ export async function DELETE(
         await prisma.product.delete({
             where: { id: parseInt(id) }
         });
+
+        revalidatePath('/');
+        revalidatePath('/products');
+        revalidatePath('/admin/products');
 
         return NextResponse.json({ success: true });
     } catch (error) {

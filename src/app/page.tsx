@@ -3,7 +3,7 @@ import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
-import { getFeaturedProducts, getPreOrderProducts } from "@/lib/data";
+import { getFeaturedProducts, getPreOrderProducts, getLatestProducts } from "@/lib/data";
 
 const CATEGORIES = [
   {
@@ -29,6 +29,12 @@ const CATEGORIES = [
     icon: "🎮",
     image: "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&h=300&fit=crop",
     description: "Gaming & Accessories"
+  },
+  {
+    name: "FASHION",
+    icon: "👕",
+    image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=400&h=300&fit=crop",
+    description: "Premium clothing & apparel"
   },
 ];
 
@@ -56,6 +62,7 @@ const HOW_IT_WORKS = [
 export default async function Home() {
   const FEATURED_PRODUCTS = await getFeaturedProducts();
   const PRE_ORDER_PRODUCTS = await getPreOrderProducts();
+  const LATEST_PRODUCTS = await getLatestProducts();
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: "var(--bg)" }}>
       <Navbar />
@@ -224,6 +231,40 @@ export default async function Home() {
             </div>
           </div>
         </section>
+
+        {/* Latest Arrivals */}
+        {LATEST_PRODUCTS.length > 0 && (
+          <section className="py-20" style={{ backgroundColor: "var(--bg-secondary)" }}>
+            <div className="container">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-12">
+                <div>
+                  <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: "var(--primary)" }}>
+                    New Arrivals
+                  </span>
+                  <h2 className="text-3xl md:text-4xl font-bold mt-2" style={{ fontFamily: "var(--font-display)", color: "var(--text)" }}>
+                    Latest Products
+                  </h2>
+                </div>
+                <Link
+                  href="/products"
+                  className="btn btn-secondary"
+                  style={{ whiteSpace: 'nowrap' }}
+                >
+                  Shop Everything
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+              </div>
+
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {LATEST_PRODUCTS.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Pre-Order Products */}
         {PRE_ORDER_PRODUCTS.length > 0 && (

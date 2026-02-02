@@ -24,7 +24,7 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
         featured: false,
     });
 
-    const CATEGORIES = ["SMARTPHONES", "SMARTWATCHES", "COMPUTERS", "SMART GADGETS"];
+    const CATEGORIES = ["SMARTPHONES", "SMARTWATCHES", "COMPUTERS", "SMART GADGETS", "FASHION"];
 
     useEffect(() => {
         fetchProduct();
