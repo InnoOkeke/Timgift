@@ -176,7 +176,7 @@ export default async function Home() {
               </h2>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
               {CATEGORIES.map((cat) => (
                 <Link
                   key={cat.name}
