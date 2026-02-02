@@ -5,7 +5,7 @@ import { Product } from "@/types";
 import Link from "next/link";
 import { getProducts } from "@/lib/data";
 
-const CATEGORIES = ["SMARTPHONES", "SMARTWATCHES", "COMPUTERS", "SMART GADGETS"];
+const CATEGORIES = ["SMARTPHONES", "SMARTWATCHES", "COMPUTERS", "SMART GADGETS", "FASHION"];
 
 export default async function ProductsPage(props: {
     searchParams: Promise<{ status?: string; category?: string; search?: string }>;
