@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Logo from "./Logo";
 
-const CATEGORIES = ["SMARTPHONES", "SMARTWATCHES", "COMPUTERS", "SMART GADGETS"];
+const CATEGORIES = ["IPHONE", "ANDROID", "MACBOOK", "IPAD", "VIDEO GAMES CONSOLES", "SMARTWATCHES", "WINDOWS LAPTOPS", "AIRPODS"];
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
@@ -11,7 +11,7 @@ export default function Footer() {
     return (
         <footer style={{ backgroundColor: "var(--bg-secondary)", borderTop: "1px solid var(--border)" }}>
             <div className="container py-12 md:py-16">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-y-12 lg:gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 sm:gap-y-12 lg:gap-8">
                     {/* Brand */}
                     <div className="flex flex-col items-start text-left">
                         <Link href="/" className="mb-6">
@@ -129,6 +129,41 @@ export default function Footer() {
                                 </a>
                             </li>
                         </ul>
+                    </div>
+
+                    {/* Mofets Computers */}
+                    <div className="flex flex-col items-start text-left">
+                        <h3 className="font-semibold mb-5 text-base" style={{ color: "var(--text)" }}>Our Partner</h3>
+                        <div
+                            className="w-full rounded-xl p-4"
+                            style={{ backgroundColor: "var(--bg)", border: "1px solid var(--border)" }}
+                        >
+                            <div className="flex items-center gap-2 mb-3">
+                                <span className="text-xl">🖥️</span>
+                                <span className="font-bold text-sm" style={{ color: "var(--text)" }}>Mofets Computers</span>
+                            </div>
+                            <p className="text-xs leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
+                                Your go-to destination for quality desktop computers, laptops, and IT accessories at competitive prices.
+                            </p>
+                            <ul className="space-y-1 text-xs" style={{ listStyle: "none", padding: 0, margin: 0, color: "var(--text-secondary)" }}>
+                                <li className="flex items-center gap-2">
+                                    <span style={{ color: "var(--primary)" }}>✓</span> Desktops & Laptops
+                                </li>
+                                <li className="flex items-center gap-2">
+                                    <span style={{ color: "var(--primary)" }}>✓</span> IT Accessories
+                                </li>
+                                <li className="flex items-center gap-2">
+                                    <span style={{ color: "var(--primary)" }}>✓</span> Computer Repairs
+                                </li>
+                            </ul>
+                            <Link
+                                href="/products?category=WINDOWS%20LAPTOPS"
+                                className="inline-block mt-3 text-xs font-semibold transition-colors"
+                                style={{ color: "var(--primary)" }}
+                            >
+                                Shop Computers →
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

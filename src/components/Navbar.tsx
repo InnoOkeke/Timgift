@@ -7,7 +7,7 @@ import { useTheme } from "./ThemeProvider";
 import { useCart } from "./CartProvider";
 import Logo from "./Logo";
 
-const CATEGORIES = ["SMARTPHONES", "SMARTWATCHES", "COMPUTERS", "SMART GADGETS", "FASHION"];
+const CATEGORIES = ["IPHONE", "ANDROID", "MACBOOK", "IPAD", "VIDEO GAMES CONSOLES", "SMARTWATCHES", "WINDOWS LAPTOPS", "AIRPODS"];
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);

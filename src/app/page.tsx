@@ -7,34 +7,60 @@ import { getFeaturedProducts, getPreOrderProducts, getLatestProducts } from "@/l
 
 const CATEGORIES = [
   {
-    name: "SMARTPHONES",
+    name: "IPHONE",
+    label: "iPhone",
+    icon: "🍎",
+    image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=300&fit=crop",
+    description: "Apple iPhone lineup"
+  },
+  {
+    name: "ANDROID",
+    label: "Android",
     icon: "📱",
-    image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop",
-    description: "Latest flagship devices"
+    image: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=400&h=300&fit=crop",
+    description: "Samsung, Tecno & more"
+  },
+  {
+    name: "MACBOOK",
+    label: "MacBook",
+    icon: "💻",
+    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=300&fit=crop",
+    description: "Apple MacBook Pro & Air"
+  },
+  {
+    name: "IPAD",
+    label: "iPad",
+    icon: "🖥️",
+    image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=300&fit=crop",
+    description: "Apple iPad & tablets"
+  },
+  {
+    name: "VIDEO GAMES CONSOLES",
+    label: "Video Games Consoles",
+    icon: "🎮",
+    image: "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&h=300&fit=crop",
+    description: "PS5, Xbox & more"
   },
   {
     name: "SMARTWATCHES",
+    label: "Smartwatches",
     icon: "⌚",
-    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=300&fit=crop",
-    description: "Wearable technology"
+    image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400&h=300&fit=crop",
+    description: "Apple Watch & more"
   },
   {
-    name: "COMPUTERS",
-    icon: "💻",
-    image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop",
-    description: "Laptops & Desktops"
+    name: "WINDOWS LAPTOPS",
+    label: "Windows Laptops",
+    icon: "🖱️",
+    image: "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&h=300&fit=crop",
+    description: "Dell, HP, Lenovo & more"
   },
   {
-    name: "SMART GADGETS",
-    icon: "🎮",
-    image: "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&h=300&fit=crop",
-    description: "Gaming & Accessories"
-  },
-  {
-    name: "FASHION",
-    icon: "👕",
-    image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=400&h=300&fit=crop",
-    description: "Premium clothing & apparel"
+    name: "AIRPODS",
+    label: "AirPods",
+    icon: "🎧",
+    image: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=400&h=300&fit=crop",
+    description: "Apple AirPods & earbuds"
   },
 ];
 
@@ -176,7 +202,7 @@ export default async function Home() {
               </h2>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6">
               {CATEGORIES.map((cat) => (
                 <Link
                   key={cat.name}
@@ -185,13 +211,13 @@ export default async function Home() {
                 >
                   <img
                     src={cat.image}
-                    alt={cat.name}
+                    alt={cat.label}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
                   <div className="absolute bottom-4 left-4 right-4">
                     <span className="text-2xl mb-1 block">{cat.icon}</span>
-                    <h3 className="text-white font-bold text-lg">{cat.name}</h3>
+                    <h3 className="text-white font-bold text-lg leading-tight">{cat.label}</h3>
                     <p className="text-white/70 text-sm">{cat.description}</p>
                   </div>
                 </Link>
