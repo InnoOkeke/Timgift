@@ -9,58 +9,42 @@ const CATEGORIES = [
   {
     name: "IPHONE",
     label: "iPhone",
-    icon: "🍎",
-    image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=300&fit=crop",
-    description: "Apple iPhone lineup"
+    image: "https://images.unsplash.com/photo-1678685888221-cda773a3dcdb?w=400&h=400&fit=crop&auto=format",
   },
   {
     name: "ANDROID",
     label: "Android",
-    icon: "📱",
-    image: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=400&h=300&fit=crop",
-    description: "Samsung, Tecno & more"
+    image: "https://images.unsplash.com/photo-1591337676887-a217a6970a8a?w=400&h=400&fit=crop&auto=format",
   },
   {
     name: "MACBOOK",
     label: "MacBook",
-    icon: "💻",
-    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=300&fit=crop",
-    description: "Apple MacBook Pro & Air"
+    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=400&fit=crop&auto=format",
   },
   {
     name: "IPAD",
     label: "iPad",
-    icon: "🖥️",
-    image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=300&fit=crop",
-    description: "Apple iPad & tablets"
+    image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=400&fit=crop&auto=format",
   },
   {
     name: "VIDEO GAMES CONSOLES",
     label: "Video Games Consoles",
-    icon: "🎮",
-    image: "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&h=300&fit=crop",
-    description: "PS5, Xbox & more"
+    image: "https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=400&h=400&fit=crop&auto=format",
   },
   {
     name: "SMARTWATCHES",
     label: "Smartwatches",
-    icon: "⌚",
-    image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400&h=300&fit=crop",
-    description: "Apple Watch & more"
+    image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400&h=400&fit=crop&auto=format",
   },
   {
     name: "WINDOWS LAPTOPS",
     label: "Windows Laptops",
-    icon: "🖱️",
-    image: "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&h=300&fit=crop",
-    description: "Dell, HP, Lenovo & more"
+    image: "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&h=400&fit=crop&auto=format",
   },
   {
     name: "AIRPODS",
     label: "AirPods",
-    icon: "🎧",
-    image: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=400&h=300&fit=crop",
-    description: "Apple AirPods & earbuds"
+    image: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=400&h=400&fit=crop&auto=format",
   },
 ];
 
@@ -202,23 +186,40 @@ export default async function Home() {
               </h2>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-5">
               {CATEGORIES.map((cat) => (
                 <Link
                   key={cat.name}
                   href={`/products?category=${encodeURIComponent(cat.name)}`}
-                  className="group relative overflow-hidden rounded-2xl aspect-[4/3]"
+                  className="group flex flex-col rounded-2xl overflow-hidden transition-all duration-200 hover:-translate-y-1"
+                  style={{
+                    backgroundColor: "var(--bg-card)",
+                    border: "1px solid var(--border)",
+                    boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
+                  }}
                 >
-                  <img
-                    src={cat.image}
-                    alt={cat.label}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <span className="text-2xl mb-1 block">{cat.icon}</span>
-                    <h3 className="text-white font-bold text-lg leading-tight">{cat.label}</h3>
-                    <p className="text-white/70 text-sm">{cat.description}</p>
+                  {/* Image — square, object-contain so product is fully visible */}
+                  <div
+                    className="w-full aspect-square overflow-hidden"
+                    style={{ backgroundColor: "var(--bg-secondary)" }}
+                  >
+                    <img
+                      src={cat.image}
+                      alt={cat.label}
+                      className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105 p-4"
+                    />
+                  </div>
+                  {/* Name */}
+                  <div
+                    className="px-3 py-3 text-center"
+                    style={{ borderTop: "1px solid var(--border)" }}
+                  >
+                    <span
+                      className="font-semibold text-sm leading-snug"
+                      style={{ color: "var(--text)" }}
+                    >
+                      {cat.label}
+                    </span>
                   </div>
                 </Link>
               ))}
