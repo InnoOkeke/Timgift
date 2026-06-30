@@ -6,46 +6,14 @@ import ProductCard from "@/components/ProductCard";
 import { getFeaturedProducts, getPreOrderProducts, getLatestProducts } from "@/lib/data";
 
 const CATEGORIES = [
-  {
-    name: "IPHONE",
-    label: "iPhone",
-    image: "https://images.unsplash.com/lDWTfYhZ85w?w=500&h=500&fit=crop&q=75&auto=format",
-  },
-  {
-    name: "ANDROID",
-    label: "Android",
-    image: "https://images.unsplash.com/V-iFRXuuBeQ?w=500&h=500&fit=crop&q=75&auto=format",
-  },
-  {
-    name: "MACBOOK",
-    label: "MacBook",
-    image: "https://images.unsplash.com/Hin-rzhOdWs?w=500&h=500&fit=crop&q=75&auto=format",
-  },
-  {
-    name: "IPAD",
-    label: "iPad",
-    image: "https://images.unsplash.com/ADilxPQeWcI?w=500&h=500&fit=crop&q=75&auto=format",
-  },
-  {
-    name: "VIDEO GAMES CONSOLES",
-    label: "Video Games Consoles",
-    image: "https://images.unsplash.com/ads33nL7V4k?w=500&h=500&fit=crop&q=75&auto=format",
-  },
-  {
-    name: "SMARTWATCHES",
-    label: "Smartwatches",
-    image: "https://images.unsplash.com/FPEBZJLD8Rs?w=500&h=500&fit=crop&q=75&auto=format",
-  },
-  {
-    name: "WINDOWS LAPTOPS",
-    label: "Windows Laptops",
-    image: "https://images.unsplash.com/i5UV2HpITYA?w=500&h=500&fit=crop&q=75&auto=format",
-  },
-  {
-    name: "AIRPODS",
-    label: "AirPods",
-    image: "https://images.unsplash.com/rI2MXeP6sss?w=500&h=500&fit=crop&q=75&auto=format",
-  },
+  { name: "IPHONE",               label: "iPhone",               image: "/images/categories/iphone.jpg" },
+  { name: "ANDROID",              label: "Android",              image: "/images/categories/android.jpg" },
+  { name: "MACBOOK",              label: "MacBook",              image: "/images/categories/macbook.jpg" },
+  { name: "IPAD",                 label: "iPad",                 image: "/images/categories/ipad.jpg" },
+  { name: "VIDEO GAMES CONSOLES", label: "Video Games Consoles", image: "/images/categories/ps5.jpg" },
+  { name: "SMARTWATCHES",         label: "Smartwatches",         image: "/images/categories/watch.jpg" },
+  { name: "WINDOWS LAPTOPS",      label: "Windows Laptops",      image: "/images/categories/laptop.jpg" },
+  { name: "AIRPODS",              label: "AirPods",              image: "/images/categories/airpods.jpg" },
 ];
 
 const HOW_IT_WORKS = [
