@@ -5,47 +5,120 @@ import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import { getFeaturedProducts, getPreOrderProducts, getLatestProducts } from "@/lib/data";
 
+// Inline SVG device icons — no background, inherits card surface
+const CategoryIcons: Record<string, React.ReactNode> = {
+  IPHONE: (
+    <svg viewBox="0 0 100 160" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <rect x="18" y="4" width="64" height="152" rx="12" fill="currentColor" opacity="0.08"/>
+      <rect x="18" y="4" width="64" height="152" rx="12" stroke="currentColor" strokeWidth="3.5"/>
+      <rect x="28" y="18" width="44" height="112" rx="4" fill="currentColor" opacity="0.06"/>
+      <rect x="28" y="18" width="44" height="112" rx="4" stroke="currentColor" strokeWidth="2"/>
+      <circle cx="50" cy="144" r="5" stroke="currentColor" strokeWidth="2.5"/>
+      <rect x="38" y="8" width="24" height="4" rx="2" fill="currentColor" opacity="0.4"/>
+    </svg>
+  ),
+  ANDROID: (
+    <svg viewBox="0 0 100 160" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <rect x="16" y="20" width="68" height="120" rx="10" fill="currentColor" opacity="0.08"/>
+      <rect x="16" y="20" width="68" height="120" rx="10" stroke="currentColor" strokeWidth="3.5"/>
+      <rect x="26" y="32" width="48" height="80" rx="3" fill="currentColor" opacity="0.06"/>
+      <rect x="26" y="32" width="48" height="80" rx="3" stroke="currentColor" strokeWidth="2"/>
+      <line x1="50" y2="18" x2="50" y1="8" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+      <circle cx="38" cy="14" r="4" stroke="currentColor" strokeWidth="2"/>
+      <circle cx="62" cy="14" r="4" stroke="currentColor" strokeWidth="2"/>
+      <circle cx="50" cy="148" r="5" stroke="currentColor" strokeWidth="2.5"/>
+      <line x1="36" y1="148" x2="44" y2="148" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+      <line x1="56" y1="148" x2="64" y2="148" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+    </svg>
+  ),
+  MACBOOK: (
+    <svg viewBox="0 0 180 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <rect x="20" y="10" width="140" height="88" rx="8" fill="currentColor" opacity="0.08"/>
+      <rect x="20" y="10" width="140" height="88" rx="8" stroke="currentColor" strokeWidth="3.5"/>
+      <rect x="30" y="20" width="120" height="68" rx="3" fill="currentColor" opacity="0.06"/>
+      <rect x="30" y="20" width="120" height="68" rx="3" stroke="currentColor" strokeWidth="2"/>
+      <path d="M4 100 H176 Q180 100 176 108 H4 Q0 108 4 100Z" fill="currentColor" opacity="0.1" stroke="currentColor" strokeWidth="2.5"/>
+      <rect x="72" y="100" width="36" height="4" rx="2" fill="currentColor" opacity="0.3"/>
+      <path d="M85 54 L90 48 L95 54" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  ),
+  IPAD: (
+    <svg viewBox="0 0 120 160" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <rect x="10" y="8" width="100" height="144" rx="12" fill="currentColor" opacity="0.08"/>
+      <rect x="10" y="8" width="100" height="144" rx="12" stroke="currentColor" strokeWidth="3.5"/>
+      <rect x="20" y="20" width="80" height="120" rx="4" fill="currentColor" opacity="0.06"/>
+      <rect x="20" y="20" width="80" height="120" rx="4" stroke="currentColor" strokeWidth="2"/>
+      <circle cx="60" cy="148" r="0.5" fill="currentColor" opacity="0"/>
+      <rect x="52" y="10" width="16" height="3" rx="1.5" fill="currentColor" opacity="0.35"/>
+      <circle cx="108" cy="80" r="5" stroke="currentColor" strokeWidth="2"/>
+      <rect x="38" y="142" width="44" height="4" rx="2" fill="currentColor" opacity="0.2"/>
+    </svg>
+  ),
+  "VIDEO GAMES CONSOLES": (
+    <svg viewBox="0 0 180 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <rect x="20" y="30" width="140" height="70" rx="24" fill="currentColor" opacity="0.08"/>
+      <rect x="20" y="30" width="140" height="70" rx="24" stroke="currentColor" strokeWidth="3.5"/>
+      <circle cx="130" cy="55" r="7" stroke="currentColor" strokeWidth="2.5"/>
+      <circle cx="146" cy="65" r="7" stroke="currentColor" strokeWidth="2.5"/>
+      <circle cx="114" cy="65" r="7" stroke="currentColor" strokeWidth="2.5"/>
+      <circle cx="130" cy="75" r="7" stroke="currentColor" strokeWidth="2.5"/>
+      <line x1="50" y1="58" x2="50" y2="72" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+      <line x1="43" y1="65" x2="57" y2="65" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+      <circle cx="72" cy="65" r="4" stroke="currentColor" strokeWidth="2.5"/>
+      <circle cx="88" cy="65" r="4" stroke="currentColor" strokeWidth="2.5"/>
+    </svg>
+  ),
+  SMARTWATCHES: (
+    <svg viewBox="0 0 100 160" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <rect x="30" y="38" width="40" height="84" rx="14" fill="currentColor" opacity="0.08"/>
+      <rect x="30" y="38" width="40" height="84" rx="14" stroke="currentColor" strokeWidth="3.5"/>
+      <rect x="38" y="48" width="24" height="64" rx="6" fill="currentColor" opacity="0.06"/>
+      <rect x="38" y="48" width="24" height="64" rx="6" stroke="currentColor" strokeWidth="2"/>
+      <line x1="50" y1="80" x2="50" y2="70" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      <line x1="50" y1="80" x2="56" y2="80" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      <rect x="35" y="20" width="30" height="18" rx="4" fill="currentColor" opacity="0.1" stroke="currentColor" strokeWidth="2"/>
+      <rect x="35" y="122" width="30" height="18" rx="4" fill="currentColor" opacity="0.1" stroke="currentColor" strokeWidth="2"/>
+      <rect x="78" y="68" width="8" height="24" rx="3" fill="currentColor" opacity="0.2" stroke="currentColor" strokeWidth="1.5"/>
+    </svg>
+  ),
+  "WINDOWS LAPTOPS": (
+    <svg viewBox="0 0 180 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <rect x="20" y="10" width="140" height="88" rx="8" fill="currentColor" opacity="0.08"/>
+      <rect x="20" y="10" width="140" height="88" rx="8" stroke="currentColor" strokeWidth="3.5"/>
+      <rect x="30" y="20" width="120" height="68" rx="3" fill="currentColor" opacity="0.06"/>
+      <rect x="30" y="20" width="120" height="68" rx="3" stroke="currentColor" strokeWidth="2"/>
+      <path d="M4 100 H176 Q180 100 176 108 H4 Q0 108 4 100Z" fill="currentColor" opacity="0.1" stroke="currentColor" strokeWidth="2.5"/>
+      <rect x="72" y="100" width="36" height="4" rx="2" fill="currentColor" opacity="0.3"/>
+      {/* Windows logo */}
+      <rect x="83" y="47" width="8" height="8" rx="1" fill="currentColor" opacity="0.5"/>
+      <rect x="93" y="47" width="8" height="8" rx="1" fill="currentColor" opacity="0.5"/>
+      <rect x="83" y="57" width="8" height="8" rx="1" fill="currentColor" opacity="0.5"/>
+      <rect x="93" y="57" width="8" height="8" rx="1" fill="currentColor" opacity="0.5"/>
+    </svg>
+  ),
+  AIRPODS: (
+    <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <rect x="30" y="20" width="80" height="100" rx="20" fill="currentColor" opacity="0.08"/>
+      <rect x="30" y="20" width="80" height="100" rx="20" stroke="currentColor" strokeWidth="3.5"/>
+      <circle cx="70" cy="68" r="12" stroke="currentColor" strokeWidth="2.5"/>
+      <line x1="70" y1="56" x2="70" y2="34" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+      <circle cx="46" cy="90" r="8" stroke="currentColor" strokeWidth="2.5"/>
+      <line x1="46" y1="82" x2="46" y2="66" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+      <circle cx="94" cy="90" r="8" stroke="currentColor" strokeWidth="2.5"/>
+      <line x1="94" y1="82" x2="94" y2="66" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+    </svg>
+  ),
+};
+
 const CATEGORIES = [
-  {
-    name: "IPHONE",
-    label: "iPhone",
-    image: "https://images.unsplash.com/photo-1678685888221-cda773a3dcdb?w=400&h=400&fit=crop&auto=format",
-  },
-  {
-    name: "ANDROID",
-    label: "Android",
-    image: "https://images.unsplash.com/photo-1591337676887-a217a6970a8a?w=400&h=400&fit=crop&auto=format",
-  },
-  {
-    name: "MACBOOK",
-    label: "MacBook",
-    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=400&fit=crop&auto=format",
-  },
-  {
-    name: "IPAD",
-    label: "iPad",
-    image: "https://images.unsplash.com/photo-1587614382346-4ec70e388b28?w=400&h=400&fit=crop&auto=format",
-  },
-  {
-    name: "VIDEO GAMES CONSOLES",
-    label: "Video Games Consoles",
-    image: "https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=400&h=400&fit=crop&auto=format",
-  },
-  {
-    name: "SMARTWATCHES",
-    label: "Smartwatches",
-    image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400&h=400&fit=crop&auto=format",
-  },
-  {
-    name: "WINDOWS LAPTOPS",
-    label: "Windows Laptops",
-    image: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400&h=400&fit=crop&auto=format",
-  },
-  {
-    name: "AIRPODS",
-    label: "AirPods",
-    image: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=400&h=400&fit=crop&auto=format",
-  },
+  { name: "IPHONE",               label: "iPhone" },
+  { name: "ANDROID",              label: "Android" },
+  { name: "MACBOOK",              label: "MacBook" },
+  { name: "IPAD",                 label: "iPad" },
+  { name: "VIDEO GAMES CONSOLES", label: "Video Games Consoles" },
+  { name: "SMARTWATCHES",         label: "Smartwatches" },
+  { name: "WINDOWS LAPTOPS",      label: "Windows Laptops" },
+  { name: "AIRPODS",              label: "AirPods" },
 ];
 
 const HOW_IT_WORKS = [
@@ -198,23 +271,19 @@ export default async function Home() {
                     boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
                   }}
                 >
-                  {/* Image — same bg as card so no contrast break */}
-                  <div className="w-full aspect-square overflow-hidden">
-                    <img
-                      src={cat.image}
-                      alt={cat.label}
-                      className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105 p-4"
-                    />
+                  {/* SVG icon — inherits currentColor from card, no bg */}
+                  <div
+                    className="w-full aspect-square flex items-center justify-center p-6 transition-transform duration-300 group-hover:scale-105"
+                    style={{ color: "var(--text)" }}
+                  >
+                    {CategoryIcons[cat.name]}
                   </div>
                   {/* Name */}
                   <div
                     className="px-3 py-3 text-center"
                     style={{ borderTop: "1px solid var(--border)" }}
                   >
-                    <span
-                      className="font-semibold text-sm leading-snug"
-                      style={{ color: "var(--text)" }}
-                    >
+                    <span className="font-semibold text-sm leading-snug" style={{ color: "var(--text)" }}>
                       {cat.label}
                     </span>
                   </div>
