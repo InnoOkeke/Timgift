@@ -9,42 +9,42 @@ const CATEGORIES = [
   {
     name: "IPHONE",
     label: "iPhone",
-    image: "https://images.unsplash.com/photo-1632661674596-df8be070a5c5?w=400&h=400&fit=crop&q=80",
+    image: "https://images.unsplash.com/lDWTfYhZ85w?w=500&h=500&fit=crop&q=75&auto=format",
   },
   {
     name: "ANDROID",
     label: "Android",
-    image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=400&fit=crop&q=80",
+    image: "https://images.unsplash.com/V-iFRXuuBeQ?w=500&h=500&fit=crop&q=75&auto=format",
   },
   {
     name: "MACBOOK",
     label: "MacBook",
-    image: "/images/categories/macbook.png",
+    image: "https://images.unsplash.com/Hin-rzhOdWs?w=500&h=500&fit=crop&q=75&auto=format",
   },
   {
     name: "IPAD",
     label: "iPad",
-    image: "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=400&h=400&fit=crop&q=80",
+    image: "https://images.unsplash.com/ADilxPQeWcI?w=500&h=500&fit=crop&q=75&auto=format",
   },
   {
     name: "VIDEO GAMES CONSOLES",
     label: "Video Games Consoles",
-    image: "https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=400&h=400&fit=crop&q=80",
+    image: "https://images.unsplash.com/ads33nL7V4k?w=500&h=500&fit=crop&q=75&auto=format",
   },
   {
     name: "SMARTWATCHES",
     label: "Smartwatches",
-    image: "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=400&h=400&fit=crop&q=80",
+    image: "https://images.unsplash.com/FPEBZJLD8Rs?w=500&h=500&fit=crop&q=75&auto=format",
   },
   {
     name: "WINDOWS LAPTOPS",
     label: "Windows Laptops",
-    image: "/images/categories/laptop.png",
+    image: "https://images.unsplash.com/i5UV2HpITYA?w=500&h=500&fit=crop&q=75&auto=format",
   },
   {
     name: "AIRPODS",
     label: "AirPods",
-    image: "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400&h=400&fit=crop&q=80",
+    image: "https://images.unsplash.com/rI2MXeP6sss?w=500&h=500&fit=crop&q=75&auto=format",
   },
 ];
 
@@ -202,6 +202,8 @@ export default async function Home() {
                     <img
                       src={cat.image}
                       alt={cat.label}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
