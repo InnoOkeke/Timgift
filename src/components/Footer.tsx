@@ -140,25 +140,8 @@ export default function Footer() {
                         <p className="text-sm" style={{ color: "var(--text-muted)" }}>
                             © {currentYear} TIMGIFT01 TECHNOLOGIES. All rights reserved.
                         </p>
-
-                        {/* Mofets Computers */}
-                        <div className="flex items-center gap-3 px-4 py-2 rounded-xl" style={{ backgroundColor: "var(--bg-secondary)", border: "1px solid var(--border)" }}>
-                            <span className="text-lg">🖥️</span>
-                            <div className="text-left">
-                                <p className="text-xs font-bold leading-none mb-0.5" style={{ color: "var(--text)" }}>Mofets Computers</p>
-                                <p className="text-xs" style={{ color: "var(--text-muted)" }}>Desktops · Laptops · Repairs</p>
-                            </div>
-                            <Link
-                                href="/products?category=WINDOWS%20LAPTOPS"
-                                className="text-xs font-semibold whitespace-nowrap"
-                                style={{ color: "var(--primary)" }}
-                            >
-                                Shop →
-                            </Link>
-                        </div>
-
                         <p className="text-sm" style={{ color: "var(--text-muted)" }}>
-                            Premium Gadgets Store
+                            A product of Mofets Computers
                         </p>
                     </div>
                 </div>

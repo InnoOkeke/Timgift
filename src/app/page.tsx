@@ -24,7 +24,7 @@ const CATEGORIES = [
   {
     name: "IPAD",
     label: "iPad",
-    image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=400&fit=crop&auto=format",
+    image: "https://images.unsplash.com/photo-1587614382346-4ec70e388b28?w=400&h=400&fit=crop&auto=format",
   },
   {
     name: "VIDEO GAMES CONSOLES",
@@ -39,7 +39,7 @@ const CATEGORIES = [
   {
     name: "WINDOWS LAPTOPS",
     label: "Windows Laptops",
-    image: "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&h=400&fit=crop&auto=format",
+    image: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400&h=400&fit=crop&auto=format",
   },
   {
     name: "AIRPODS",
@@ -198,11 +198,8 @@ export default async function Home() {
                     boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
                   }}
                 >
-                  {/* Image — square, object-contain so product is fully visible */}
-                  <div
-                    className="w-full aspect-square overflow-hidden"
-                    style={{ backgroundColor: "var(--bg-secondary)" }}
-                  >
+                  {/* Image — same bg as card so no contrast break */}
+                  <div className="w-full aspect-square overflow-hidden">
                     <img
                       src={cat.image}
                       alt={cat.label}
