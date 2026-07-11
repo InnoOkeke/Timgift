@@ -3,15 +3,13 @@
 import Link from "next/link";
 import Logo from "./Logo";
 
-const CATEGORIES = ["IPHONE", "ANDROID", "MACBOOK", "IPAD", "VIDEO GAMES CONSOLES", "SMARTWATCHES", "WINDOWS LAPTOPS", "AIRPODS"];
-
 export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
         <footer style={{ backgroundColor: "var(--bg-secondary)", borderTop: "1px solid var(--border)" }}>
             <div className="container py-12 md:py-16">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 sm:gap-y-12 lg:gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-y-12 lg:gap-8">
                     {/* Brand */}
                     <div className="flex flex-col items-start text-left">
                         <Link href="/" className="mb-6">
@@ -65,24 +63,6 @@ export default function Footer() {
                                 </svg>
                             </a>
                         </div>
-                    </div>
-
-                    {/* Categories */}
-                    <div className="flex flex-col items-start text-left">
-                        <h3 className="font-semibold mb-5 text-base" style={{ color: "var(--text)" }}>Categories</h3>
-                        <ul className="space-y-3 w-full" style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                            {CATEGORIES.map((cat) => (
-                                <li key={cat}>
-                                    <Link
-                                        href={`/products?category=${encodeURIComponent(cat)}`}
-                                        className="text-sm transition-colors hover:text-primary hover:pl-1 block"
-                                        style={{ color: "var(--text-secondary)", transition: "all 0.2s" }}
-                                    >
-                                        {cat}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
                     </div>
 
                     {/* Quick Links */}
