@@ -15,9 +15,9 @@ export default function Footer() {
             <div className="container" style={{ padding: "40px 0 32px" }}>
                 <div style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-                    gap: "32px",
-                }}>
+                    gridTemplateColumns: "repeat(2, 1fr)",
+                    gap: "28px",
+                }} className="footer-grid">
                     {/* Brand */}
                     <div>
                         <Link href="/" style={{ display: "inline-block", marginBottom: "14px" }}>
@@ -30,7 +30,7 @@ export default function Footer() {
                             maxWidth: "240px",
                             marginBottom: "16px",
                         }}>
-                            Quality new &amp; gently used electronics at wholesale prices. Nationwide delivery guaranteed.
+                            Premium gadgets. Verified authentic. Delivered nationwide. No stress, just great tech.
                         </p>
 
                         {/* Social */}
@@ -302,14 +302,13 @@ export default function Footer() {
                 <div className="container" style={{ padding: "16px 0" }}>
                     <div style={{
                         display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "space-between",
+                        flexDirection: "column",
                         alignItems: "center",
-                        gap: "12px",
-                        flexWrap: "wrap",
+                        gap: "4px",
+                        textAlign: "center",
                     }}>
                         <p style={{ fontSize: "12px", color: "var(--text-muted)" }}>
-                            © {currentYear} TIMGIFT01 TECHNOLOGIES. All rights reserved.
+                            &copy; {currentYear} TIMGIFT01 TECHNOLOGIES. All rights reserved.
                         </p>
                         <p style={{ fontSize: "12px", color: "var(--text-muted)" }}>
                             A product of Mofets Computers
@@ -317,6 +316,22 @@ export default function Footer() {
                     </div>
                 </div>
             </div>
+
+            <style>{`
+                .footer-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                @media (min-width: 640px) {
+                    .footer-grid {
+                        grid-template-columns: repeat(3, 1fr);
+                    }
+                }
+                @media (min-width: 1024px) {
+                    .footer-grid {
+                        grid-template-columns: repeat(5, 1fr);
+                    }
+                }
+            `}</style>
         </footer>
     );
 }

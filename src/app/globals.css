@@ -1135,3 +1135,22 @@ h6 {
     min-height: 520px !important;
   }
 }
+
+/* ========================================
+   Navbar height offset
+   Mobile: 56px top bar only
+   Desktop: 56px + 40px category strip = 96px
+   ======================================== */
+:root {
+  --navbar-height: 56px;
+}
+@media (min-width: 768px) {
+  :root {
+    --navbar-height: 96px;
+  }
+}
+
+/* Utility class for pages to use */
+.page-top {
+  padding-top: var(--navbar-height);
+}

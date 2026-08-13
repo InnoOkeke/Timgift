@@ -114,7 +114,7 @@ export default function CheckoutPage() {
     return (
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg)' }}>
             <Navbar />
-            <main style={{ flex: 1, paddingTop: '110px' }}>
+            <main style={{ flex: 1, paddingTop: '56px' }}>
                 {/* Header */}
                 <div className="container" style={{ paddingTop: '32px', paddingBottom: '24px' }}>
                     <nav style={{

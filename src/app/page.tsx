@@ -19,7 +19,7 @@ export default async function Home() {
         <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", backgroundColor: "var(--bg)" }}>
             <Navbar />
 
-            <main style={{ flex: 1, paddingTop: "104px" }}>
+            <main style={{ flex: 1, paddingTop: "56px" }}>
 
                 {/* ── Hero Slider (Client Component) ── */}
                 <HeroSlider />

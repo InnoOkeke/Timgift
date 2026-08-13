@@ -58,7 +58,7 @@ export default async function ProductsPage(props: {
         <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", backgroundColor: "var(--bg)" }}>
             <Navbar />
 
-            <main style={{ flex: 1, paddingTop: "104px" }}>
+            <main style={{ flex: 1, paddingTop: "56px" }}>
 
                 {/* Page header */}
                 <div style={{

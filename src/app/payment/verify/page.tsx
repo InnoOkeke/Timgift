@@ -50,7 +50,7 @@ export default function PaymentVerifyPage() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                paddingTop: "110px",
+                paddingTop: "56px",
                 paddingBottom: "80px",
             }}>
                 <div style={{
