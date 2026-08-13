@@ -139,12 +139,7 @@ export default function ProductDetailPage() {
                         gap: '48px',
                     }}>
                         {/* Desktop: Two Column Layout */}
-                        <div style={{
-                            display: 'grid',
-                            gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
-                            gap: '64px',
-                            alignItems: 'start'
-                        }}>
+                        <div className="two-col-layout" style={{ alignItems: 'start' }}>
                             {/* Product Image/Media */}
                             <div style={{
                                 position: isMobile ? 'relative' : 'sticky',

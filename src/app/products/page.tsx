@@ -252,11 +252,7 @@ export default async function ProductsPage(props: {
                             )}
 
                             {inStockProducts.length > 0 ? (
-                                <div style={{
-                                    display: "grid",
-                                    gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-                                    gap: "14px",
-                                }}>
+                                <div className="product-grid">
                                     {inStockProducts.map((product) => (
                                         <ProductCard key={product.id} product={product} />
                                     ))}
@@ -358,11 +354,7 @@ export default async function ProductsPage(props: {
                             )}
 
                             {preOrderProducts.length > 0 ? (
-                                <div style={{
-                                    display: "grid",
-                                    gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-                                    gap: "14px",
-                                }}>
+                                <div className="product-grid">
                                     {preOrderProducts.map((product) => (
                                         <ProductCard key={product.id} product={product} />
                                     ))}

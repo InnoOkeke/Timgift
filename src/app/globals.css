@@ -1007,3 +1007,131 @@ h6 {
 .transition-transform {
   transition: transform var(--transition);
 }
+
+/* ========================================
+   Mobile-First Responsive Utilities
+   ======================================== */
+
+/* Product grid — 2 cols on mobile, auto-fill on larger screens */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+@media (min-width: 480px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (min-width: 640px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .product-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Two-column layout (product detail, checkout) */
+.two-col-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+@media (min-width: 768px) {
+  .two-col-layout {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+}
+
+/* Section padding responsive */
+.section-pad {
+  padding: 28px 0;
+}
+
+@media (min-width: 768px) {
+  .section-pad {
+    padding: 48px 0;
+  }
+}
+
+/* Hide scrollbar cross-browser */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Mobile: visible by default, hide on sm+ */
+.mobile-only {
+  display: block;
+}
+@media (min-width: 640px) {
+  .mobile-only {
+    display: none;
+  }
+}
+
+/* sm: hidden by default, show on sm+ */
+.sm\:inline {
+  display: none;
+}
+@media (min-width: 640px) {
+  .sm\:inline {
+    display: inline;
+  }
+}
+
+/* ========================================
+   Hero Slider Responsive
+   ======================================== */
+.hero-grid {
+  grid-template-columns: 1fr !important;
+}
+
+@media (min-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 1fr 1fr !important;
+    padding: 0 3rem !important;
+  }
+
+  [class="hero-grid"] > div:first-child + div {
+    display: flex !important;
+  }
+}
+
+/* Hide hero image column on mobile */
+.hero-image-col {
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+  .hero-image-col {
+    display: flex !important;
+  }
+}
+
+/* Hero min-height responsive */
+@media (min-width: 768px) {
+  .hero-slide {
+    min-height: 520px !important;
+  }
+}

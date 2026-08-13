@@ -33,12 +33,12 @@ export default async function Home() {
                         <div style={{
                             background: "linear-gradient(135deg, #DC2626 0%, #B91C1C 100%)",
                             borderRadius: "12px",
-                            padding: "24px 32px",
+                            padding: "16px 20px",
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "space-between",
                             flexWrap: "wrap",
-                            gap: "16px",
+                            gap: "12px",
                             marginBottom: "24px",
                         }}>
                             <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
@@ -94,12 +94,7 @@ export default async function Home() {
 
                         {/* Products directly under banner */}
                         {LIMITED_TIME_DEALS.length > 0 && (
-                            <div style={{
-                                display: "grid",
-                                gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-                                gap: "14px",
-                                paddingBottom: "36px",
-                            }}>
+                            <div className="product-grid" style={{ paddingBottom: "36px" }}>
                                 {LIMITED_TIME_DEALS.map((product) => (
                                     <ProductCard key={product.id} product={product} />
                                 ))}
@@ -141,11 +136,7 @@ export default async function Home() {
                                     See All →
                                 </Link>
                             </div>
-                            <div style={{
-                                display: "grid",
-                                gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-                                gap: "14px",
-                            }}>
+                            <div className="product-grid">
                                 {FEATURED_PRODUCTS.map((product) => (
                                     <ProductCard key={product.id} product={product} />
                                 ))}
@@ -182,11 +173,7 @@ export default async function Home() {
                                     See All →
                                 </Link>
                             </div>
-                            <div style={{
-                                display: "grid",
-                                gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-                                gap: "14px",
-                            }}>
+                            <div className="product-grid">
                                 {LATEST_PRODUCTS.map((product) => (
                                     <ProductCard key={product.id} product={product} />
                                 ))}
@@ -223,11 +210,7 @@ export default async function Home() {
                                     See All →
                                 </Link>
                             </div>
-                            <div style={{
-                                display: "grid",
-                                gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-                                gap: "14px",
-                            }}>
+                            <div className="product-grid">
                                 {PRE_ORDER_PRODUCTS.map((product) => (
                                     <ProductCard key={product.id} product={product} />
                                 ))}
@@ -258,7 +241,7 @@ export default async function Home() {
                         </div>
                         <div style={{
                             display: "grid",
-                            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+                            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
                             gap: "32px",
                         }}>
                             {[
@@ -366,7 +349,7 @@ export default async function Home() {
                         </div>
                         <div style={{
                             display: "grid",
-                            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
                             gap: "24px",
                         }}>
                             {[

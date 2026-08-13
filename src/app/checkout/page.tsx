@@ -181,12 +181,7 @@ export default function CheckoutPage() {
                             </Link>
                         </div>
                     ) : (
-                        <div style={{
-                            display: 'grid',
-                            gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
-                            gap: '32px',
-                            alignItems: 'start'
-                        }}>
+                        <div className="two-col-layout" style={{ alignItems: 'start' }}>
                             {/* Left Column - Cart Items & Form */}
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                                 {/* Cart Items */}

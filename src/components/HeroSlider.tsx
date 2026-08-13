@@ -84,7 +84,7 @@ export default function HeroSlider() {
                 key={slide.id}
                 style={{
                     background: slide.bg,
-                    minHeight: "600px",
+                    minHeight: "320px",
                     display: "flex",
                     alignItems: "center",
                     position: "relative",
@@ -115,18 +115,18 @@ export default function HeroSlider() {
                     pointerEvents: "none",
                 }} />
 
-                <div style={{ position: "relative", zIndex: 1, padding: "80px 0" }}>
-                    <div style={{
-                        display: "grid",
-                        gridTemplateColumns: "1fr 1fr",
-                        gap: "48px",
-                        alignItems: "center",
-                        maxWidth: "1280px",
-                        margin: "0 auto",
-                        padding: "0 3rem",
-                    }}
-                        className="hero-grid"
-                    >
+                    <div style={{ position: "relative", zIndex: 1, padding: "48px 0" }}>
+                        <div style={{
+                            display: "grid",
+                            gridTemplateColumns: "1fr",
+                            gap: "32px",
+                            alignItems: "center",
+                            maxWidth: "1280px",
+                            margin: "0 auto",
+                            padding: "0 1.5rem",
+                        }}
+                            className="hero-grid"
+                        >
                         {/* Text side */}
                         <div>
                             {/* Tag pill */}
