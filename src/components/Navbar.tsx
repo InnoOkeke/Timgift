@@ -238,27 +238,41 @@ export default function Navbar() {
             </header>
 
             <style>{`
-                /* Search form: hidden on mobile, flex on md+ */
+                /* Search form: hidden + no space on mobile, flex on md+ */
                 .navbar-search-form {
                     display: none;
-                    flex: 1;
-                    margin: 0 16px;
+                    flex: 0;
+                    width: 0;
+                    margin: 0;
+                    overflow: hidden;
                 }
                 @media (min-width: 768px) {
-                    .navbar-search-form { display: flex !important; }
+                    .navbar-search-form {
+                        display: flex !important;
+                        flex: 1 !important;
+                        width: auto !important;
+                        margin: 0 16px !important;
+                        overflow: visible !important;
+                    }
                 }
 
-                /* Desktop nav links: hidden on mobile, flex on lg+ */
+                /* Desktop nav links: hidden + no space on mobile */
                 .navbar-desktop-nav {
                     display: none;
-                    align-items: center;
-                    gap: 4px;
+                    width: 0;
+                    overflow: hidden;
                 }
                 @media (min-width: 1024px) {
-                    .navbar-desktop-nav { display: flex !important; }
+                    .navbar-desktop-nav {
+                        display: flex !important;
+                        width: auto !important;
+                        align-items: center !important;
+                        gap: 4px !important;
+                        overflow: visible !important;
+                    }
                 }
 
-                /* Mobile-only elements: visible on mobile, hidden on md+ */
+                /* Mobile-only: show on mobile, gone on md+ */
                 .navbar-mobile-only {
                     display: flex !important;
                 }
@@ -266,18 +280,14 @@ export default function Navbar() {
                     .navbar-mobile-only { display: none !important; }
                 }
 
-                /* Category strip: hidden on mobile, block on md+ */
-                .navbar-category-strip {
-                    display: none;
-                }
+                /* Category strip: desktop only */
+                .navbar-category-strip { display: none; }
                 @media (min-width: 768px) {
                     .navbar-category-strip { display: block !important; }
                 }
 
-                /* Cart label: hidden on tiny screens */
-                .navbar-cart-label {
-                    display: none;
-                }
+                /* Cart label */
+                .navbar-cart-label { display: none; }
                 @media (min-width: 400px) {
                     .navbar-cart-label { display: inline !important; }
                 }

@@ -149,25 +149,26 @@ export default function Footer() {
             </div>
 
             <style>{`
-                /* Mobile: brand full-width, then 2 columns for the rest */
+                /* Mobile: single column, brand full width */
                 .footer-grid {
                     display: grid;
                     grid-template-columns: 1fr;
-                    gap: 32px;
+                    gap: 28px;
                 }
                 .footer-brand {
                     grid-column: 1 / -1;
                 }
-                /* Tablet: brand + 3 cols */
-                @media (min-width: 640px) {
+                /* Tablet 768px+: 2 columns */
+                @media (min-width: 768px) {
                     .footer-grid {
                         grid-template-columns: 1fr 1fr;
+                        gap: 32px;
                     }
                     .footer-brand {
                         grid-column: 1 / -1;
                     }
                 }
-                /* Desktop: brand + Shop + Company/Legal + Contact = 4 cols */
+                /* Desktop 1024px+: brand wide + 3 cols */
                 @media (min-width: 1024px) {
                     .footer-grid {
                         grid-template-columns: 2fr 1fr 1fr 1fr;
