@@ -152,9 +152,9 @@ export default function ProductDetailPage() {
                             }}>
                                 <div style={{
                                     borderRadius: '24px',
-                                    overflow: 'hidden',
                                     backgroundColor: 'var(--bg-secondary)',
                                     border: '1px solid var(--border)',
+                                    padding: '16px',
                                 }}>
                                     <MediaCarousel media={product.media} productName={product.name} />
                                 </div>
@@ -241,14 +241,33 @@ export default function ProductDetailPage() {
                                     </div>
 
                                     {/* Description */}
-                                    <p style={{
-                                        fontSize: '16px',
-                                        color: 'var(--text-secondary)',
-                                        lineHeight: 1.7,
-                                        maxWidth: '540px'
+                                    <div style={{
+                                        backgroundColor: "var(--bg-secondary)",
+                                        borderRadius: "16px",
+                                        padding: "24px",
+                                        border: "1px solid var(--border)",
+                                        marginTop: "8px",
                                     }}>
-                                        {product.description}
-                                    </p>
+                                        <h3 style={{
+                                            fontSize: "12px",
+                                            fontWeight: 700,
+                                            textTransform: "uppercase",
+                                            letterSpacing: "0.08em",
+                                            color: "var(--text-muted)",
+                                            marginBottom: "14px",
+                                        }}>
+                                            About this product
+                                        </h3>
+                                        <p style={{
+                                            fontSize: "15px",
+                                            color: "var(--text-secondary)",
+                                            lineHeight: 1.8,
+                                            margin: 0,
+                                            whiteSpace: "pre-wrap",
+                                        }}>
+                                            {product.description}
+                                        </p>
+                                    </div>
                                 </div>
 
                                 {/* Divider */}

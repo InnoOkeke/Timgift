@@ -152,12 +152,13 @@ export default async function ProductsPage(props: {
                             </div>
                         </div>
 
-                        {/* Category horizontal scroll */}
+                {/* Category horizontal scroll */}
                         <div style={{
                             display: "flex",
                             gap: "8px",
                             marginTop: "16px",
                             overflowX: "auto",
+                            overflowY: "visible",
                             scrollbarWidth: "none",
                             paddingBottom: "2px",
                         }}>

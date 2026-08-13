@@ -15,42 +15,53 @@ interface MediaCarouselProps {
 export default function MediaCarousel({ media, productName }: MediaCarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    // Fallback if no media
-    const fallbackImage = "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&h=600&fit=crop";
+    const fallbackImage = "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&h=800&fit=crop";
 
     if (!media || media.length === 0) {
         return (
-            <div
-                className="rounded-2xl overflow-hidden"
-                style={{ backgroundColor: "var(--bg-secondary)", maxWidth: "500px", aspectRatio: "1/1" }}
-            >
-                <img
-                    src={fallbackImage}
-                    alt={productName}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
+            <div style={{ width: "100%" }}>
+                <div style={{
+                    borderRadius: "20px",
+                    overflow: "hidden",
+                    backgroundColor: "var(--bg-secondary)",
+                    aspectRatio: "1/1",
+                }}>
+                    <img
+                        src={fallbackImage}
+                        alt={productName}
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                </div>
             </div>
         );
     }
 
     const currentMedia = media[currentIndex];
+    const prev = () => setCurrentIndex(i => (i === 0 ? media.length - 1 : i - 1));
+    const next = () => setCurrentIndex(i => (i === media.length - 1 ? 0 : i + 1));
 
     return (
-        <div style={{ maxWidth: "500px" }}>
-            {/* Main Image */}
-            <div
-                className="relative rounded-2xl overflow-hidden"
-                style={{ backgroundColor: "var(--bg-secondary)", aspectRatio: "1/1" }}
-            >
+        <div style={{ width: "100%" }}>
+            {/* Main viewer */}
+            <div style={{
+                position: "relative",
+                borderRadius: "20px",
+                overflow: "hidden",
+                backgroundColor: "var(--bg-secondary)",
+                aspectRatio: "1/1",
+                border: "1px solid var(--border)",
+            }}>
                 {currentMedia.type === "image" ? (
                     <img
                         src={currentMedia.url}
-                        alt={productName}
-                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                        onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.src = fallbackImage;
+                        alt={`${productName} — view ${currentIndex + 1}`}
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                            transition: "opacity 0.2s ease",
                         }}
+                        onError={(e) => { (e.target as HTMLImageElement).src = fallbackImage; }}
                     />
                 ) : (
                     <video
@@ -60,128 +71,180 @@ export default function MediaCarousel({ media, productName }: MediaCarouselProps
                     />
                 )}
 
-                {/* Navigation Arrows */}
+                {/* Prev / Next arrows */}
                 {media.length > 1 && (
                     <>
                         <button
-                            onClick={() => setCurrentIndex(prev => prev === 0 ? media.length - 1 : prev - 1)}
+                            onClick={prev}
+                            aria-label="Previous image"
                             style={{
                                 position: "absolute",
-                                left: "12px",
+                                left: "14px",
                                 top: "50%",
                                 transform: "translateY(-50%)",
-                                width: "40px",
-                                height: "40px",
+                                width: "44px",
+                                height: "44px",
                                 borderRadius: "50%",
-                                backgroundColor: "var(--bg)",
-                                color: "var(--text)",
+                                backgroundColor: "rgba(0,0,0,0.45)",
+                                color: "white",
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
                                 border: "none",
-                                cursor: "pointer"
+                                cursor: "pointer",
+                                backdropFilter: "blur(4px)",
+                                transition: "background 0.15s",
                             }}
+                            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "rgba(0,0,0,0.7)")}
+                            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "rgba(0,0,0,0.45)")}
                         >
-                            <svg style={{ width: "18px", height: "18px" }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
                             </svg>
                         </button>
                         <button
-                            onClick={() => setCurrentIndex(prev => prev === media.length - 1 ? 0 : prev + 1)}
+                            onClick={next}
+                            aria-label="Next image"
                             style={{
                                 position: "absolute",
-                                right: "12px",
+                                right: "14px",
                                 top: "50%",
                                 transform: "translateY(-50%)",
-                                width: "40px",
-                                height: "40px",
+                                width: "44px",
+                                height: "44px",
                                 borderRadius: "50%",
-                                backgroundColor: "var(--bg)",
-                                color: "var(--text)",
+                                backgroundColor: "rgba(0,0,0,0.45)",
+                                color: "white",
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
                                 border: "none",
-                                cursor: "pointer"
+                                cursor: "pointer",
+                                backdropFilter: "blur(4px)",
+                                transition: "background 0.15s",
                             }}
+                            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "rgba(0,0,0,0.7)")}
+                            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "rgba(0,0,0,0.45)")}
                         >
-                            <svg style={{ width: "18px", height: "18px" }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                             </svg>
                         </button>
                     </>
                 )}
 
-                {/* Counter */}
+                {/* Counter pill */}
                 {media.length > 1 && (
-                    <div
-                        style={{
-                            position: "absolute",
-                            bottom: "12px",
-                            left: "50%",
-                            transform: "translateX(-50%)",
-                            padding: "6px 12px",
-                            borderRadius: "20px",
-                            fontSize: "12px",
-                            fontWeight: 500,
-                            backgroundColor: "var(--bg)",
-                            color: "var(--text)"
-                        }}
-                    >
+                    <div style={{
+                        position: "absolute",
+                        bottom: "14px",
+                        right: "14px",
+                        padding: "5px 12px",
+                        borderRadius: "20px",
+                        fontSize: "12px",
+                        fontWeight: 600,
+                        backgroundColor: "rgba(0,0,0,0.5)",
+                        color: "white",
+                        backdropFilter: "blur(4px)",
+                    }}>
                         {currentIndex + 1} / {media.length}
                     </div>
                 )}
             </div>
 
-            {/* Thumbnails */}
+            {/* Thumbnail strip */}
             {media.length > 1 && (
-                <div style={{ display: "flex", gap: "10px", overflowX: "auto", marginTop: "12px", paddingBottom: "4px" }}>
+                <div style={{
+                    display: "flex",
+                    gap: "10px",
+                    marginTop: "14px",
+                    overflowX: "auto",
+                    paddingBottom: "6px",
+                    scrollbarWidth: "none",
+                }}>
                     {media.map((item, index) => (
                         <button
                             key={index}
                             onClick={() => setCurrentIndex(index)}
+                            aria-label={`View image ${index + 1}`}
                             style={{
                                 flexShrink: 0,
-                                width: "60px",
-                                height: "60px",
-                                borderRadius: "8px",
+                                width: "80px",
+                                height: "80px",
+                                borderRadius: "12px",
                                 overflow: "hidden",
-                                border: index === currentIndex ? "2px solid var(--primary)" : "2px solid var(--border)",
-                                opacity: index === currentIndex ? 1 : 0.7,
+                                border: index === currentIndex
+                                    ? "2.5px solid var(--primary)"
+                                    : "2px solid var(--border)",
+                                opacity: index === currentIndex ? 1 : 0.55,
                                 cursor: "pointer",
                                 padding: 0,
-                                background: "none"
+                                background: "var(--bg-secondary)",
+                                transition: "opacity 0.15s, border-color 0.15s, transform 0.15s",
+                                transform: index === currentIndex ? "scale(1.05)" : "scale(1)",
+                            }}
+                            onMouseEnter={(e) => {
+                                if (index !== currentIndex) {
+                                    (e.currentTarget as HTMLElement).style.opacity = "0.85";
+                                    (e.currentTarget as HTMLElement).style.transform = "scale(1.03)";
+                                }
+                            }}
+                            onMouseLeave={(e) => {
+                                if (index !== currentIndex) {
+                                    (e.currentTarget as HTMLElement).style.opacity = "0.55";
+                                    (e.currentTarget as HTMLElement).style.transform = "scale(1)";
+                                }
                             }}
                         >
                             {item.type === "image" ? (
                                 <img
                                     src={item.url}
-                                    alt={`${productName} ${index + 1}`}
+                                    alt={`${productName} thumbnail ${index + 1}`}
                                     style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                                    onError={(e) => {
-                                        const target = e.target as HTMLImageElement;
-                                        target.src = fallbackImage;
-                                    }}
+                                    onError={(e) => { (e.target as HTMLImageElement).src = fallbackImage; }}
                                 />
                             ) : (
-                                <div
-                                    style={{
-                                        width: "100%",
-                                        height: "100%",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        backgroundColor: "var(--bg-secondary)",
-                                        color: "var(--text-muted)"
-                                    }}
-                                >
-                                    <svg style={{ width: "20px", height: "20px" }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
+                                <div style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    backgroundColor: "var(--bg-secondary)",
+                                    color: "white",
+                                    fontSize: "22px",
+                                }}>
+                                    ▶
                                 </div>
                             )}
                         </button>
+                    ))}
+                </div>
+            )}
+
+            {/* Dot indicators (mobile-friendly) */}
+            {media.length > 1 && (
+                <div style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "6px",
+                    marginTop: "10px",
+                }}>
+                    {media.map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => setCurrentIndex(index)}
+                            style={{
+                                width: index === currentIndex ? "20px" : "7px",
+                                height: "7px",
+                                borderRadius: "4px",
+                                backgroundColor: index === currentIndex ? "var(--primary)" : "var(--border)",
+                                border: "none",
+                                cursor: "pointer",
+                                padding: 0,
+                                transition: "width 0.2s ease, background-color 0.15s",
+                            }}
+                        />
                     ))}
                 </div>
             )}

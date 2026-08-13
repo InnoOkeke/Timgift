@@ -302,141 +302,108 @@ export default function ProductCard({ product }: ProductCardProps) {
                         </>
                     ) : (
                         <>
-                            {/* View Button */}
-                            <Link
-                                href={`/product/${product.id}`}
-                                style={{
-                                    height: "36px",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    fontSize: "12.5px",
-                                    fontWeight: 600,
-                                    borderRadius: "7px",
-                                    backgroundColor: "var(--bg-secondary)",
-                                    color: "var(--text-secondary)",
-                                    border: "1px solid var(--border)",
-                                    textDecoration: "none",
-                                    transition: "all 0.15s",
-                                    padding: "0 10px",
-                                }}
-                                onMouseEnter={(e) => {
-                                    const el = e.currentTarget as HTMLElement;
-                                    el.style.backgroundColor = "var(--bg-hover)";
-                                    el.style.color = "var(--text)";
-                                }}
-                                onMouseLeave={(e) => {
-                                    const el = e.currentTarget as HTMLElement;
-                                    el.style.backgroundColor = "var(--bg-secondary)";
-                                    el.style.color = "var(--text-secondary)";
-                                }}
-                            >
-                                View
-                            </Link>
-
-                            {/* Quantity Controls */}
+                            {/* Quantity + Checkout row */}
                             <div style={{
                                 display: "flex",
                                 alignItems: "center",
                                 gap: "6px",
-                                height: "36px",
-                                padding: "0 8px",
-                                borderRadius: "7px",
-                                backgroundColor: "var(--bg-secondary)",
-                                border: "1px solid var(--border)",
+                                width: "100%",
                             }}>
-                                <button
-                                    onClick={handleDecrement}
-                                    style={{
-                                        width: "24px",
-                                        height: "24px",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        borderRadius: "4px",
-                                        backgroundColor: "var(--bg)",
-                                        border: "1px solid var(--border)",
-                                        color: "var(--text)",
-                                        cursor: "pointer",
-                                        fontSize: "14px",
-                                        fontWeight: 600,
-                                        transition: "all 0.15s",
-                                    }}
-                                    onMouseEnter={(e) => {
-                                        (e.currentTarget as HTMLElement).style.backgroundColor = "var(--bg-hover)";
-                                    }}
-                                    onMouseLeave={(e) => {
-                                        (e.currentTarget as HTMLElement).style.backgroundColor = "var(--bg)";
-                                    }}
-                                >
-                                    −
-                                </button>
-                                <span style={{
-                                    fontSize: "13px",
-                                    fontWeight: 700,
-                                    color: "var(--text)",
-                                    minWidth: "20px",
-                                    textAlign: "center",
-                                }}>
-                                    {quantity}
-                                </span>
-                                <button
-                                    onClick={handleIncrement}
-                                    style={{
-                                        width: "24px",
-                                        height: "24px",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        borderRadius: "4px",
-                                        backgroundColor: "var(--bg)",
-                                        border: "1px solid var(--border)",
-                                        color: "var(--text)",
-                                        cursor: "pointer",
-                                        fontSize: "14px",
-                                        fontWeight: 600,
-                                        transition: "all 0.15s",
-                                    }}
-                                    onMouseEnter={(e) => {
-                                        (e.currentTarget as HTMLElement).style.backgroundColor = "var(--bg-hover)";
-                                    }}
-                                    onMouseLeave={(e) => {
-                                        (e.currentTarget as HTMLElement).style.backgroundColor = "var(--bg)";
-                                    }}
-                                >
-                                    +
-                                </button>
-                            </div>
-
-                            {/* Checkout Button */}
-                            <button
-                                onClick={handleCheckout}
-                                title="Checkout"
-                                style={{
-                                    width: "36px",
-                                    height: "36px",
+                                {/* Quantity Controls */}
+                                <div style={{
                                     display: "flex",
                                     alignItems: "center",
-                                    justifyContent: "center",
+                                    gap: "4px",
+                                    height: "36px",
+                                    padding: "0 6px",
                                     borderRadius: "7px",
-                                    backgroundColor: "var(--primary)",
-                                    color: "white",
-                                    border: "none",
-                                    cursor: "pointer",
-                                    transition: "background 0.15s",
-                                    flexShrink: 0,
-                                }}
-                                onMouseEnter={(e) => {
-                                    (e.currentTarget as HTMLElement).style.backgroundColor = "var(--primary-hover)";
-                                }}
-                                onMouseLeave={(e) => {
-                                    (e.currentTarget as HTMLElement).style.backgroundColor = "var(--primary)";
-                                }}
-                            >
-                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                </svg>
-                            </button>
+                                    backgroundColor: "var(--bg-secondary)",
+                                    border: "1px solid var(--border)",
+                                    flex: 1,
+                                    justifyContent: "space-between",
+                                    minWidth: 0,
+                                }}>
+                                    <button
+                                        onClick={handleDecrement}
+                                        style={{
+                                            width: "22px",
+                                            height: "22px",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            borderRadius: "4px",
+                                            backgroundColor: "var(--bg)",
+                                            border: "1px solid var(--border)",
+                                            color: "var(--text)",
+                                            cursor: "pointer",
+                                            fontSize: "14px",
+                                            fontWeight: 600,
+                                            flexShrink: 0,
+                                        }}
+                                    >
+                                        −
+                                    </button>
+                                    <span style={{
+                                        fontSize: "13px",
+                                        fontWeight: 700,
+                                        color: "var(--text)",
+                                        minWidth: "16px",
+                                        textAlign: "center",
+                                    }}>
+                                        {quantity}
+                                    </span>
+                                    <button
+                                        onClick={handleIncrement}
+                                        style={{
+                                            width: "22px",
+                                            height: "22px",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            borderRadius: "4px",
+                                            backgroundColor: "var(--bg)",
+                                            border: "1px solid var(--border)",
+                                            color: "var(--text)",
+                                            cursor: "pointer",
+                                            fontSize: "14px",
+                                            fontWeight: 600,
+                                            flexShrink: 0,
+                                        }}
+                                    >
+                                        +
+                                    </button>
+                                </div>
+
+                                {/* Checkout Button */}
+                                <button
+                                    onClick={handleCheckout}
+                                    title="Go to Checkout"
+                                    style={{
+                                        width: "36px",
+                                        height: "36px",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        borderRadius: "7px",
+                                        backgroundColor: "var(--primary)",
+                                        color: "white",
+                                        border: "none",
+                                        cursor: "pointer",
+                                        transition: "background 0.15s",
+                                        flexShrink: 0,
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        (e.currentTarget as HTMLElement).style.backgroundColor = "var(--primary-hover)";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        (e.currentTarget as HTMLElement).style.backgroundColor = "var(--primary)";
+                                    }}
+                                >
+                                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </button>
+                            </div>
                         </>
                     )}
                 </div>
