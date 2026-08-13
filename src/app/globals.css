@@ -1154,3 +1154,13 @@ h6 {
 .page-top {
   padding-top: var(--navbar-height);
 }
+
+/* Payment methods grid */
+.payment-methods-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+}
+@media (min-width: 640px) {
+    .payment-methods-grid {
+        grid-template-columns: repeat(5, 1fr) !important;
+    }
+}

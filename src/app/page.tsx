@@ -523,12 +523,12 @@ export default async function Home() {
                             </p>
                         </div>
                         <div style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            flexWrap: "wrap",
-                            gap: "24px",
-                        }}>
+                            display: "grid",
+                            gridTemplateColumns: "repeat(3, 1fr)",
+                            gap: "12px",
+                            maxWidth: "640px",
+                            margin: "0 auto",
+                        }} className="payment-methods-grid">
                             {[
                                 { name: "Bank Transfer", icon: "🏦" },
                                 { name: "Card Payment", icon: "💳" },
@@ -537,20 +537,18 @@ export default async function Home() {
                                 { name: "USSD", icon: "📱" },
                             ].map((method, i) => (
                                 <div key={i} style={{
-                                    padding: "16px 28px",
+                                    padding: "14px 12px",
                                     borderRadius: "10px",
                                     border: "1px solid var(--border)",
                                     backgroundColor: "var(--bg-card)",
                                     display: "flex",
+                                    flexDirection: "column",
                                     alignItems: "center",
-                                    gap: "10px",
+                                    gap: "8px",
+                                    textAlign: "center",
                                 }}>
                                     <span style={{ fontSize: "24px" }}>{method.icon}</span>
-                                    <span style={{
-                                        fontSize: "14px",
-                                        fontWeight: 600,
-                                        color: "var(--text)",
-                                    }}>
+                                    <span style={{ fontSize: "12px", fontWeight: 600, color: "var(--text)" }}>
                                         {method.name}
                                     </span>
                                 </div>
