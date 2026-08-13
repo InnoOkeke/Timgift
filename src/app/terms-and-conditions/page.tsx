@@ -4,8 +4,8 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Terms & Conditions | Tim Gift",
-    description: "Read the Terms and Conditions governing your use of the Tim Gift website and purchase of products.",
+    title: "Terms & Conditions | TimGift",
+    description: "Read the Terms and Conditions governing your use of the TimGift website and purchase of products.",
 };
 
 export default function TermsAndConditionsPage() {
@@ -58,7 +58,7 @@ export default function TermsAndConditionsPage() {
                                 lineHeight: 1.8,
                                 marginBottom: "48px",
                             }}>
-                                Welcome to <strong style={{ color: "var(--text)" }}>Tim Gift</strong>, operated
+                                Welcome to <strong style={{ color: "var(--text)" }}>TimGift</strong>, operated
                                 by <strong style={{ color: "var(--text)" }}>Mofets Computers</strong> — owners
                                 of timgift.com, a leading e-commerce platform for fast-moving consumer
                                 electronics in Nigeria. These Terms and Conditions govern your use of our
@@ -157,7 +157,7 @@ export default function TermsAndConditionsPage() {
                                 <p>
                                     Products are covered only by the warranty expressly stated on the
                                     individual product page or provided directly by the manufacturer.
-                                    Unless explicitly stated, no additional warranty is offered by Tim Gift.
+                                    Unless explicitly stated, no additional warranty is offered by TimGift.
                                     The following are expressly excluded from warranty coverage:
                                 </p>
                                 <PolicyList items={[
@@ -173,7 +173,7 @@ export default function TermsAndConditionsPage() {
                                 <p>
                                     Customers are solely responsible for ensuring that all billing,
                                     shipping, and contact information provided at the time of purchase
-                                    is accurate and complete. Tim Gift will not be held responsible for
+                                    is accurate and complete. TimGift will not be held responsible for
                                     order delays, failed deliveries, or losses resulting from incorrect
                                     or incomplete information submitted by the customer.
                                 </p>
@@ -194,7 +194,7 @@ export default function TermsAndConditionsPage() {
                             {/* Section 10 */}
                             <PolicySection number="10" title="Limitation of Liability">
                                 <p>
-                                    To the fullest extent permitted by applicable law, Tim Gift and
+                                    To the fullest extent permitted by applicable law, TimGift and
                                     Mofets Computers shall not be liable for any indirect, incidental,
                                     special, consequential, or punitive damages arising from:
                                 </p>

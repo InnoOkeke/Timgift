@@ -74,7 +74,7 @@ export default function AboutPage() {
                                 </h2>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', color: 'var(--text-secondary)', lineHeight: 1.8 }}>
                                     <p>
-                                        Tim Gift was born from a simple observation: Nigerians deserve access to
+                                        TimGift was born from a simple observation: Nigerians deserve access to
                                         genuine, high-quality electronics without the premium markup or authenticity
                                         concerns that plague the market.
                                     </p>
@@ -99,7 +99,7 @@ export default function AboutPage() {
                             }}>
                                 <img
                                     src="https://images.unsplash.com/photo-1556656793-08538906a9f8?w=800&h=600&fit=crop"
-                                    alt="Tim Gift Store"
+                                    alt="TimGift Store"
                                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                 />
                             </div>
@@ -221,7 +221,7 @@ export default function AboutPage() {
                                 marginBottom: '32px'
                             }}>
                                 Browse our curated collection of premium gadgets and discover why
-                                thousands of Nigerians trust Tim Gift.
+                                thousands of Nigerians trust TimGift.
                             </p>
                             <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
                                 <Link

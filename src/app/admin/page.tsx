@@ -121,7 +121,7 @@ export default function AdminDashboard() {
                         Dashboard
                     </h1>
                     <p className="text-lg" style={{ color: "var(--text-secondary)" }}>
-                        Welcome back to your Tim Gift command center.
+                        Welcome back to your TimGift command center.
                     </p>
                 </header>
 

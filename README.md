@@ -1,8 +1,8 @@
-# Tim Gift | Premium Gadgets Store
+# TimGift | Premium Gadgets Store
 
-Tim Gift is a premium e-commerce platform for sourcing quality new and gently used electronics at wholesale prices. The application is built with modern web technologies to provide a sleek, Apple-inspired user experience.
+TimGift is a premium e-commerce platform for sourcing quality new and gently used electronics at wholesale prices. The application is built with modern web technologies to provide a sleek, Apple-inspired user experience.
 
-![Tim Gift Home](/images/screenshots/home-preview.png)
+![TimGift Home](/images/screenshots/home-preview.png)
 *(Note: Add actual screenshots to `public/images/screenshots`)*
 
 ## 🚀 Tech Stack

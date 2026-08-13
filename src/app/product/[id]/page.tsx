@@ -110,7 +110,7 @@ export default function ProductDetailPage() {
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg)' }}>
             <Navbar />
 
-            <main style={{ flex: 1, paddingTop: '100px' }}>
+            <main style={{ flex: 1, paddingTop: '110px' }}>
                 {/* Breadcrumb */}
                 <div className="container" style={{ paddingTop: '24px', paddingBottom: '24px' }}>
                     <nav style={{

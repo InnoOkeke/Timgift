@@ -17,8 +17,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Tim Gift | Premium Gadgets Store",
-  description: "Source quality new and gently used electronics at wholesale prices. Tim Gift - Your trusted tech partner for amazing deals delivered nationwide.",
+  title: "TimGift | Premium Gadgets Store",
+  description: "Source quality new and gently used electronics at wholesale prices. TimGift - Your trusted tech partner for amazing deals delivered nationwide.",
   icons: {
     icon: "/images/icon.png",
   },

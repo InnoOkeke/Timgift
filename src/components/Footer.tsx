@@ -7,79 +7,206 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer style={{ backgroundColor: "var(--bg-secondary)", borderTop: "1px solid var(--border)" }}>
-            <div className="container py-12 md:py-16">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-y-12 lg:gap-8">
+        <footer style={{
+            backgroundColor: "var(--bg)",
+            borderTop: "1px solid var(--border)",
+            marginTop: "auto",
+        }}>
+            <div className="container" style={{ padding: "40px 0 32px" }}>
+                <div style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+                    gap: "32px",
+                }}>
                     {/* Brand */}
-                    <div className="flex flex-col items-start text-left">
-                        <Link href="/" className="mb-6">
+                    <div>
+                        <Link href="/" style={{ display: "inline-block", marginBottom: "14px" }}>
                             <Logo variant="footer" />
                         </Link>
-                        <p className="text-sm leading-relaxed mb-6 max-w-sm" style={{ color: "var(--text-secondary)" }}>
-                            Your trusted source for quality new and gently used electronics at wholesale prices.
-                            Amazing deals delivered nationwide.
+                        <p style={{
+                            fontSize: "13px",
+                            lineHeight: 1.6,
+                            color: "var(--text-muted)",
+                            maxWidth: "240px",
+                            marginBottom: "16px",
+                        }}>
+                            Quality new &amp; gently used electronics at wholesale prices. Nationwide delivery guaranteed.
                         </p>
 
-                        {/* Social Links */}
-                        <div className="flex gap-3">
+                        {/* Social */}
+                        <div style={{ display: "flex", gap: "8px" }}>
                             <a
                                 href="https://web.facebook.com/profile.php?id=61587370073592"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center justify-center transition-colors hover:scale-105"
+                                aria-label="Facebook"
                                 style={{
-                                    width: "40px",
-                                    height: "40px",
-                                    borderRadius: "8px",
-                                    backgroundColor: "var(--bg)",
+                                    width: "34px",
+                                    height: "34px",
+                                    borderRadius: "7px",
                                     border: "1px solid var(--border)",
-                                    color: "var(--text)"
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    color: "var(--text-muted)",
+                                    transition: "all 0.15s",
                                 }}
-                                title="Facebook"
+                                onMouseEnter={(e) => {
+                                    const el = e.currentTarget as HTMLElement;
+                                    el.style.borderColor = "var(--primary)";
+                                    el.style.color = "var(--primary)";
+                                    el.style.backgroundColor = "var(--primary-bg)";
+                                }}
+                                onMouseLeave={(e) => {
+                                    const el = e.currentTarget as HTMLElement;
+                                    el.style.borderColor = "var(--border)";
+                                    el.style.color = "var(--text-muted)";
+                                    el.style.backgroundColor = "transparent";
+                                }}
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
                                 </svg>
                             </a>
                             <a
                                 href="https://www.instagram.com/timgift01/"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center justify-center transition-colors hover:scale-105"
+                                aria-label="Instagram"
                                 style={{
-                                    width: "40px",
-                                    height: "40px",
-                                    borderRadius: "8px",
-                                    backgroundColor: "var(--bg)",
+                                    width: "34px",
+                                    height: "34px",
+                                    borderRadius: "7px",
                                     border: "1px solid var(--border)",
-                                    color: "var(--text)"
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    color: "var(--text-muted)",
+                                    transition: "all 0.15s",
                                 }}
-                                title="Instagram"
+                                onMouseEnter={(e) => {
+                                    const el = e.currentTarget as HTMLElement;
+                                    el.style.borderColor = "var(--primary)";
+                                    el.style.color = "var(--primary)";
+                                    el.style.backgroundColor = "var(--primary-bg)";
+                                }}
+                                onMouseLeave={(e) => {
+                                    const el = e.currentTarget as HTMLElement;
+                                    el.style.borderColor = "var(--border)";
+                                    el.style.color = "var(--text-muted)";
+                                    el.style.backgroundColor = "transparent";
+                                }}
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                                </svg>
+                            </a>
+                            <a
+                                href="https://wa.me/2348090529117"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="WhatsApp"
+                                style={{
+                                    width: "34px",
+                                    height: "34px",
+                                    borderRadius: "7px",
+                                    border: "1px solid var(--border)",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    color: "var(--text-muted)",
+                                    transition: "all 0.15s",
+                                }}
+                                onMouseEnter={(e) => {
+                                    const el = e.currentTarget as HTMLElement;
+                                    el.style.borderColor = "#22C55E";
+                                    el.style.color = "#22C55E";
+                                    el.style.backgroundColor = "#F0FDF4";
+                                }}
+                                onMouseLeave={(e) => {
+                                    const el = e.currentTarget as HTMLElement;
+                                    el.style.borderColor = "var(--border)";
+                                    el.style.color = "var(--text-muted)";
+                                    el.style.backgroundColor = "transparent";
+                                }}
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z" />
                                 </svg>
                             </a>
                         </div>
                     </div>
 
-                    {/* Quick Links */}
-                    <div className="flex flex-col items-start text-left">
-                        <h3 className="font-semibold mb-5 text-base" style={{ color: "var(--text)" }}>Quick Links</h3>
-                        <ul className="space-y-3 w-full" style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                    {/* Shop */}
+                    <div>
+                        <h3 style={{
+                            fontSize: "13px",
+                            fontWeight: 700,
+                            color: "var(--text)",
+                            marginBottom: "14px",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.05em",
+                        }}>
+                            Shop
+                        </h3>
+                        <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "10px" }}>
                             {[
                                 { label: "All Products", href: "/products" },
+                                { label: "In Stock", href: "/products?status=IN_STOCK" },
                                 { label: "Pre-Order", href: "/products?status=PRE_ORDER" },
+                                { label: "iPhone", href: "/products?category=IPHONE" },
+                                { label: "MacBook", href: "/products?category=MACBOOK" },
+                                { label: "Laptops", href: "/products?category=WINDOWS%20LAPTOPS" },
+                            ].map((link) => (
+                                <li key={link.href}>
+                                    <Link
+                                        href={link.href}
+                                        style={{
+                                            fontSize: "13px",
+                                            color: "var(--text-muted)",
+                                            textDecoration: "none",
+                                            transition: "color 0.15s",
+                                        }}
+                                        onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "var(--primary)")}
+                                        onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "var(--text-muted)")}
+                                    >
+                                        {link.label}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Company */}
+                    <div>
+                        <h3 style={{
+                            fontSize: "13px",
+                            fontWeight: 700,
+                            color: "var(--text)",
+                            marginBottom: "14px",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.05em",
+                        }}>
+                            Company
+                        </h3>
+                        <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "10px" }}>
+                            {[
                                 { label: "About Us", href: "/about" },
                                 { label: "Contact Us", href: "/contact" },
                             ].map((link) => (
                                 <li key={link.href}>
                                     <Link
                                         href={link.href}
-                                        className="text-sm transition-colors hover:text-primary hover:pl-1 block"
-                                        style={{ color: "var(--text-secondary)", transition: "all 0.2s" }}
+                                        style={{
+                                            fontSize: "13px",
+                                            color: "var(--text-muted)",
+                                            textDecoration: "none",
+                                            transition: "color 0.15s",
+                                        }}
+                                        onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "var(--primary)")}
+                                        onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "var(--text-muted)")}
                                     >
                                         {link.label}
                                     </Link>
@@ -89,9 +216,18 @@ export default function Footer() {
                     </div>
 
                     {/* Legal */}
-                    <div className="flex flex-col items-start text-left">
-                        <h3 className="font-semibold mb-5 text-base" style={{ color: "var(--text)" }}>Legal</h3>
-                        <ul className="space-y-3 w-full" style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                    <div>
+                        <h3 style={{
+                            fontSize: "13px",
+                            fontWeight: 700,
+                            color: "var(--text)",
+                            marginBottom: "14px",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.05em",
+                        }}>
+                            Legal
+                        </h3>
+                        <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "10px" }}>
                             {[
                                 { label: "Privacy Policy", href: "/privacy-policy" },
                                 { label: "Refund Policy", href: "/refund-policy" },
@@ -101,8 +237,14 @@ export default function Footer() {
                                 <li key={link.href}>
                                     <Link
                                         href={link.href}
-                                        className="text-sm transition-colors hover:text-primary hover:pl-1 block"
-                                        style={{ color: "var(--text-secondary)", transition: "all 0.2s" }}
+                                        style={{
+                                            fontSize: "13px",
+                                            color: "var(--text-muted)",
+                                            textDecoration: "none",
+                                            transition: "color 0.15s",
+                                        }}
+                                        onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "var(--primary)")}
+                                        onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "var(--text-muted)")}
                                     >
                                         {link.label}
                                     </Link>
@@ -112,22 +254,41 @@ export default function Footer() {
                     </div>
 
                     {/* Contact */}
-                    <div className="flex flex-col items-start text-left">
-                        <h3 className="font-semibold mb-5 text-base" style={{ color: "var(--text)" }}>Contact Us</h3>
-                        <ul className="space-y-4 w-full" style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                            <li className="flex items-start gap-3 text-sm" style={{ color: "var(--text-secondary)" }}>
-                                <span className="mt-0.5">📍</span>
-                                <span className="flex-1">5, Oshitelu St, GTBank Plaza, Ikeja Lagos</span>
+                    <div>
+                        <h3 style={{
+                            fontSize: "13px",
+                            fontWeight: 700,
+                            color: "var(--text)",
+                            marginBottom: "14px",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.05em",
+                        }}>
+                            Contact
+                        </h3>
+                        <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "12px" }}>
+                            <li style={{ display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "13px", color: "var(--text-muted)" }}>
+                                <span style={{ flexShrink: 0, marginTop: "1px" }}>📍</span>
+                                <span>5, Oshitelu St, GTBank Plaza, Ikeja Lagos</span>
                             </li>
-                            <li className="flex items-center gap-3 text-sm" style={{ color: "var(--text-secondary)" }}>
+                            <li style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                                 <span>📞</span>
-                                <a href="tel:08090529117" className="transition-colors hover:text-primary">
+                                <a
+                                    href="tel:08090529117"
+                                    style={{ color: "var(--text-muted)", textDecoration: "none", transition: "color 0.15s" }}
+                                    onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "var(--primary)")}
+                                    onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "var(--text-muted)")}
+                                >
                                     08090529117
                                 </a>
                             </li>
-                            <li className="flex items-center gap-3 text-sm" style={{ color: "var(--text-secondary)" }}>
+                            <li style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                                 <span>💬</span>
-                                <a href="https://wa.me/2348090529117" className="transition-colors hover:text-primary">
+                                <a
+                                    href="https://wa.me/2348090529117"
+                                    style={{ color: "var(--text-muted)", textDecoration: "none", transition: "color 0.15s" }}
+                                    onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "var(--primary)")}
+                                    onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "var(--text-muted)")}
+                                >
                                     WhatsApp Us
                                 </a>
                             </li>
@@ -136,14 +297,21 @@ export default function Footer() {
                 </div>
             </div>
 
-            {/* Bottom Bar */}
+            {/* Bottom bar */}
             <div style={{ borderTop: "1px solid var(--border)" }}>
-                <div className="container py-6">
-                    <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
-                        <p className="text-sm" style={{ color: "var(--text-muted)" }}>
+                <div className="container" style={{ padding: "16px 0" }}>
+                    <div style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        gap: "12px",
+                        flexWrap: "wrap",
+                    }}>
+                        <p style={{ fontSize: "12px", color: "var(--text-muted)" }}>
                             © {currentYear} TIMGIFT01 TECHNOLOGIES. All rights reserved.
                         </p>
-                        <p className="text-sm" style={{ color: "var(--text-muted)" }}>
+                        <p style={{ fontSize: "12px", color: "var(--text-muted)" }}>
                             A product of Mofets Computers
                         </p>
                     </div>

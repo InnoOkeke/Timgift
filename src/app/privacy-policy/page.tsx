@@ -4,8 +4,8 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Privacy Policy | Tim Gift",
-    description: "Learn how Tim Gift collects, uses, and protects your personal information.",
+    title: "Privacy Policy | TimGift",
+    description: "Learn how TimGift collects, uses, and protects your personal information.",
 };
 
 export default function PrivacyPolicyPage() {
@@ -58,7 +58,7 @@ export default function PrivacyPolicyPage() {
                                 lineHeight: 1.8,
                                 marginBottom: "48px",
                             }}>
-                                At Tim Gift, we value your privacy and are committed to protecting your
+                                At TimGift, we value your privacy and are committed to protecting your
                                 personal information. This Privacy Policy explains what data we collect,
                                 how we use it, and the rights available to you as our customer.
                             </p>
@@ -101,7 +101,7 @@ export default function PrivacyPolicyPage() {
                             <PolicySection number="3" title="Data Protection">
                                 <p>
                                     We take the security of your personal information seriously.
-                                    Tim Gift implements reasonable technical and administrative measures
+                                    TimGift implements reasonable technical and administrative measures
                                     to protect your data from unauthorised access, disclosure, alteration,
                                     or misuse. While no system can guarantee absolute security, we
                                     continuously work to safeguard the information entrusted to us.

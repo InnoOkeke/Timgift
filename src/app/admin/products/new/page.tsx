@@ -20,6 +20,7 @@ export default function NewProduct() {
         status: "IN_STOCK",
         stockQuantity: "10",
         featured: false,
+        limitedTimeDeal: false,
     });
 
     const CATEGORIES = ["IPHONE", "ANDROID", "MACBOOK", "IPAD", "VIDEO GAMES CONSOLES", "SMARTWATCHES", "WINDOWS LAPTOPS", "AIRPODS"];
@@ -444,47 +445,61 @@ export default function NewProduct() {
                                             }}
                                         >
                                             <div>
-                                                <p style={{
-                                                    fontSize: '14px',
-                                                    fontWeight: 500,
-                                                    color: 'var(--text)',
-                                                    marginBottom: '2px',
-                                                }}>
+                                                <p style={{ fontSize: '14px', fontWeight: 500, color: 'var(--text)', marginBottom: '2px' }}>
                                                     Featured Product
                                                 </p>
-                                                <p style={{
-                                                    fontSize: '12px',
-                                                    color: 'var(--text-muted)',
-                                                }}>
-                                                    Show on homepage
+                                                <p style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+                                                    Show in Trending Now
                                                 </p>
                                             </div>
                                             <div style={{
-                                                width: '44px',
-                                                height: '26px',
-                                                borderRadius: '13px',
+                                                width: '44px', height: '26px', borderRadius: '13px',
                                                 backgroundColor: formData.featured ? 'var(--primary)' : 'var(--border)',
-                                                position: 'relative',
-                                                transition: 'background-color 0.2s ease',
+                                                position: 'relative', transition: 'background-color 0.2s ease',
                                             }}>
                                                 <div style={{
-                                                    position: 'absolute',
-                                                    top: '3px',
+                                                    position: 'absolute', top: '3px',
                                                     left: formData.featured ? '21px' : '3px',
-                                                    width: '20px',
-                                                    height: '20px',
-                                                    borderRadius: '50%',
-                                                    backgroundColor: 'white',
-                                                    boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                                                    width: '20px', height: '20px', borderRadius: '50%',
+                                                    backgroundColor: 'white', boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
                                                     transition: 'left 0.2s ease',
                                                 }} />
-                                                <input
-                                                    type="checkbox"
-                                                    name="featured"
-                                                    checked={formData.featured}
-                                                    onChange={handleChange}
-                                                    style={{ display: 'none' }}
-                                                />
+                                                <input type="checkbox" name="featured" checked={formData.featured} onChange={handleChange} style={{ display: 'none' }} />
+                                            </div>
+                                        </div>
+
+                                        {/* Limited Time Deal Toggle */}
+                                        <div
+                                            onClick={() => setFormData(prev => ({ ...prev, limitedTimeDeal: !prev.limitedTimeDeal }))}
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'space-between',
+                                                cursor: 'pointer',
+                                                padding: '8px 0',
+                                            }}
+                                        >
+                                            <div>
+                                                <p style={{ fontSize: '14px', fontWeight: 500, color: 'var(--text)', marginBottom: '2px' }}>
+                                                    🔥 Limited Time Deal
+                                                </p>
+                                                <p style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+                                                    Show in Limited Time Deals
+                                                </p>
+                                            </div>
+                                            <div style={{
+                                                width: '44px', height: '26px', borderRadius: '13px',
+                                                backgroundColor: formData.limitedTimeDeal ? '#DC2626' : 'var(--border)',
+                                                position: 'relative', transition: 'background-color 0.2s ease',
+                                            }}>
+                                                <div style={{
+                                                    position: 'absolute', top: '3px',
+                                                    left: formData.limitedTimeDeal ? '21px' : '3px',
+                                                    width: '20px', height: '20px', borderRadius: '50%',
+                                                    backgroundColor: 'white', boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                                                    transition: 'left 0.2s ease',
+                                                }} />
+                                                <input type="checkbox" name="limitedTimeDeal" checked={formData.limitedTimeDeal} onChange={handleChange} style={{ display: 'none' }} />
                                             </div>
                                         </div>
                                     </div>

@@ -14,6 +14,7 @@ export default function CheckoutPage() {
 
     const [formData, setFormData] = useState({
         name: "",
+        email: "",
         phone: "",
         address: ""
     });
@@ -25,56 +26,51 @@ export default function CheckoutPage() {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleWhatsAppOrder = async () => {
-        if (!formData.name || !formData.phone || items.length === 0) {
-            showToast("Please fill in your details and ensure you have items in cart.", "error");
+    const handlePaystackPayment = async () => {
+        if (!formData.name || !formData.email || !formData.phone || !formData.address || items.length === 0) {
+            showToast("Please fill in all required fields.", "error");
             return;
         }
 
         setIsSubmitting(true);
-
         try {
-            const orderData = {
-                customerName: formData.name,
-                customerPhone: formData.phone,
-                customerAddress: formData.address || "No address provided",
-                items: items.map(i => ({
-                    id: i.product.id,
-                    name: i.product.name,
-                    price: i.product.price,
-                    quantity: i.quantity,
-                    media: i.product.media
-                })),
-                totalAmount: totalAmount
-            };
-
-            const res = await fetch('/api/orders', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(orderData)
+            const res = await fetch("/api/payment/initialize", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    customerName: formData.name,
+                    customerEmail: formData.email,
+                    customerPhone: formData.phone,
+                    customerAddress: formData.address,
+                    items: items.map(i => ({
+                        id: i.product.id,
+                        name: i.product.name,
+                        price: i.product.price,
+                        quantity: i.quantity,
+                        media: i.product.media,
+                    })),
+                    totalAmount: totalAmount,
+                }),
             });
 
-            if (!res.ok) throw new Error("Failed to save order");
+            const data = await res.json();
 
-            const itemList = items.map(i => `- ${i.product.name} (x${i.quantity}) - ₦${(i.product.price * i.quantity).toLocaleString()}`).join('\n');
-            const message = `*New Order - Tim Gift*\n\n*Customer Details:*\nName: ${formData.name}\nPhone: ${formData.phone}\nAddress: ${formData.address}\n\n*Items:*\n${itemList}\n\n*Total Amount:* ₦${totalAmount.toLocaleString()}\n\n------------------\nOrder Date: ${new Date().toLocaleDateString()}`;
+            if (!res.ok) {
+                showToast(data.error || "Failed to initialize payment.", "error");
+                return;
+            }
 
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappNumber = "2348090529117";
-
-            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
-
-            clearCart();
-            showToast("Order submitted successfully! Redirecting to WhatsApp...", "success");
+            // Redirect to Paystack's hosted payment page
+            window.location.href = data.authorization_url;
         } catch (error) {
-            console.error("Order Submission Error:", error);
-            showToast("Something went wrong while saving your order. Please try again.", "error");
+            console.error("Payment init error:", error);
+            showToast("Something went wrong. Please try again.", "error");
         } finally {
             setIsSubmitting(false);
         }
     };
 
-    const isFormValid = formData.name && formData.phone && items.length > 0 && !isSubmitting;
+    const isFormValid = formData.name && formData.email && formData.phone && formData.address && items.length > 0 && !isSubmitting;
 
     // Apple-inspired input styles
     const inputStyle: React.CSSProperties = {
@@ -118,7 +114,7 @@ export default function CheckoutPage() {
     return (
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg)' }}>
             <Navbar />
-            <main style={{ flex: 1, paddingTop: '100px' }}>
+            <main style={{ flex: 1, paddingTop: '110px' }}>
                 {/* Header */}
                 <div className="container" style={{ paddingTop: '32px', paddingBottom: '24px' }}>
                     <nav style={{
@@ -367,6 +363,28 @@ export default function CheckoutPage() {
                                         </div>
                                         <div>
                                             <label style={labelStyle}>
+                                                Email Address <span style={{ color: '#EF4444' }}>*</span>
+                                            </label>
+                                            <input
+                                                type="email"
+                                                name="email"
+                                                required
+                                                value={formData.email}
+                                                onChange={handleInputChange}
+                                                style={inputStyle}
+                                                placeholder="Enter your email address"
+                                                onFocus={(e) => {
+                                                    e.target.style.borderColor = 'var(--primary)';
+                                                    e.target.style.boxShadow = '0 0 0 4px rgba(22, 163, 74, 0.1)';
+                                                }}
+                                                onBlur={(e) => {
+                                                    e.target.style.borderColor = 'var(--border)';
+                                                    e.target.style.boxShadow = 'none';
+                                                }}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label style={labelStyle}>
                                                 Phone Number <span style={{ color: '#EF4444' }}>*</span>
                                             </label>
                                             <input
@@ -388,9 +406,10 @@ export default function CheckoutPage() {
                                             />
                                         </div>
                                         <div>
-                                            <label style={labelStyle}>Delivery Address</label>
+                                            <label style={labelStyle}>Delivery Address <span style={{ color: '#EF4444' }}>*</span></label>
                                             <textarea
                                                 name="address"
+                                                required
                                                 value={formData.address}
                                                 onChange={handleInputChange}
                                                 style={{
@@ -430,14 +449,14 @@ export default function CheckoutPage() {
                                 />
 
                                 <button
-                                    onClick={handleWhatsAppOrder}
+                                    onClick={handlePaystackPayment}
                                     disabled={!isFormValid}
                                     style={{
                                         width: '100%',
                                         padding: '18px 32px',
                                         fontSize: '16px',
                                         fontWeight: 600,
-                                        backgroundColor: isFormValid ? '#25D366' : 'var(--border)',
+                                        backgroundColor: isFormValid ? 'var(--primary)' : 'var(--border)',
                                         color: isFormValid ? 'white' : 'var(--text-muted)',
                                         border: 'none',
                                         borderRadius: '14px',
@@ -447,18 +466,18 @@ export default function CheckoutPage() {
                                         justifyContent: 'center',
                                         gap: '12px',
                                         transition: 'all 0.2s ease',
-                                        boxShadow: isFormValid ? '0 4px 20px rgba(37, 211, 102, 0.3)' : 'none',
+                                        boxShadow: isFormValid ? '0 4px 20px rgba(22, 163, 74, 0.3)' : 'none',
                                         opacity: isSubmitting ? 0.7 : 1,
                                     }}
                                     onMouseEnter={(e) => {
                                         if (isFormValid && !isSubmitting) {
                                             e.currentTarget.style.transform = 'translateY(-2px)';
-                                            e.currentTarget.style.boxShadow = '0 8px 30px rgba(37, 211, 102, 0.4)';
+                                            e.currentTarget.style.boxShadow = '0 8px 30px rgba(22, 163, 74, 0.4)';
                                         }
                                     }}
                                     onMouseLeave={(e) => {
                                         e.currentTarget.style.transform = 'translateY(0)';
-                                        e.currentTarget.style.boxShadow = isFormValid ? '0 4px 20px rgba(37, 211, 102, 0.3)' : 'none';
+                                        e.currentTarget.style.boxShadow = isFormValid ? '0 4px 20px rgba(22, 163, 74, 0.3)' : 'none';
                                     }}
                                 >
                                     {isSubmitting ? (
@@ -471,14 +490,14 @@ export default function CheckoutPage() {
                                                 borderRadius: '50%',
                                                 animation: 'spin 1s linear infinite',
                                             }} />
-                                            <span>Submitting Order...</span>
+                                            <span>Processing...</span>
                                         </>
                                     ) : (
                                         <>
-                                            <svg style={{ width: '22px', height: '22px' }} fill="currentColor" viewBox="0 0 24 24">
-                                                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z" />
+                                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                                             </svg>
-                                            <span>Complete Order on WhatsApp</span>
+                                            <span>Pay with Paystack</span>
                                         </>
                                     )}
                                 </button>
@@ -489,7 +508,7 @@ export default function CheckoutPage() {
                                     color: 'var(--text-muted)',
                                     opacity: 0.7
                                 }}>
-                                    By placing this order, you agree to our terms of service
+                                    🔒 Secure payment powered by Paystack
                                 </p>
                             </div>
                         </div>
@@ -497,7 +516,11 @@ export default function CheckoutPage() {
                 </div>
             </main>
             <Footer />
-            <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+            <style>{`
+                @keyframes spin { 
+                    to { transform: rotate(360deg); }
+                }
+            `}</style>
         </div>
     );
 }

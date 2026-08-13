@@ -4,8 +4,8 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Refund Policy | Tim Gift",
-    description: "Understand Tim Gift's return, refund, and exchange policy for all device purchases.",
+    title: "Refund Policy | TimGift",
+    description: "Understand TimGift's return, refund, and exchange policy for all device purchases.",
 };
 
 export default function RefundPolicyPage() {
@@ -58,7 +58,7 @@ export default function RefundPolicyPage() {
                                 lineHeight: 1.8,
                                 marginBottom: "48px",
                             }}>
-                                Thank you for shopping with Tim Gift. Every device we sell is thoroughly
+                                Thank you for shopping with TimGift. Every device we sell is thoroughly
                                 tested and inspected before dispatch to ensure it meets our quality standards
                                 and is in good working condition. We stand behind every product we sell,
                                 and this policy outlines the terms under which returns, refunds, and

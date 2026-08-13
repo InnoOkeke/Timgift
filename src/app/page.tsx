@@ -1,397 +1,624 @@
 import Link from "next/link";
-import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
-import { getFeaturedProducts, getPreOrderProducts, getLatestProducts } from "@/lib/data";
-
-const CATEGORIES = [
-  { name: "IPHONE",               label: "iPhone",               image: "/images/categories/iphone.jpg" },
-  { name: "ANDROID",              label: "Android",              image: "/images/categories/android.jpg" },
-  { name: "MACBOOK",              label: "MacBook",              image: "/images/categories/macbook.jpg" },
-  { name: "IPAD",                 label: "iPad",                 image: "/images/categories/ipad.jpg" },
-  { name: "VIDEO GAMES CONSOLES", label: "Video Games Consoles", image: "/images/categories/ps5.jpg" },
-  { name: "SMARTWATCHES",         label: "Smartwatches",         image: "/images/categories/watch.jpg" },
-  { name: "WINDOWS LAPTOPS",      label: "Windows Laptops",      image: "/images/categories/laptop.jpg" },
-  { name: "AIRPODS",              label: "AirPods",              image: "/images/categories/airpods.jpg" },
-];
-
-const HOW_IT_WORKS = [
-  {
-    step: "01",
-    title: "Browse & Select",
-    description: "Explore our curated collection of quality new and gently used electronics at amazing prices.",
-    icon: "🔍",
-  },
-  {
-    step: "02",
-    title: "Create Order",
-    description: "Add items to cart and submit your purchase request. Our sales team responds fast via WhatsApp.",
-    icon: "🛒",
-  },
-  {
-    step: "03",
-    title: "Pay & Receive",
-    description: "Choose from various payment methods. We inspect products thoroughly and confirm delivery.",
-    icon: "✅",
-  },
-];
+import CategoryRow from "@/components/CategoryRow";
+import HeroSlider from "@/components/HeroSlider";
+import NewsletterSignup from "@/components/NewsletterSignup";
+import FeatureCard from "@/components/FeatureCard";
+import { getFeaturedProducts, getPreOrderProducts, getLatestProducts, getBestSellers, getLimitedTimeDeals } from "@/lib/data";
 
 export default async function Home() {
-  const FEATURED_PRODUCTS = await getFeaturedProducts();
-  const PRE_ORDER_PRODUCTS = await getPreOrderProducts();
-  const LATEST_PRODUCTS = await getLatestProducts();
-  return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "var(--bg)" }}>
-      <Navbar />
+    const FEATURED_PRODUCTS = await getFeaturedProducts();
+    const PRE_ORDER_PRODUCTS = await getPreOrderProducts();
+    const LATEST_PRODUCTS = await getLatestProducts();
+    const BEST_SELLERS = await getBestSellers();
+    const LIMITED_TIME_DEALS = await getLimitedTimeDeals();
 
-      <main className="flex-1">
-        {/* Hero Section */}
-        <section
-          className="relative overflow-hidden"
-          style={{ backgroundColor: "var(--bg-secondary)", paddingTop: "120px", paddingBottom: "80px" }}
-        >
-          <div className="container relative z-10">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              {/* Hero Content */}
-              <div className="text-center md:text-left">
-                <h1
-                  className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
-                  style={{ fontFamily: "var(--font-display)", color: "var(--text)" }}
-                >
-                  Your Trusted Source for{" "}
-                  <span className="text-gradient">Premium Gadgets</span>
-                </h1>
+    return (
+        <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", backgroundColor: "var(--bg)" }}>
+            <Navbar />
 
-                <p
-                  className="text-lg mb-8 leading-relaxed max-w-xl"
-                  style={{ color: "var(--text-secondary)" }}
-                >
-                  Shop the latest smartphones, laptops, smartwatches, and accessories at unbeatable wholesale prices.
-                  Fast nationwide delivery, guaranteed authenticity.
-                </p>
+            <main style={{ flex: 1, paddingTop: "104px" }}>
 
-                <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                  <Link
-                    href="/products"
-                    className="btn btn-primary"
-                    style={{ padding: "12px 24px", fontSize: "15px" }}
-                  >
-                    Shop Now →
-                  </Link>
-                  <Link
-                    href="/products?status=PRE_ORDER"
-                    className="btn btn-secondary"
-                    style={{ padding: "12px 24px", fontSize: "15px" }}
-                  >
-                    Pre-Order Exclusives
-                  </Link>
-                </div>
-              </div>
+                {/* ── Hero Slider (Client Component) ── */}
+                <HeroSlider />
 
-              {/* Hero Image */}
-              <div className="relative hidden md:block">
-                <div className="relative aspect-square max-w-md mx-auto">
-                  <div
-                    className="absolute inset-0 rounded-3xl"
-                    style={{
-                      background: "linear-gradient(135deg, var(--primary) 0%, rgba(22,163,74,0.2) 100%)",
-                      transform: "rotate(-6deg)"
-                    }}
-                  ></div>
-                  <div
-                    className="relative rounded-3xl overflow-hidden shadow-xl"
-                    style={{ backgroundColor: "var(--bg-card)" }}
-                  >
-                    <img
-                      src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=600&h=600&fit=crop"
-                      alt="Premium smartphones collection"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+                {/* ── Category Row (Client Component — handles hover interactions) ── */}
+                <CategoryRow />
 
-        {/* Trust Badges */}
-        <section className="py-16" style={{ backgroundColor: "var(--bg)" }}>
-          <div className="container">
-            <div className="grid md:grid-cols-3 gap-6">
-              {[
-                { icon: "✓", title: "Certified Authentic", desc: "Every device verified genuine — sourced directly from authorized distributors" },
-                { icon: "⚡", title: "Swift Nationwide Delivery", desc: "Express shipping to your doorstep, anywhere in Nigeria" },
-                { icon: "🔒", title: "Seamless & Secure Checkout", desc: "Effortless payment via WhatsApp with complete buyer protection" },
-              ].map((badge, idx) => (
-                <div
-                  key={idx}
-                  className="card p-6 text-center"
-                >
-                  <div
-                    className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl"
-                    style={{ backgroundColor: "rgba(22, 163, 74, 0.1)" }}
-                  >
-                    {badge.icon}
-                  </div>
-                  <h3 className="font-semibold mb-2" style={{ color: "var(--text)" }}>{badge.title}</h3>
-                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>{badge.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+                {/* ── Flash Sale Banner ── */}
+                <section style={{ backgroundColor: "var(--bg)", padding: "16px 0 0 0" }}>
+                    <div className="container">
+                        <div style={{
+                            background: "linear-gradient(135deg, #DC2626 0%, #B91C1C 100%)",
+                            borderRadius: "12px",
+                            padding: "24px 32px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            flexWrap: "wrap",
+                            gap: "16px",
+                            marginBottom: "24px",
+                        }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                                <div style={{
+                                    width: "48px",
+                                    height: "48px",
+                                    borderRadius: "50%",
+                                    backgroundColor: "rgba(255,255,255,0.2)",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    fontSize: "24px",
+                                }}>
+                                    🔥
+                                </div>
+                                <div>
+                                    <h3 style={{
+                                        fontFamily: "var(--font-display)",
+                                        fontSize: "20px",
+                                        fontWeight: 700,
+                                        color: "#FFFFFF",
+                                        margin: 0,
+                                    }}>
+                                        Limited Time Deals
+                                    </h3>
+                                    <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.9)", margin: 0 }}>
+                                        Grab them before they're gone!
+                                    </p>
+                                </div>
+                            </div>
+                            <Link
+                                href="/products"
+                                style={{
+                                    display: "inline-flex",
+                                    alignItems: "center",
+                                    gap: "8px",
+                                    padding: "12px 24px",
+                                    borderRadius: "8px",
+                                    backgroundColor: "#FFFFFF",
+                                    color: "#DC2626",
+                                    fontWeight: 700,
+                                    fontSize: "14px",
+                                    textDecoration: "none",
+                                    transition: "opacity 0.15s",
+                                }}
+                            >
+                                Shop All Deals
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                            </Link>
+                        </div>
 
-        {/* Categories */}
-        <section className="py-20" style={{ backgroundColor: "var(--bg-secondary)" }}>
-          <div className="container">
-            <div className="text-center mb-12">
-              <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: "var(--primary)" }}>
-                Categories
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold mt-2" style={{ fontFamily: "var(--font-display)", color: "var(--text)" }}>
-                Shop by Category
-              </h2>
-            </div>
+                        {/* Products directly under banner */}
+                        {LIMITED_TIME_DEALS.length > 0 && (
+                            <div style={{
+                                display: "grid",
+                                gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+                                gap: "14px",
+                                paddingBottom: "36px",
+                            }}>
+                                {LIMITED_TIME_DEALS.map((product) => (
+                                    <ProductCard key={product.id} product={product} />
+                                ))}
+                            </div>
+                        )}
+                        {LIMITED_TIME_DEALS.length === 0 && (
+                            <p style={{ color: 'var(--text-muted)', fontSize: '14px', paddingBottom: '36px' }}>
+                                No limited time deals right now. Check back soon!
+                            </p>
+                        )}
+                    </div>
+                </section>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-5">
-              {CATEGORIES.map((cat) => (
-                <Link
-                  key={cat.name}
-                  href={`/products?category=${encodeURIComponent(cat.name)}`}
-                  className="group flex flex-col rounded-2xl overflow-hidden transition-all duration-200 hover:-translate-y-1"
-                  style={{
-                    backgroundColor: "var(--bg-card)",
-                    border: "1px solid var(--border)",
-                    boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
-                  }}
-                >
-                  <div className="w-full aspect-square overflow-hidden">
-                    <img
-                      src={cat.image}
-                      alt={cat.label}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                  </div>
-                  <div
-                    className="px-3 py-3 text-center"
-                    style={{ borderTop: "1px solid var(--border)" }}
-                  >
-                    <span className="font-semibold text-sm leading-snug" style={{ color: "var(--text)" }}>
-                      {cat.label}
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
+                {/* ── Featured / Trending ── */}
+                {FEATURED_PRODUCTS.length > 0 && (
+                    <section style={{ backgroundColor: "var(--bg-secondary)", padding: "36px 0" }}>
+                        <div className="container">
+                            <div style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                marginBottom: "20px",
+                            }}>
+                                <div>
+                                    <h2 style={{
+                                        fontFamily: "var(--font-display)",
+                                        fontSize: "18px",
+                                        fontWeight: 700,
+                                        color: "var(--text)",
+                                        margin: 0,
+                                    }}>
+                                        Trending Now
+                                    </h2>
+                                    <p style={{ fontSize: "13px", color: "var(--text-muted)", marginTop: "4px" }}>
+                                        Most popular items this week
+                                    </p>
+                                </div>
+                                <Link href="/products" style={{ fontSize: "13px", color: "var(--primary)", fontWeight: 600, textDecoration: "none" }}>
+                                    See All →
+                                </Link>
+                            </div>
+                            <div style={{
+                                display: "grid",
+                                gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+                                gap: "14px",
+                            }}>
+                                {FEATURED_PRODUCTS.map((product) => (
+                                    <ProductCard key={product.id} product={product} />
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                )}
 
-        {/* Featured Products */}
-        <section className="py-20" style={{ backgroundColor: "var(--bg)" }}>
-          <div className="container">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-12">
-              <div>
-                <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: "var(--primary)" }}>
-                  Featured
-                </span>
-                <h2 className="text-3xl md:text-4xl font-bold mt-2" style={{ fontFamily: "var(--font-display)", color: "var(--text)" }}>
-                  Trending Now
-                </h2>
-              </div>
-              <Link
-                href="/products"
-                className="btn btn-secondary"
-                style={{ whiteSpace: 'nowrap' }}
-              >
-                View All Products
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </div>
+                {/* ── Latest Arrivals ── */}
+                {LATEST_PRODUCTS.length > 0 && (
+                    <section style={{ backgroundColor: "var(--bg)", padding: "36px 0" }}>
+                        <div className="container">
+                            <div style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                marginBottom: "20px",
+                            }}>
+                                <div>
+                                    <h2 style={{
+                                        fontFamily: "var(--font-display)",
+                                        fontSize: "18px",
+                                        fontWeight: 700,
+                                        color: "var(--text)",
+                                        margin: 0,
+                                    }}>
+                                        Latest Deals
+                                    </h2>
+                                    <p style={{ fontSize: "13px", color: "var(--text-muted)", marginTop: "4px" }}>
+                                        Fresh drops and new additions
+                                    </p>
+                                </div>
+                                <Link href="/products" style={{ fontSize: "13px", color: "var(--primary)", fontWeight: 600, textDecoration: "none" }}>
+                                    See All →
+                                </Link>
+                            </div>
+                            <div style={{
+                                display: "grid",
+                                gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+                                gap: "14px",
+                            }}>
+                                {LATEST_PRODUCTS.map((product) => (
+                                    <ProductCard key={product.id} product={product} />
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                )}
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {FEATURED_PRODUCTS.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          </div>
-        </section>
+                {/* ── Pre-Order ── */}
+                {PRE_ORDER_PRODUCTS.length > 0 && (
+                    <section style={{ backgroundColor: "var(--bg-secondary)", padding: "36px 0" }}>
+                        <div className="container">
+                            <div style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                marginBottom: "20px",
+                            }}>
+                                <div>
+                                    <h2 style={{
+                                        fontFamily: "var(--font-display)",
+                                        fontSize: "18px",
+                                        fontWeight: 700,
+                                        color: "var(--text)",
+                                        margin: 0,
+                                    }}>
+                                        Pre-Order Now
+                                    </h2>
+                                    <p style={{ fontSize: "13px", color: "var(--text-muted)", marginTop: "4px" }}>
+                                        Reserve before they arrive
+                                    </p>
+                                </div>
+                                <Link href="/products?status=PRE_ORDER" style={{ fontSize: "13px", color: "var(--primary)", fontWeight: 600, textDecoration: "none" }}>
+                                    See All →
+                                </Link>
+                            </div>
+                            <div style={{
+                                display: "grid",
+                                gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+                                gap: "14px",
+                            }}>
+                                {PRE_ORDER_PRODUCTS.map((product) => (
+                                    <ProductCard key={product.id} product={product} />
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                )}
 
-        {/* Latest Arrivals */}
-        {LATEST_PRODUCTS.length > 0 && (
-          <section className="py-20" style={{ backgroundColor: "var(--bg-secondary)" }}>
-            <div className="container">
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-12">
-                <div>
-                  <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: "var(--primary)" }}>
-                    New Arrivals
-                  </span>
-                  <h2 className="text-3xl md:text-4xl font-bold mt-2" style={{ fontFamily: "var(--font-display)", color: "var(--text)" }}>
-                    Latest Products
-                  </h2>
-                </div>
-                <Link
-                  href="/products"
-                  className="btn btn-secondary"
-                  style={{ whiteSpace: 'nowrap' }}
-                >
-                  Shop Everything
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
-              </div>
+                {/* ── How It Works ── */}
+                <section style={{
+                    backgroundColor: "var(--bg-secondary)",
+                    padding: "56px 0",
+                }}>
+                    <div className="container">
+                        <div style={{ textAlign: "center", marginBottom: "40px" }}>
+                            <h2 style={{
+                                fontFamily: "var(--font-display)",
+                                fontSize: "28px",
+                                fontWeight: 700,
+                                color: "var(--text)",
+                                margin: "0 0 12px 0",
+                            }}>
+                                How It Works
+                            </h2>
+                            <p style={{ fontSize: "15px", color: "var(--text-muted)", maxWidth: "600px", margin: "0 auto" }}>
+                                Getting your dream gadget is easy with TimGift
+                            </p>
+                        </div>
+                        <div style={{
+                            display: "grid",
+                            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+                            gap: "32px",
+                        }}>
+                            {[
+                                {
+                                    step: "01",
+                                    icon: "🔍",
+                                    title: "Browse Products",
+                                    desc: "Explore our wide range of verified authentic gadgets and electronics"
+                                },
+                                {
+                                    step: "02",
+                                    icon: "🛒",
+                                    title: "Add to Cart & Checkout",
+                                    desc: "Review your items, adjust quantities, and proceed to secure checkout"
+                                },
+                                {
+                                    step: "03",
+                                    icon: "💳",
+                                    title: "Pay Securely",
+                                    desc: "Complete payment online via Paystack or choose bank transfer"
+                                },
+                                {
+                                    step: "04",
+                                    icon: "📦",
+                                    title: "Get Delivered",
+                                    desc: "Fast nationwide delivery straight to your doorstep across Nigeria"
+                                },
+                            ].map((item, i) => (
+                                <div key={i} style={{
+                                    position: "relative",
+                                    padding: "28px 24px",
+                                    borderRadius: "12px",
+                                    backgroundColor: "var(--bg-card)",
+                                    border: "1px solid var(--border)",
+                                    textAlign: "center",
+                                }}>
+                                    <div style={{
+                                        position: "absolute",
+                                        top: "-14px",
+                                        left: "24px",
+                                        padding: "4px 12px",
+                                        borderRadius: "20px",
+                                        backgroundColor: "var(--primary)",
+                                        color: "white",
+                                        fontSize: "12px",
+                                        fontWeight: 700,
+                                    }}>
+                                        STEP {item.step}
+                                    </div>
+                                    <div style={{
+                                        width: "64px",
+                                        height: "64px",
+                                        borderRadius: "50%",
+                                        backgroundColor: "var(--primary-bg)",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        fontSize: "32px",
+                                        margin: "0 auto 20px",
+                                    }}>
+                                        {item.icon}
+                                    </div>
+                                    <h3 style={{
+                                        fontFamily: "var(--font-display)",
+                                        fontSize: "17px",
+                                        fontWeight: 700,
+                                        color: "var(--text)",
+                                        margin: "0 0 12px 0",
+                                    }}>
+                                        {item.title}
+                                    </h3>
+                                    <p style={{
+                                        fontSize: "14px",
+                                        color: "var(--text-muted)",
+                                        lineHeight: 1.6,
+                                        margin: 0,
+                                    }}>
+                                        {item.desc}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {LATEST_PRODUCTS.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
+                {/* ── Customer Testimonials ── */}
+                <section style={{
+                    backgroundColor: "var(--bg-secondary)",
+                    padding: "56px 0",
+                }}>
+                    <div className="container">
+                        <div style={{ textAlign: "center", marginBottom: "40px" }}>
+                            <h2 style={{
+                                fontFamily: "var(--font-display)",
+                                fontSize: "28px",
+                                fontWeight: 700,
+                                color: "var(--text)",
+                                margin: "0 0 12px 0",
+                            }}>
+                                What Our Customers Say
+                            </h2>
+                            <p style={{ fontSize: "15px", color: "var(--text-muted)" }}>
+                                Trusted by thousands of satisfied customers
+                            </p>
+                        </div>
+                        <div style={{
+                            display: "grid",
+                            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                            gap: "24px",
+                        }}>
+                            {[
+                                {
+                                    name: "Oluwaseun A.",
+                                    location: "Lagos",
+                                    rating: 5,
+                                    review: "Got my iPhone 15 Pro at an amazing price! Delivery was super fast and the phone is 100% authentic. Highly recommend TimGift!",
+                                    product: "iPhone 15 Pro"
+                                },
+                                {
+                                    name: "Chidinma N.",
+                                    location: "Abuja",
+                                    rating: 5,
+                                    review: "Best place to buy gadgets in Nigeria. I pre-ordered the PS5 and they delivered exactly when promised. Great customer service!",
+                                    product: "PlayStation 5"
+                                },
+                                {
+                                    name: "Emmanuel K.",
+                                    location: "Port Harcourt",
+                                    rating: 5,
+                                    review: "Ordered a MacBook Air and received it in perfect condition. The WhatsApp ordering process is so convenient. Will definitely buy again!",
+                                    product: "MacBook Air M2"
+                                },
+                            ].map((testimonial, i) => (
+                                <div key={i} style={{
+                                    padding: "28px",
+                                    borderRadius: "12px",
+                                    backgroundColor: "var(--bg-card)",
+                                    border: "1px solid var(--border)",
+                                }}>
+                                    <div style={{
+                                        display: "flex",
+                                        marginBottom: "16px",
+                                        gap: "4px",
+                                    }}>
+                                        {[...Array(testimonial.rating)].map((_, i) => (
+                                            <span key={i} style={{ color: "#F59E0B", fontSize: "18px" }}>★</span>
+                                        ))}
+                                    </div>
+                                    <p style={{
+                                        fontSize: "14px",
+                                        lineHeight: 1.7,
+                                        color: "var(--text-secondary)",
+                                        marginBottom: "20px",
+                                        fontStyle: "italic",
+                                    }}>
+                                        "{testimonial.review}"
+                                    </p>
+                                    <div style={{ borderTop: "1px solid var(--border)", paddingTop: "16px" }}>
+                                        <div style={{
+                                            display: "flex",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                        }}>
+                                            <div>
+                                                <div style={{
+                                                    fontSize: "15px",
+                                                    fontWeight: 600,
+                                                    color: "var(--text)",
+                                                    marginBottom: "4px",
+                                                }}>
+                                                    {testimonial.name}
+                                                </div>
+                                                <div style={{
+                                                    fontSize: "13px",
+                                                    color: "var(--text-muted)",
+                                                }}>
+                                                    {testimonial.location}
+                                                </div>
+                                            </div>
+                                            <div style={{
+                                                padding: "4px 10px",
+                                                borderRadius: "6px",
+                                                backgroundColor: "var(--primary-bg)",
+                                                color: "var(--primary)",
+                                                fontSize: "11px",
+                                                fontWeight: 600,
+                                            }}>
+                                                ✓ Verified Purchase
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
 
-        {/* Pre-Order Products */}
-        {PRE_ORDER_PRODUCTS.length > 0 && (
-          <section className="py-20" style={{ backgroundColor: "var(--bg-secondary)" }}>
-            <div className="container">
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-12">
-                <div>
-                  <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: "var(--pre-order)" }}>
-                    ⏳ Coming Soon
-                  </span>
-                  <h2 className="text-3xl md:text-4xl font-bold mt-2" style={{ fontFamily: "var(--font-display)", color: "var(--text)" }}>
-                    Pre-Order Now
-                  </h2>
-                  <p className="text-base mt-2" style={{ color: "var(--text-secondary)" }}>
-                    Reserve the latest devices before they hit the shelves
-                  </p>
-                </div>
-                <Link
-                  href="/products?status=PRE_ORDER"
-                  className="btn btn-secondary"
-                  style={{ whiteSpace: 'nowrap' }}
-                >
-                  View Pre-Orders
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
-              </div>
+                {/* ── Why Choose Us ── */}
+                <section style={{
+                    backgroundColor: "var(--bg)",
+                    padding: "56px 0",
+                }}>
+                    <div className="container">
+                        <div style={{ textAlign: "center", marginBottom: "40px" }}>
+                            <h2 style={{
+                                fontFamily: "var(--font-display)",
+                                fontSize: "28px",
+                                fontWeight: 700,
+                                color: "var(--text)",
+                                margin: "0 0 12px 0",
+                            }}>
+                                Why Shop With TimGift?
+                            </h2>
+                            <p style={{ fontSize: "15px", color: "var(--text-muted)" }}>
+                                We're committed to providing the best shopping experience
+                            </p>
+                        </div>
+                        <div style={{
+                            display: "grid",
+                            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+                            gap: "24px",
+                        }}>
+                            {[
+                                {
+                                    icon: "🛡️",
+                                    title: "100% Authentic Guarantee",
+                                    desc: "All products are certified authentic and come with manufacturer warranty"
+                                },
+                                {
+                                    icon: "💰",
+                                    title: "Competitive Pricing",
+                                    desc: "Get wholesale prices on premium gadgets without compromising on quality"
+                                },
+                                {
+                                    icon: "🚀",
+                                    title: "Fast Delivery",
+                                    desc: "Quick nationwide shipping to all major cities in Nigeria within 2-3 days"
+                                },
+                                {
+                                    icon: "🔒",
+                                    title: "Secure Transactions",
+                                    desc: "Safe and secure payment methods with buyer protection"
+                                },
+                                {
+                                    icon: "📞",
+                                    title: "24/7 Customer Support",
+                                    desc: "Our team is always ready to help via WhatsApp, email, or phone"
+                                },
+                                {
+                                    icon: "🎁",
+                                    title: "Special Deals",
+                                    desc: "Exclusive discounts and promotions for our valued customers"
+                                },
+                            ].map((feature, i) => (
+                                <FeatureCard key={i} icon={feature.icon} title={feature.title} desc={feature.desc} />
+                            ))}
+                        </div>
+                    </div>
+                </section>
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {PRE_ORDER_PRODUCTS.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
+                {/* ── Payment Methods ── */}
+                <section style={{
+                    backgroundColor: "var(--bg-secondary)",
+                    padding: "40px 0",
+                }}>
+                    <div className="container">
+                        <div style={{ textAlign: "center", marginBottom: "32px" }}>
+                            <h3 style={{
+                                fontFamily: "var(--font-display)",
+                                fontSize: "20px",
+                                fontWeight: 700,
+                                color: "var(--text)",
+                                margin: "0 0 8px 0",
+                            }}>
+                                Accepted Payment Methods
+                            </h3>
+                            <p style={{ fontSize: "14px", color: "var(--text-muted)" }}>
+                                Pay securely with your preferred method
+                            </p>
+                        </div>
+                        <div style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            flexWrap: "wrap",
+                            gap: "24px",
+                        }}>
+                            {[
+                                { name: "Bank Transfer", icon: "🏦" },
+                                { name: "Card Payment", icon: "💳" },
+                                { name: "Paystack", icon: "💚" },
+                                { name: "Flutterwave", icon: "🟡" },
+                                { name: "USSD", icon: "📱" },
+                            ].map((method, i) => (
+                                <div key={i} style={{
+                                    padding: "16px 28px",
+                                    borderRadius: "10px",
+                                    border: "1px solid var(--border)",
+                                    backgroundColor: "var(--bg-card)",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "10px",
+                                }}>
+                                    <span style={{ fontSize: "24px" }}>{method.icon}</span>
+                                    <span style={{
+                                        fontSize: "14px",
+                                        fontWeight: 600,
+                                        color: "var(--text)",
+                                    }}>
+                                        {method.name}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
 
-        {/* How It Works */}
-        <section className="py-20" style={{ backgroundColor: "var(--bg-secondary)" }}>
-          <div className="container">
-            <div className="text-center mb-12">
-              <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: "var(--primary)" }}>
-                How It Works
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold mt-2" style={{ fontFamily: "var(--font-display)", color: "var(--text)" }}>
-                Simple Steps to Your Order
-              </h2>
-            </div>
+                {/* ── Delivery Coverage ── */}
+                <section style={{
+                    backgroundColor: "var(--bg)",
+                    padding: "48px 0",
+                }}>
+                    <div className="container">
+                        <div style={{
+                            textAlign: "center",
+                            maxWidth: "600px",
+                            margin: "0 auto",
+                            padding: "32px",
+                            borderRadius: "12px",
+                            backgroundColor: "var(--bg-secondary)",
+                            border: "1px solid var(--border)",
+                        }}>
+                            <div style={{ fontSize: "48px", marginBottom: "16px" }}>📦</div>
+                            <h3 style={{
+                                fontFamily: "var(--font-display)",
+                                fontSize: "24px",
+                                fontWeight: 700,
+                                color: "var(--text)",
+                                margin: "0 0 12px 0",
+                            }}>
+                                We Deliver Nationwide
+                            </h3>
+                            <p style={{
+                                fontSize: "15px",
+                                color: "var(--text-muted)",
+                                lineHeight: 1.6,
+                                margin: 0,
+                            }}>
+                                Fast and reliable delivery to all major cities across Nigeria including Lagos, Abuja, Port Harcourt, Kano, Ibadan, and more. Contact us on WhatsApp to confirm delivery to your area.
+                            </p>
+                        </div>
+                    </div>
+                </section>
 
-            <div className="grid md:grid-cols-3 gap-8">
-              {HOW_IT_WORKS.map((item, idx) => (
-                <div key={idx} className="relative">
-                  {/* Connector Line */}
-                  {idx < HOW_IT_WORKS.length - 1 && (
-                    <div
-                      className="hidden md:block absolute top-12 left-[60%] w-full h-0.5"
-                      style={{ backgroundColor: "var(--border)" }}
-                    ></div>
-                  )}
+                {/* ── Newsletter Signup ── */}
+                <NewsletterSignup />
 
-                  <div className="card p-8 relative z-10 text-center">
-                    <span
-                      className="absolute -top-4 left-4 text-6xl font-bold opacity-10"
-                      style={{ fontFamily: "var(--font-display)", color: "var(--primary)" }}
-                    >
-                      {item.step}
-                    </span>
-                    <div className="text-4xl mb-4">{item.icon}</div>
-                    <h3 className="text-xl font-bold mb-3" style={{ color: "var(--text)" }}>{item.title}</h3>
-                    <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>{item.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+            </main>
 
-        {/* About Section */}
-        <section className="py-20" style={{ backgroundColor: "var(--bg)" }}>
-          <div className="container">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: "var(--primary)" }}>
-                  About Us
-                </span>
-                <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-6" style={{ fontFamily: "var(--font-display)", color: "var(--text)" }}>
-                  Your Trusted Gadgets Partner
-                </h2>
-
-                <div className="space-y-4 leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                  <p>
-                    Wireless devices have changed how we live, and we are developing new ways to make
-                    these devices more accessible for everyone.
-                  </p>
-                  <p>
-                    From smartphones to tablets to smartwatches and mobile accessories, we provide
-                    life-changing solutions that keep our world connected.
-                  </p>
-                  <p>
-                    We are one of the best ICT sourcing and procurement platforms for MSMEs, Schools,
-                    Public & Private organizations.
-                  </p>
-                </div>
-
-                <div
-                  className="mt-8 p-6 rounded-xl"
-                  style={{ backgroundColor: "var(--bg-secondary)" }}
-                >
-                  <h4 className="font-semibold mb-4" style={{ color: "var(--text)" }}>Contact Us</h4>
-                  <div className="space-y-3 text-sm" style={{ color: "var(--text-secondary)" }}>
-                    <p className="flex items-center gap-3">
-                      <span style={{ color: "var(--primary)" }}>📍</span>
-                      5, Oshitelu St, GTBank Plaza, Ikeja Lagos
-                    </p>
-                    <p className="flex items-center gap-3">
-                      <span style={{ color: "var(--primary)" }}>📞</span>
-                      08090529117
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="relative">
-                <div className="aspect-square max-w-md mx-auto rounded-2xl overflow-hidden">
-                  <img
-                    src="https://images.unsplash.com/photo-1556656793-08538906a9f8?w=600&h=600&fit=crop"
-                    alt="Tim Gift store"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <Footer />
-    </div>
-  );
+            <Footer />
+        </div>
+    );
 }

@@ -77,13 +77,53 @@ export const getPreOrderProducts = async () => {
 export const getLatestProducts = async (limit: number = 8) => {
     try {
         const products = await prisma.product.findMany({
+            where: { status: 'IN_STOCK', featured: false },
+            take: limit,
+            orderBy: { createdAt: 'desc' }
+        });
+        // If there aren't enough non-featured products, fill with featured ones
+        if (products.length < 4) {
+            const extras = await prisma.product.findMany({
+                where: {
+                    status: 'IN_STOCK',
+                    id: { notIn: products.map(p => p.id) }
+                },
+                take: limit - products.length,
+                orderBy: { createdAt: 'desc' }
+            });
+            return [...products, ...extras].map(parseProduct);
+        }
+        return products.map(parseProduct);
+    } catch (error) {
+        console.error("Error fetching latest products:", error);
+        return [];
+    }
+};
+
+export const getLimitedTimeDeals = async (limit: number = 8) => {
+    try {
+        const products = await prisma.product.findMany({
+            where: { limitedTimeDeal: true },
+            take: limit,
+            orderBy: { createdAt: 'desc' }
+        });
+        return products.map(parseProduct);
+    } catch (error) {
+        console.error("Error fetching limited time deals:", error);
+        return [];
+    }
+};
+
+export const getBestSellers = async (limit: number = 8) => {
+    try {
+        const products = await prisma.product.findMany({
             where: { status: 'IN_STOCK' },
             take: limit,
             orderBy: { createdAt: 'desc' }
         });
         return products.map(parseProduct);
     } catch (error) {
-        console.error("Error fetching latest products:", error);
+        console.error("Error fetching best sellers:", error);
         return [];
     }
 };

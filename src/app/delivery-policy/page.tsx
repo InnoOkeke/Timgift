@@ -4,8 +4,8 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Delivery Policy | Tim Gift",
-    description: "Everything you need to know about Tim Gift's order processing, delivery timelines, and shipping terms.",
+    title: "Delivery Policy | TimGift",
+    description: "Everything you need to know about TimGift's order processing, delivery timelines, and shipping terms.",
 };
 
 export default function DeliveryPolicyPage() {
@@ -58,7 +58,7 @@ export default function DeliveryPolicyPage() {
                                 lineHeight: 1.8,
                                 marginBottom: "48px",
                             }}>
-                                Thank you for shopping with Tim Gift. We are committed to delivering
+                                Thank you for shopping with TimGift. We are committed to delivering
                                 your electronics safely, securely, and as promptly as possible.
                                 Please read this Delivery Policy carefully so you know what to expect
                                 once your order has been placed.
@@ -183,7 +183,7 @@ export default function DeliveryPolicyPage() {
                                 <p>
                                     Ownership of and responsibility for an item transfers to the
                                     customer once the package has been successfully delivered to
-                                    the delivery address provided at the time of order. Tim Gift
+                                    the delivery address provided at the time of order. TimGift
                                     is not liable for loss, theft, or damage that occurs after
                                     a successful delivery has been confirmed.
                                 </p>
