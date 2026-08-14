@@ -47,6 +47,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                     flexDirection: "column",
                     animation: "slideDown 0.2s ease",
                 }}
+                className="minicart-dropdown"
             >
                 {/* Header */}
                 <div style={{
@@ -323,13 +324,21 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
 
                 <style>{`
                     @keyframes slideDown {
-                        from {
-                            opacity: 0;
-                            transform: translateY(-10px);
-                        }
-                        to {
-                            opacity: 1;
-                            transform: translateY(0);
+                        from { opacity: 0; transform: translateY(-10px); }
+                        to   { opacity: 1; transform: translateY(0); }
+                    }
+
+                    /* On mobile: detach from parent and pin to viewport */
+                    @media (max-width: 767px) {
+                        .minicart-dropdown {
+                            position: fixed !important;
+                            top: 68px !important;
+                            left: 12px !important;
+                            right: 12px !important;
+                            width: auto !important;
+                            max-width: none !important;
+                            max-height: calc(100vh - 88px) !important;
+                            border-radius: 16px !important;
                         }
                     }
                 `}</style>
