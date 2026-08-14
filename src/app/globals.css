@@ -1155,12 +1155,4 @@ h6 {
   padding-top: var(--navbar-height);
 }
 
-/* Payment methods grid */
-.payment-methods-grid {
-    grid-template-columns: repeat(3, 1fr) !important;
-}
-@media (min-width: 640px) {
-    .payment-methods-grid {
-        grid-template-columns: repeat(5, 1fr) !important;
-    }
-}
+/* Payment methods grid - removed, replaced with single Paystack card */
