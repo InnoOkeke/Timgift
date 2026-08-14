@@ -20,25 +20,23 @@ export default function Invoice({ customerName, customerAddress, items, totalAmo
     return (
         <div style={{
             backgroundColor: 'var(--bg-secondary)',
-            borderRadius: '24px',
+            borderRadius: '20px',
             border: '1px solid var(--border)',
             overflow: 'hidden',
         }}>
             {/* Header */}
             <div style={{
-                padding: '28px',
+                padding: '20px',
                 background: 'linear-gradient(135deg, rgba(22, 163, 74, 0.08), rgba(22, 163, 74, 0.02))',
                 borderBottom: '1px solid var(--border)',
             }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                    <div>
-                        <div style={{
-                            marginBottom: '12px'
-                        }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
+                    <div style={{ minWidth: 0 }}>
+                        <div style={{ marginBottom: '12px' }}>
                             <Logo variant="dark" />
                         </div>
                     </div>
-                    <div style={{ textAlign: 'right' }}>
+                    <div style={{ textAlign: 'right', flexShrink: 0 }}>
                         <div style={{
                             fontSize: '11px',
                             fontWeight: 700,
@@ -71,7 +69,7 @@ export default function Invoice({ customerName, customerAddress, items, totalAmo
             {/* Customer Info */}
             {customerName && (
                 <div style={{
-                    padding: '20px 28px',
+                    padding: '16px 20px',
                     borderBottom: '1px solid var(--border)',
                     display: 'flex',
                     alignItems: 'flex-start',
@@ -123,7 +121,7 @@ export default function Invoice({ customerName, customerAddress, items, totalAmo
             )}
 
             {/* Items */}
-            <div style={{ padding: '24px 28px' }}>
+            <div style={{ padding: '16px 20px' }}>
                 {items.length === 0 ? (
                     <div style={{ textAlign: 'center', padding: '40px 20px' }}>
                         <div style={{
@@ -227,7 +225,7 @@ export default function Invoice({ customerName, customerAddress, items, totalAmo
             {/* Total */}
             {items.length > 0 && (
                 <div style={{
-                    padding: '24px 28px',
+                    padding: '16px 20px',
                     background: 'linear-gradient(135deg, rgba(22, 163, 74, 0.1), rgba(22, 163, 74, 0.04))',
                     borderTop: '1px solid var(--border)',
                 }}>
@@ -240,17 +238,10 @@ export default function Invoice({ customerName, customerAddress, items, totalAmo
                         paddingBottom: '12px',
                         borderBottom: '1px dashed var(--border)',
                     }}>
-                        <span style={{
-                            fontSize: '13px',
-                            color: 'var(--text-secondary)',
-                        }}>
+                        <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
                             Subtotal ({items.reduce((sum, item) => sum + item.quantity, 0)} items)
                         </span>
-                        <span style={{
-                            fontSize: '14px',
-                            fontWeight: 600,
-                            color: 'var(--text)',
-                        }}>
+                        <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text)' }}>
                             ₦{totalAmount.toLocaleString()}
                         </span>
                     </div>
@@ -260,16 +251,13 @@ export default function Invoice({ customerName, customerAddress, items, totalAmo
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
+                        gap: '12px',
                     }}>
-                        <span style={{
-                            fontSize: '15px',
-                            fontWeight: 600,
-                            color: 'var(--text)',
-                        }}>
+                        <span style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text)', flexShrink: 0 }}>
                             Total Amount
                         </span>
                         <span style={{
-                            fontSize: '28px',
+                            fontSize: 'clamp(20px, 5vw, 28px)',
                             fontWeight: 700,
                             color: 'var(--primary)',
                             fontFamily: 'var(--font-display)',

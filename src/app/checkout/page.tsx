@@ -97,9 +97,9 @@ export default function CheckoutPage() {
 
     const cardStyle: React.CSSProperties = {
         backgroundColor: 'var(--bg-secondary)',
-        borderRadius: '24px',
+        borderRadius: '20px',
         border: '1px solid var(--border)',
-        padding: '28px',
+        padding: '20px',
     };
 
     const sectionTitleStyle: React.CSSProperties = {
@@ -199,19 +199,19 @@ export default function CheckoutPage() {
                                                     key={item.product.id}
                                                     style={{
                                                         display: 'flex',
-                                                        alignItems: 'center',
-                                                        gap: '16px',
-                                                        padding: '16px',
-                                                        borderRadius: '16px',
+                                                        alignItems: 'flex-start',
+                                                        gap: '12px',
+                                                        padding: '12px',
+                                                        borderRadius: '14px',
                                                         backgroundColor: 'var(--bg)',
                                                         border: '1px solid var(--border)',
                                                     }}
                                                 >
                                                     {/* Product Image */}
                                                     <div style={{
-                                                        width: '72px',
-                                                        height: '72px',
-                                                        borderRadius: '12px',
+                                                        width: '60px',
+                                                        height: '60px',
+                                                        borderRadius: '10px',
                                                         overflow: 'hidden',
                                                         flexShrink: 0,
                                                         backgroundColor: 'var(--bg-secondary)'
@@ -227,102 +227,89 @@ export default function CheckoutPage() {
                                                         />
                                                     </div>
 
-                                                    {/* Product Info */}
+                                                    {/* Product Info + Controls */}
                                                     <div style={{ flex: 1, minWidth: 0 }}>
-                                                        <h3 style={{
-                                                            color: 'var(--text)',
-                                                            fontWeight: 600,
-                                                            fontSize: '15px',
-                                                            whiteSpace: 'nowrap',
-                                                            overflow: 'hidden',
-                                                            textOverflow: 'ellipsis',
-                                                            marginBottom: '6px'
-                                                        }}>
-                                                            {item.product.name}
-                                                        </h3>
-                                                        <p style={{ color: 'var(--primary)', fontSize: '14px', fontWeight: 600 }}>
-                                                            ₦{item.product.price.toLocaleString()}
-                                                        </p>
-                                                        <p style={{ color: 'var(--text-muted)', fontSize: '12px', marginTop: '2px' }}>
-                                                            Subtotal: ₦{(item.product.price * item.quantity).toLocaleString()}
-                                                        </p>
-                                                    </div>
+                                                        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '8px', marginBottom: '8px' }}>
+                                                            <div style={{ minWidth: 0 }}>
+                                                                <h3 style={{
+                                                                    color: 'var(--text)',
+                                                                    fontWeight: 600,
+                                                                    fontSize: '14px',
+                                                                    overflow: 'hidden',
+                                                                    textOverflow: 'ellipsis',
+                                                                    whiteSpace: 'nowrap',
+                                                                    marginBottom: '4px'
+                                                                }}>
+                                                                    {item.product.name}
+                                                                </h3>
+                                                                <p style={{ color: 'var(--primary)', fontSize: '13px', fontWeight: 600 }}>
+                                                                    ₦{item.product.price.toLocaleString()}
+                                                                </p>
+                                                                <p style={{ color: 'var(--text-muted)', fontSize: '11px', marginTop: '2px' }}>
+                                                                    Subtotal: ₦{(item.product.price * item.quantity).toLocaleString()}
+                                                                </p>
+                                                            </div>
+                                                            {/* Remove Button */}
+                                                            <button
+                                                                onClick={() => removeFromCart(item.product.id)}
+                                                                style={{
+                                                                    width: '28px', height: '28px',
+                                                                    borderRadius: '7px',
+                                                                    background: 'rgba(239, 68, 68, 0.1)',
+                                                                    color: '#EF4444',
+                                                                    border: 'none',
+                                                                    cursor: 'pointer',
+                                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                                    fontSize: '16px',
+                                                                    flexShrink: 0,
+                                                                }}
+                                                                title="Remove"
+                                                            >
+                                                                ×
+                                                            </button>
+                                                        </div>
 
-                                                    {/* Quantity Controls */}
-                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
-                                                        <button
-                                                            onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                                                            style={{
-                                                                width: '32px',
-                                                                height: '32px',
-                                                                borderRadius: '8px',
-                                                                border: '1px solid var(--border)',
-                                                                background: 'var(--bg-secondary)',
+                                                        {/* Quantity Controls */}
+                                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                            <button
+                                                                onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                                                                style={{
+                                                                    width: '28px', height: '28px',
+                                                                    borderRadius: '7px',
+                                                                    border: '1px solid var(--border)',
+                                                                    background: 'var(--bg-secondary)',
+                                                                    color: 'var(--text)',
+                                                                    cursor: 'pointer',
+                                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                                    fontSize: '16px', fontWeight: 500,
+                                                                }}
+                                                            >
+                                                                −
+                                                            </button>
+                                                            <span style={{
                                                                 color: 'var(--text)',
-                                                                cursor: 'pointer',
-                                                                display: 'flex',
-                                                                alignItems: 'center',
-                                                                justifyContent: 'center',
-                                                                fontSize: '18px',
-                                                                fontWeight: 500,
-                                                                transition: 'all 0.15s ease',
-                                                            }}
-                                                        >
-                                                            −
-                                                        </button>
-                                                        <span style={{
-                                                            color: 'var(--text)',
-                                                            minWidth: '28px',
-                                                            textAlign: 'center',
-                                                            fontSize: '15px',
-                                                            fontWeight: 700
-                                                        }}>
-                                                            {item.quantity}
-                                                        </span>
-                                                        <button
-                                                            onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                                                            style={{
-                                                                width: '32px',
-                                                                height: '32px',
-                                                                borderRadius: '8px',
-                                                                border: '1px solid var(--border)',
-                                                                background: 'var(--bg-secondary)',
-                                                                color: 'var(--text)',
-                                                                cursor: 'pointer',
-                                                                display: 'flex',
-                                                                alignItems: 'center',
-                                                                justifyContent: 'center',
-                                                                fontSize: '18px',
-                                                                fontWeight: 500,
-                                                                transition: 'all 0.15s ease',
-                                                            }}
-                                                        >
-                                                            +
-                                                        </button>
+                                                                minWidth: '24px', textAlign: 'center',
+                                                                fontSize: '14px', fontWeight: 700
+                                                            }}>
+                                                                {item.quantity}
+                                                            </span>
+                                                            <button
+                                                                onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                                                                style={{
+                                                                    width: '28px', height: '28px',
+                                                                    borderRadius: '7px',
+                                                                    border: '1px solid var(--border)',
+                                                                    background: 'var(--bg-secondary)',
+                                                                    color: 'var(--text)',
+                                                                    cursor: 'pointer',
+                                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                                    fontSize: '16px', fontWeight: 500,
+                                                                }}
+                                                            >
+                                                                +
+                                                            </button>
+                                                        </div>
                                                     </div>
-
-                                                    {/* Remove Button */}
-                                                    <button
-                                                        onClick={() => removeFromCart(item.product.id)}
-                                                        style={{
-                                                            width: '32px',
-                                                            height: '32px',
-                                                            borderRadius: '8px',
-                                                            background: 'rgba(239, 68, 68, 0.1)',
-                                                            color: '#EF4444',
-                                                            border: 'none',
-                                                            cursor: 'pointer',
-                                                            display: 'flex',
-                                                            alignItems: 'center',
-                                                            justifyContent: 'center',
-                                                            fontSize: '18px',
-                                                            flexShrink: 0,
-                                                            transition: 'all 0.15s ease',
-                                                        }}
-                                                        title="Remove"
-                                                    >
-                                                        ×
-                                                    </button>
                                                 </div>
                                             );
                                         })}
@@ -430,12 +417,10 @@ export default function CheckoutPage() {
 
                             {/* Right Column - Summary & Submit */}
                             <div style={{
-                                position: 'sticky',
-                                top: '120px',
                                 display: 'flex',
                                 flexDirection: 'column',
-                                gap: '20px'
-                            }}>
+                                gap: '16px'
+                            }} className="checkout-summary-col">
                                 <Invoice
                                     customerName={formData.name}
                                     customerAddress={formData.address}
@@ -514,6 +499,13 @@ export default function CheckoutPage() {
             <style>{`
                 @keyframes spin { 
                     to { transform: rotate(360deg); }
+                }
+                /* Sticky summary only on desktop */
+                @media (min-width: 768px) {
+                    .checkout-summary-col {
+                        position: sticky;
+                        top: 120px;
+                    }
                 }
             `}</style>
         </div>
