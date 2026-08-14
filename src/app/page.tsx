@@ -529,71 +529,70 @@ export default async function Home() {
                             maxWidth: "640px",
                             margin: "0 auto",
                         }} className="payment-methods-grid">
-                            {/* Bank Transfer */}
-                            <div style={{
-                                padding: "14px 12px",
-                                borderRadius: "10px",
-                                border: "1px solid var(--border)",
-                                backgroundColor: "var(--bg-card)",
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                gap: "8px",
-                                textAlign: "center",
-                            }}>
-                                <span style={{ fontSize: "24px" }}>🏦</span>
-                                <span style={{ fontSize: "12px", fontWeight: 600, color: "var(--text)" }}>Bank Transfer</span>
-                            </div>
-                            {/* Card Payment */}
-                            <div style={{
-                                padding: "14px 12px",
-                                borderRadius: "10px",
-                                border: "1px solid var(--border)",
-                                backgroundColor: "var(--bg-card)",
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                gap: "8px",
-                                textAlign: "center",
-                            }}>
-                                <span style={{ fontSize: "24px" }}>💳</span>
-                                <span style={{ fontSize: "12px", fontWeight: 600, color: "var(--text)" }}>Card Payment</span>
-                            </div>
-                            {/* Paystack — real logo */}
-                            <div style={{
-                                padding: "14px 12px",
-                                borderRadius: "10px",
-                                border: "1px solid var(--border)",
-                                backgroundColor: "var(--bg-card)",
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                gap: "8px",
-                                textAlign: "center",
-                            }}>
-                                <svg width="32" height="32" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="200" height="200" rx="40" fill="#00C3F7"/>
-                                    <path d="M56 80h88a8 8 0 0 1 8 8v8a8 8 0 0 1-8 8H56a8 8 0 0 1-8-8v-8a8 8 0 0 1 8-8z" fill="white"/>
-                                    <path d="M56 112h64a8 8 0 0 1 8 8v8a8 8 0 0 1-8 8H56a8 8 0 0 1-8-8v-8a8 8 0 0 1 8-8z" fill="white" fillOpacity="0.6"/>
-                                    <path d="M56 48h40a8 8 0 0 1 8 8v8a8 8 0 0 1-8 8H56a8 8 0 0 1-8-8v-8a8 8 0 0 1 8-8z" fill="white" fillOpacity="0.3"/>
-                                </svg>
-                                <span style={{ fontSize: "12px", fontWeight: 600, color: "var(--text)" }}>Paystack</span>
-                            </div>
-                            {/* USSD */}
-                            <div style={{
-                                padding: "14px 12px",
-                                borderRadius: "10px",
-                                border: "1px solid var(--border)",
-                                backgroundColor: "var(--bg-card)",
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                gap: "8px",
-                                textAlign: "center",
-                            }}>
-                                <span style={{ fontSize: "24px" }}>📱</span>
-                                <span style={{ fontSize: "12px", fontWeight: 600, color: "var(--text)" }}>USSD</span>
-                            </div>
+                            {[
+                                {
+                                    label: "Bank Transfer",
+                                    icon: (
+                                        <span style={{ fontSize: "28px", lineHeight: 1 }}>🏦</span>
+                                    ),
+                                },
+                                {
+                                    label: "Card Payment",
+                                    icon: (
+                                        <span style={{ fontSize: "28px", lineHeight: 1 }}>💳</span>
+                                    ),
+                                },
+                                {
+                                    label: "Paystack",
+                                    icon: (
+                                        <svg width="28" height="28" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect width="200" height="200" rx="40" fill="#00C3F7"/>
+                                            <path d="M56 80h88a8 8 0 0 1 8 8v8a8 8 0 0 1-8 8H56a8 8 0 0 1-8-8v-8a8 8 0 0 1 8-8z" fill="white"/>
+                                            <path d="M56 112h64a8 8 0 0 1 8 8v8a8 8 0 0 1-8 8H56a8 8 0 0 1-8-8v-8a8 8 0 0 1 8-8z" fill="white" fillOpacity="0.6"/>
+                                            <path d="M56 48h40a8 8 0 0 1 8 8v8a8 8 0 0 1-8 8H56a8 8 0 0 1-8-8v-8a8 8 0 0 1 8-8z" fill="white" fillOpacity="0.3"/>
+                                        </svg>
+                                    ),
+                                },
+                                {
+                                    label: "USSD",
+                                    icon: (
+                                        <span style={{ fontSize: "28px", lineHeight: 1 }}>📱</span>
+                                    ),
+                                },
+                            ].map((method) => (
+                                <div key={method.label} style={{
+                                    padding: "20px 12px",
+                                    borderRadius: "10px",
+                                    border: "1px solid var(--border)",
+                                    backgroundColor: "var(--bg-card)",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    gap: "10px",
+                                    textAlign: "center",
+                                    minHeight: "100px",
+                                }}>
+                                    <div style={{
+                                        width: "44px",
+                                        height: "44px",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        flexShrink: 0,
+                                    }}>
+                                        {method.icon}
+                                    </div>
+                                    <span style={{
+                                        fontSize: "12px",
+                                        fontWeight: 600,
+                                        color: "var(--text)",
+                                        lineHeight: 1.3,
+                                    }}>
+                                        {method.label}
+                                    </span>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </section>
