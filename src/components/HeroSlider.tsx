@@ -52,7 +52,7 @@ const SLIDES = [
         id: 5,
         tag: "Buy & Sell",
         title: "Got a Device\nto Sell? We Buy.",
-        subtitle: "Trade in your old gadgets or sell directly to us. Fast payment, fair prices, zero hassle. Chat with us on WhatsApp now.",
+        subtitle: "Trade in your old gadgets or sell directly to us. Fast payment, fair prices, zero hassle.",
         cta: { label: "Chat on WhatsApp", href: "https://wa.me/2348090529117?text=Hi%20TimGift%2C%20I%27d%20like%20to%20enquire%20about%20buying%20or%20selling%20a%20device." },
         ctaSecondary: { label: "Browse Products", href: "/products" },
         bg: "linear-gradient(135deg, #064e3b 0%, #065f46 50%, #059669 100%)",
@@ -135,19 +135,44 @@ export default function HeroSlider() {
                                         </svg>
                                     </Link>
                                 )}
-                                <Link href={slide.ctaSecondary.href} style={{ display: "inline-flex", alignItems: "center", padding: "11px 20px", borderRadius: "8px", backgroundColor: "rgba(255,255,255,0.1)", color: "white", fontWeight: 600, fontSize: "13.5px", textDecoration: "none", border: "1px solid rgba(255,255,255,0.2)" }}
-                                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.18)")}
-                                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.1)")}>
-                                    {slide.ctaSecondary.label}
-                                </Link>
+                                {slide.id !== 5 && (
+                                    <Link href={slide.ctaSecondary.href} style={{ display: "inline-flex", alignItems: "center", padding: "11px 20px", borderRadius: "8px", backgroundColor: "rgba(255,255,255,0.1)", color: "white", fontWeight: 600, fontSize: "13.5px", textDecoration: "none", border: "1px solid rgba(255,255,255,0.2)" }}
+                                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.18)")}
+                                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.1)")}>
+                                        {slide.ctaSecondary.label}
+                                    </Link>
+                                )}
                             </div>
                         </div>
 
                         {/* Image — hidden on mobile */}
                         <div className="hero-image">
-                            <div style={{ width: "100%", maxWidth: "360px", aspectRatio: "4/3", borderRadius: "14px", overflow: "hidden", boxShadow: "0 20px 60px rgba(0,0,0,0.45)", border: "1px solid rgba(255,255,255,0.1)" }}>
-                                <img src={slide.image} alt={slide.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                            </div>
+                            {slide.id === 5 ? (
+                                /* Buy & Sell — decorative icon grid, same fixed dimensions as product images */
+                                <div style={{ width: "100%", maxWidth: "360px", height: "270px", borderRadius: "14px", overflow: "hidden", boxShadow: "0 20px 60px rgba(0,0,0,0.45)", border: "1px solid rgba(255,255,255,0.1)", backgroundColor: "rgba(255,255,255,0.07)", display: "grid", gridTemplateRows: "1fr auto", gap: "10px", padding: "16px", boxSizing: "border-box" }}>
+                                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr 1fr", gap: "10px" }}>
+                                        {[
+                                            { icon: "📱", label: "Smartphones" },
+                                            { icon: "💻", label: "Laptops" },
+                                            { icon: "🎧", label: "Accessories" },
+                                            { icon: "⌚", label: "Wearables" },
+                                        ].map((item) => (
+                                            <div key={item.label} style={{ backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "10px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "5px", border: "1px solid rgba(255,255,255,0.15)" }}>
+                                                <span style={{ fontSize: "20px" }}>{item.icon}</span>
+                                                <span style={{ fontSize: "10px", fontWeight: 600, color: "rgba(255,255,255,0.85)", textAlign: "center" }}>{item.label}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div style={{ display: "flex", alignItems: "center", gap: "8px", backgroundColor: "rgba(255,255,255,0.12)", borderRadius: "8px", padding: "8px 12px", justifyContent: "center" }}>
+                                        <span style={{ fontSize: "14px" }}>💰</span>
+                                        <span style={{ fontSize: "11px", fontWeight: 700, color: "white" }}>Fast payment. Fair prices.</span>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div style={{ width: "100%", maxWidth: "360px", aspectRatio: "4/3", borderRadius: "14px", overflow: "hidden", boxShadow: "0 20px 60px rgba(0,0,0,0.45)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                                    <img src={slide.image} alt={slide.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                                </div>
+                            )}
                         </div>
                     </div>
 
