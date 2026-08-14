@@ -93,6 +93,7 @@ export default function HeroSlider() {
                         overflow: "hidden",
                         position: "relative",
                         animation: "heroSlideIn 0.45s ease forwards",
+                        minHeight: "320px",
                     }}
                 >
                     {/* Decorative blobs */}
@@ -178,6 +179,7 @@ export default function HeroSlider() {
                     align-items: center;
                     padding: 40px 24px 52px;
                     gap: 0;
+                    min-height: 320px;
                 }
                 .hero-image {
                     display: none;
@@ -200,6 +202,7 @@ export default function HeroSlider() {
                         grid-template-columns: 1fr 1fr;
                         gap: 48px;
                         padding: 64px 48px;
+                        min-height: 420px;
                     }
                     .hero-image {
                         display: flex;
