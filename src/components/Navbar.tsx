@@ -216,31 +216,37 @@ export default function Navbar() {
                         maxHeight: "calc(100vh - 64px)",
                         overflowY: "auto",
                     }}>
-                        {/* Main nav links — single horizontal row */}
-                        <div style={{ padding: "8px 12px 4px" }}>
-                            <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                                {[
-                                    {
-                                        href: "/products", label: "All Products",
-                                        icon: <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="3" width="7" height="7" rx="1" strokeWidth="2"/><rect x="15" y="3" width="7" height="7" rx="1" strokeWidth="2"/><rect x="2" y="14" width="7" height="7" rx="1" strokeWidth="2"/><rect x="15" y="14" width="7" height="7" rx="1" strokeWidth="2"/></svg>
-                                    },
-                                    {
-                                        href: "/about", label: "About Us",
-                                        icon: <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" strokeWidth="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" strokeWidth="2" strokeLinecap="round"/></svg>
-                                    },
-                                    {
-                                        href: "/contact", label: "Contact Us",
-                                        icon: <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.13 1.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.45-.45a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z" strokeWidth="2"/></svg>
-                                    },
-                                ].map(({ href, label, icon }) => (
-                                    <Link key={href} href={href} onClick={() => setMobileMenuOpen(false)}
-                                        className="mobile-menu-link"
-                                        style={{ display: "flex", alignItems: "center", gap: "6px", padding: "9px 12px", fontWeight: 500, color: "var(--text)", borderRadius: "8px", fontSize: "13.5px", textDecoration: "none", transition: "background 0.13s", flex: 1, justifyContent: "center", whiteSpace: "nowrap" }}>
-                                        <span style={{ color: "var(--text-muted)", display: "flex", flexShrink: 0 }}>{icon}</span>
-                                        {label}
-                                    </Link>
-                                ))}
-                            </div>
+                        {/* Main nav links — vertical, each row on one line */}
+                        <div style={{ padding: "8px 12px 4px", display: "flex", flexDirection: "column", gap: "2px" }}>
+                            {[
+                                {
+                                    href: "/products", label: "All Products",
+                                    icon: <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="3" width="7" height="7" rx="1" strokeWidth="2"/><rect x="15" y="3" width="7" height="7" rx="1" strokeWidth="2"/><rect x="2" y="14" width="7" height="7" rx="1" strokeWidth="2"/><rect x="15" y="14" width="7" height="7" rx="1" strokeWidth="2"/></svg>
+                                },
+                                {
+                                    href: "/about", label: "About Us",
+                                    icon: <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" strokeWidth="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" strokeWidth="2" strokeLinecap="round"/></svg>
+                                },
+                                {
+                                    href: "/contact", label: "Contact Us",
+                                    icon: <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.13 1.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.45-.45a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z" strokeWidth="2"/></svg>
+                                },
+                            ].map(({ href, label, icon }) => (
+                                <Link key={href} href={href} onClick={() => setMobileMenuOpen(false)}
+                                    className="mobile-menu-link"
+                                    style={{
+                                        display: "flex", alignItems: "center", gap: "12px",
+                                        padding: "11px 12px", fontWeight: 500, color: "var(--text)",
+                                        borderRadius: "8px", fontSize: "14.5px", textDecoration: "none",
+                                        transition: "background 0.13s", whiteSpace: "nowrap", overflow: "hidden",
+                                    }}>
+                                    <span style={{ color: "var(--text-muted)", display: "flex", flexShrink: 0 }}>{icon}</span>
+                                    <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{label}</span>
+                                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ marginLeft: "auto", color: "var(--text-muted)", opacity: 0.4, flexShrink: 0 }}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 18l6-6-6-6" />
+                                    </svg>
+                                </Link>
+                            ))}
                         </div>
 
                         {/* Divider */}
