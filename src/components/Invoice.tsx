@@ -234,15 +234,40 @@ export default function Invoice({ customerName, customerAddress, items, totalAmo
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        marginBottom: '12px',
-                        paddingBottom: '12px',
-                        borderBottom: '1px dashed var(--border)',
+                        marginBottom: '10px',
                     }}>
                         <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
                             Subtotal ({items.reduce((sum, item) => sum + item.quantity, 0)} items)
                         </span>
                         <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text)' }}>
                             ₦{totalAmount.toLocaleString()}
+                        </span>
+                    </div>
+
+                    {/* Shipping */}
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'flex-start',
+                        marginBottom: '12px',
+                        paddingBottom: '12px',
+                        borderBottom: '1px dashed var(--border)',
+                    }}>
+                        <div>
+                            <span style={{ fontSize: '13px', color: 'var(--text-secondary)', display: 'block' }}>
+                                Shipping
+                            </span>
+                            <span style={{ fontSize: '12px', color: 'var(--primary)', fontWeight: 500 }}>
+                                Free shipping
+                            </span>
+                            {customerAddress && (
+                                <span style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', marginTop: '2px' }}>
+                                    Shipping to {customerAddress}
+                                </span>
+                            )}
+                        </div>
+                        <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text)' }}>
+                            ₦0.00
                         </span>
                     </div>
 
@@ -254,7 +279,7 @@ export default function Invoice({ customerName, customerAddress, items, totalAmo
                         gap: '12px',
                     }}>
                         <span style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text)', flexShrink: 0 }}>
-                            Total Amount
+                            Total
                         </span>
                         <span style={{
                             fontSize: 'clamp(20px, 5vw, 28px)',

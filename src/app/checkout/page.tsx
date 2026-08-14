@@ -13,21 +13,28 @@ export default function CheckoutPage() {
     const { showToast } = useToast();
 
     const [formData, setFormData] = useState({
-        name: "",
+        firstName: "",
+        lastName: "",
         email: "",
         phone: "",
-        address: ""
+        address: "",
+        city: "",
+        state: "",
     });
+    const [sameAsBilling, setSameAsBilling] = useState(true);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
+    const fullName = `${formData.firstName} ${formData.lastName}`.trim();
+    const fullAddress = [formData.address, formData.city, formData.state].filter(Boolean).join(", ");
+
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handlePaystackPayment = async () => {
-        if (!formData.name || !formData.email || !formData.phone || !formData.address || items.length === 0) {
+        if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.address || !formData.city || !formData.state || items.length === 0) {
             showToast("Please fill in all required fields.", "error");
             return;
         }
@@ -38,10 +45,10 @@ export default function CheckoutPage() {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    customerName: formData.name,
+                    customerName: fullName,
                     customerEmail: formData.email,
                     customerPhone: formData.phone,
-                    customerAddress: formData.address,
+                    customerAddress: fullAddress,
                     items: items.map(i => ({
                         id: i.product.id,
                         name: i.product.name,
@@ -70,7 +77,7 @@ export default function CheckoutPage() {
         }
     };
 
-    const isFormValid = formData.name && formData.email && formData.phone && formData.address && items.length > 0 && !isSubmitting;
+    const isFormValid = formData.firstName && formData.lastName && formData.email && formData.phone && formData.address && formData.city && formData.state && items.length > 0 && !isSubmitting;
 
     // Apple-inspired input styles
     const inputStyle: React.CSSProperties = {
@@ -321,28 +328,7 @@ export default function CheckoutPage() {
                                     <h3 style={sectionTitleStyle}>Customer Details</h3>
 
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                                        <div>
-                                            <label style={labelStyle}>
-                                                Full Name <span style={{ color: '#EF4444' }}>*</span>
-                                            </label>
-                                            <input
-                                                type="text"
-                                                name="name"
-                                                required
-                                                value={formData.name}
-                                                onChange={handleInputChange}
-                                                style={inputStyle}
-                                                placeholder="Enter your full name"
-                                                onFocus={(e) => {
-                                                    e.target.style.borderColor = 'var(--primary)';
-                                                    e.target.style.boxShadow = '0 0 0 4px rgba(22, 163, 74, 0.1)';
-                                                }}
-                                                onBlur={(e) => {
-                                                    e.target.style.borderColor = 'var(--border)';
-                                                    e.target.style.boxShadow = 'none';
-                                                }}
-                                            />
-                                        </div>
+                                        {/* Email — top of form */}
                                         <div>
                                             <label style={labelStyle}>
                                                 Email Address <span style={{ color: '#EF4444' }}>*</span>
@@ -354,17 +340,49 @@ export default function CheckoutPage() {
                                                 value={formData.email}
                                                 onChange={handleInputChange}
                                                 style={inputStyle}
-                                                placeholder="Enter your email address"
-                                                onFocus={(e) => {
-                                                    e.target.style.borderColor = 'var(--primary)';
-                                                    e.target.style.boxShadow = '0 0 0 4px rgba(22, 163, 74, 0.1)';
-                                                }}
-                                                onBlur={(e) => {
-                                                    e.target.style.borderColor = 'var(--border)';
-                                                    e.target.style.boxShadow = 'none';
-                                                }}
+                                                placeholder="you@example.com"
+                                                onFocus={(e) => { e.target.style.borderColor = 'var(--primary)'; e.target.style.boxShadow = '0 0 0 4px rgba(22, 163, 74, 0.1)'; }}
+                                                onBlur={(e) => { e.target.style.borderColor = 'var(--border)'; e.target.style.boxShadow = 'none'; }}
                                             />
                                         </div>
+
+                                        {/* First & Last name side by side */}
+                                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                                            <div>
+                                                <label style={labelStyle}>
+                                                    First Name <span style={{ color: '#EF4444' }}>*</span>
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    name="firstName"
+                                                    required
+                                                    value={formData.firstName}
+                                                    onChange={handleInputChange}
+                                                    style={inputStyle}
+                                                    placeholder="Jane"
+                                                    onFocus={(e) => { e.target.style.borderColor = 'var(--primary)'; e.target.style.boxShadow = '0 0 0 4px rgba(22, 163, 74, 0.1)'; }}
+                                                    onBlur={(e) => { e.target.style.borderColor = 'var(--border)'; e.target.style.boxShadow = 'none'; }}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label style={labelStyle}>
+                                                    Last Name <span style={{ color: '#EF4444' }}>*</span>
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    name="lastName"
+                                                    required
+                                                    value={formData.lastName}
+                                                    onChange={handleInputChange}
+                                                    style={inputStyle}
+                                                    placeholder="Doe"
+                                                    onFocus={(e) => { e.target.style.borderColor = 'var(--primary)'; e.target.style.boxShadow = '0 0 0 4px rgba(22, 163, 74, 0.1)'; }}
+                                                    onBlur={(e) => { e.target.style.borderColor = 'var(--border)'; e.target.style.boxShadow = 'none'; }}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* Phone */}
                                         <div>
                                             <label style={labelStyle}>
                                                 Phone Number <span style={{ color: '#EF4444' }}>*</span>
@@ -376,41 +394,89 @@ export default function CheckoutPage() {
                                                 value={formData.phone}
                                                 onChange={handleInputChange}
                                                 style={inputStyle}
-                                                placeholder="Enter your phone number"
-                                                onFocus={(e) => {
-                                                    e.target.style.borderColor = 'var(--primary)';
-                                                    e.target.style.boxShadow = '0 0 0 4px rgba(22, 163, 74, 0.1)';
-                                                }}
-                                                onBlur={(e) => {
-                                                    e.target.style.borderColor = 'var(--border)';
-                                                    e.target.style.boxShadow = 'none';
-                                                }}
+                                                placeholder="+234 800 000 0000"
+                                                onFocus={(e) => { e.target.style.borderColor = 'var(--primary)'; e.target.style.boxShadow = '0 0 0 4px rgba(22, 163, 74, 0.1)'; }}
+                                                onBlur={(e) => { e.target.style.borderColor = 'var(--border)'; e.target.style.boxShadow = 'none'; }}
                                             />
                                         </div>
+
+                                        {/* Street Address */}
                                         <div>
-                                            <label style={labelStyle}>Delivery Address <span style={{ color: '#EF4444' }}>*</span></label>
-                                            <textarea
+                                            <label style={labelStyle}>
+                                                Street Address <span style={{ color: '#EF4444' }}>*</span>
+                                            </label>
+                                            <input
+                                                type="text"
                                                 name="address"
                                                 required
                                                 value={formData.address}
                                                 onChange={handleInputChange}
-                                                style={{
-                                                    ...inputStyle,
-                                                    resize: 'none',
-                                                    lineHeight: 1.6,
-                                                }}
-                                                rows={3}
-                                                placeholder="Enter your full delivery address"
-                                                onFocus={(e) => {
-                                                    e.target.style.borderColor = 'var(--primary)';
-                                                    e.target.style.boxShadow = '0 0 0 4px rgba(22, 163, 74, 0.1)';
-                                                }}
-                                                onBlur={(e) => {
-                                                    e.target.style.borderColor = 'var(--border)';
-                                                    e.target.style.boxShadow = 'none';
-                                                }}
+                                                style={inputStyle}
+                                                placeholder="House number, street name"
+                                                onFocus={(e) => { e.target.style.borderColor = 'var(--primary)'; e.target.style.boxShadow = '0 0 0 4px rgba(22, 163, 74, 0.1)'; }}
+                                                onBlur={(e) => { e.target.style.borderColor = 'var(--border)'; e.target.style.boxShadow = 'none'; }}
                                             />
                                         </div>
+
+                                        {/* City & State side by side */}
+                                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                                            <div>
+                                                <label style={labelStyle}>
+                                                    City <span style={{ color: '#EF4444' }}>*</span>
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    name="city"
+                                                    required
+                                                    value={formData.city}
+                                                    onChange={handleInputChange}
+                                                    style={inputStyle}
+                                                    placeholder="e.g. Lagos"
+                                                    onFocus={(e) => { e.target.style.borderColor = 'var(--primary)'; e.target.style.boxShadow = '0 0 0 4px rgba(22, 163, 74, 0.1)'; }}
+                                                    onBlur={(e) => { e.target.style.borderColor = 'var(--border)'; e.target.style.boxShadow = 'none'; }}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label style={labelStyle}>
+                                                    State <span style={{ color: '#EF4444' }}>*</span>
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    name="state"
+                                                    required
+                                                    value={formData.state}
+                                                    onChange={handleInputChange}
+                                                    style={inputStyle}
+                                                    placeholder="e.g. Lagos State"
+                                                    onFocus={(e) => { e.target.style.borderColor = 'var(--primary)'; e.target.style.boxShadow = '0 0 0 4px rgba(22, 163, 74, 0.1)'; }}
+                                                    onBlur={(e) => { e.target.style.borderColor = 'var(--border)'; e.target.style.boxShadow = 'none'; }}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* Same as billing checkbox */}
+                                        <label style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '10px',
+                                            cursor: 'pointer',
+                                            fontSize: '14px',
+                                            color: 'var(--text-secondary)',
+                                            userSelect: 'none',
+                                        }}>
+                                            <input
+                                                type="checkbox"
+                                                checked={sameAsBilling}
+                                                onChange={(e) => setSameAsBilling(e.target.checked)}
+                                                style={{
+                                                    width: '16px',
+                                                    height: '16px',
+                                                    accentColor: 'var(--primary)',
+                                                    cursor: 'pointer',
+                                                }}
+                                            />
+                                            Use same address for billing
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -422,8 +488,8 @@ export default function CheckoutPage() {
                                 gap: '16px'
                             }} className="checkout-summary-col">
                                 <Invoice
-                                    customerName={formData.name}
-                                    customerAddress={formData.address}
+                                    customerName={fullName}
+                                    customerAddress={fullAddress}
                                     items={items}
                                     totalAmount={totalAmount}
                                 />
