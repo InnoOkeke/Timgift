@@ -8,7 +8,7 @@ export default function Footer() {
 
     return (
         <footer style={{ backgroundColor: "var(--bg)", borderTop: "1px solid var(--border)", marginTop: "auto" }}>
-            <div className="container" style={{ padding: "48px 0 32px" }}>
+            <div className="container" style={{ paddingTop: "48px", paddingBottom: "32px" }}>
 
                 {/* Top section: Brand full-width on mobile, then columns on desktop */}
                 <div className="footer-grid">
@@ -136,8 +136,8 @@ export default function Footer() {
 
             {/* Bottom bar */}
             <div style={{ borderTop: "1px solid var(--border)" }}>
-                <div className="container" style={{ padding: "16px 0" }}>
-                    <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+                <div className="container" style={{ paddingTop: "16px", paddingBottom: "16px" }}>
+                    <div className="footer-bottom-bar">
                         <p style={{ fontSize: "12px", color: "var(--text-muted)" }}>
                             &copy; {currentYear} TIMGIFT01 TECHNOLOGIES. All rights reserved.
                         </p>
@@ -175,6 +175,21 @@ export default function Footer() {
                     }
                     .footer-brand {
                         grid-column: auto;
+                    }
+                }
+
+                /* Bottom bar: stack on mobile, row on md+ */
+                .footer-bottom-bar {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 4px;
+                }
+                @media (min-width: 640px) {
+                    .footer-bottom-bar {
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: center;
                     }
                 }
             `}</style>

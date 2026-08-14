@@ -63,7 +63,7 @@ export default function Navbar() {
 
                 {/* ── Top Bar ── */}
                 <div className="container">
-                    <div style={{ display: "flex", alignItems: "center", gap: "16px", height: "64px" }}>
+                    <div style={{ display: "flex", alignItems: "center", height: "64px" }}>
 
                         {/* Logo */}
                         <Link href="/" style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
@@ -103,7 +103,7 @@ export default function Navbar() {
                         </nav>
 
                         {/* Right actions */}
-                        <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0, marginLeft: "auto" }}>
 
                             {/* Mobile: search icon */}
                             <button onClick={() => setMobileSearchOpen(!mobileSearchOpen)} aria-label="Search" className="navbar-mobile-only"
@@ -209,66 +209,104 @@ export default function Navbar() {
 
                 {/* ── Mobile Menu ── */}
                 {mobileMenuOpen && (
-                    <div className="navbar-mobile-only" style={{ borderTop: "1px solid var(--border)", backgroundColor: "var(--bg)", padding: "16px" }}>
-                        <form onSubmit={handleSearch} style={{ marginBottom: "16px" }}>
-                            <input type="text" placeholder="Search gadgets..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
-                                style={{ width: "100%", height: "42px", padding: "0 16px", fontSize: "14px", border: "1.5px solid var(--border)", borderRadius: "8px", backgroundColor: "var(--bg-secondary)", color: "var(--text)", outline: "none" }} />
-                        </form>
-                        <nav style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-                            {[{ href: "/products", label: "All Products" }, { href: "/about", label: "About Us" }, { href: "/contact", label: "Contact Us" }].map(({ href, label }) => (
+                    <div className="navbar-mobile-only" style={{
+                        borderTop: "1px solid var(--border)",
+                        backgroundColor: "var(--bg)",
+                        boxShadow: "0 8px 24px rgba(0,0,0,0.10)",
+                        maxHeight: "calc(100vh - 64px)",
+                        overflowY: "auto",
+                    }}>
+                        {/* Main nav links */}
+                        <div style={{ padding: "8px 12px 4px" }}>
+                            {[
+                                {
+                                    href: "/products", label: "All Products",
+                                    icon: <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="3" width="7" height="7" rx="1" strokeWidth="2"/><rect x="15" y="3" width="7" height="7" rx="1" strokeWidth="2"/><rect x="2" y="14" width="7" height="7" rx="1" strokeWidth="2"/><rect x="15" y="14" width="7" height="7" rx="1" strokeWidth="2"/></svg>
+                                },
+                                {
+                                    href: "/about", label: "About Us",
+                                    icon: <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" strokeWidth="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" strokeWidth="2" strokeLinecap="round"/></svg>
+                                },
+                                {
+                                    href: "/contact", label: "Contact Us",
+                                    icon: <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.13 1.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.45-.45a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z" strokeWidth="2"/></svg>
+                                },
+                            ].map(({ href, label, icon }) => (
                                 <Link key={href} href={href} onClick={() => setMobileMenuOpen(false)}
-                                    style={{ padding: "10px 12px", fontWeight: 500, color: "var(--text)", borderRadius: "6px", fontSize: "14px", textDecoration: "none" }}>
+                                    className="mobile-menu-link"
+                                    style={{ display: "flex", alignItems: "center", gap: "12px", padding: "11px 12px", fontWeight: 500, color: "var(--text)", borderRadius: "8px", fontSize: "14.5px", textDecoration: "none", transition: "background 0.13s" }}>
+                                    <span style={{ color: "var(--text-muted)", display: "flex", flexShrink: 0 }}>{icon}</span>
                                     {label}
+                                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ marginLeft: "auto", color: "var(--text-muted)", opacity: 0.5 }}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 18l6-6-6-6" />
+                                    </svg>
                                 </Link>
                             ))}
-                            <div style={{ borderTop: "1px solid var(--border)", margin: "8px 0", paddingTop: "8px" }}>
-                                <p style={{ fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--text-muted)", padding: "4px 12px 8px" }}>
-                                    Categories
-                                </p>
-                                {CATEGORIES.map((cat) => (
-                                    <Link key={cat.name} href={`/products?category=${encodeURIComponent(cat.name)}`} onClick={() => setMobileMenuOpen(false)}
-                                        style={{ display: "block", padding: "8px 12px", fontSize: "14px", color: "var(--text-secondary)", borderRadius: "6px", textDecoration: "none" }}>
-                                        {cat.label}
-                                    </Link>
-                                ))}
+                        </div>
+
+                        {/* Divider */}
+                        <div style={{ height: "1px", backgroundColor: "var(--border)", margin: "4px 12px" }} />
+
+                        {/* Categories section */}
+                        <div style={{ padding: "8px 12px 16px" }}>
+                            <p style={{ fontSize: "10.5px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--text-muted)", padding: "6px 12px 10px" }}>
+                                Shop by Category
+                            </p>
+                            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px" }}>
+                                {CATEGORIES.map((cat) => {
+                                    const isActive = activeCategory?.toLowerCase() === cat.name.toLowerCase();
+                                    return (
+                                        <Link key={cat.name} href={`/products?category=${encodeURIComponent(cat.name)}`}
+                                            onClick={() => setMobileMenuOpen(false)}
+                                            className="mobile-menu-cat"
+                                            style={{
+                                                display: "flex", alignItems: "center", gap: "8px",
+                                                padding: "9px 12px", fontSize: "13.5px",
+                                                color: isActive ? "var(--primary)" : "var(--text-secondary)",
+                                                backgroundColor: isActive ? "var(--primary-bg)" : "transparent",
+                                                borderRadius: "8px", textDecoration: "none",
+                                                fontWeight: isActive ? 600 : 400,
+                                                transition: "background 0.13s",
+                                                border: isActive ? "1px solid var(--primary)" : "1px solid transparent",
+                                            }}>
+                                            <span style={{
+                                                width: "6px", height: "6px", borderRadius: "50%",
+                                                backgroundColor: isActive ? "var(--primary)" : "var(--border)",
+                                                flexShrink: 0, transition: "background 0.13s"
+                                            }} />
+                                            {cat.label}
+                                        </Link>
+                                    );
+                                })}
                             </div>
-                        </nav>
+                        </div>
                     </div>
                 )}
             </header>
 
             <style>{`
-                /* Search form: hidden + no space on mobile, flex on md+ */
+                /* Search form: hidden on mobile (no space), flex on md+ */
                 .navbar-search-form {
-                    display: none;
-                    flex: 0;
-                    width: 0;
-                    margin: 0;
-                    overflow: hidden;
+                    display: none !important;
                 }
                 @media (min-width: 768px) {
                     .navbar-search-form {
                         display: flex !important;
-                        flex: 1 !important;
-                        width: auto !important;
-                        margin: 0 16px !important;
-                        overflow: visible !important;
+                        flex: 1;
+                        margin: 0 16px;
+                        min-width: 0;
                     }
                 }
 
-                /* Desktop nav links: hidden + no space on mobile */
+                /* Desktop nav links: hidden on mobile (no space), flex on lg+ */
                 .navbar-desktop-nav {
-                    display: none;
-                    width: 0;
-                    overflow: hidden;
+                    display: none !important;
                 }
                 @media (min-width: 1024px) {
                     .navbar-desktop-nav {
                         display: flex !important;
-                        width: auto !important;
-                        align-items: center !important;
-                        gap: 4px !important;
-                        overflow: visible !important;
+                        align-items: center;
+                        gap: 4px;
                     }
                 }
 
@@ -290,6 +328,22 @@ export default function Navbar() {
                 .navbar-cart-label { display: none; }
                 @media (min-width: 400px) {
                     .navbar-cart-label { display: inline !important; }
+                }
+
+                /* Mobile menu link hover */
+                .mobile-menu-link:hover {
+                    background-color: var(--bg-secondary) !important;
+                    color: var(--primary) !important;
+                }
+                .mobile-menu-link:hover span:first-child {
+                    color: var(--primary) !important;
+                }
+
+                /* Mobile category tile hover */
+                .mobile-menu-cat:hover {
+                    background-color: var(--primary-bg) !important;
+                    color: var(--primary) !important;
+                    border-color: var(--primary) !important;
                 }
             `}</style>
         </>
