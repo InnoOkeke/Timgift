@@ -47,14 +47,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const addToCart = (product: Product, quantity: number = 1) => {
         setItems(prevItems => {
             const existingItem = prevItems.find(item => item.product.id === product.id);
+            const stockLimit = product.status === "IN_STOCK" ? product.stockQuantity : Infinity;
+
             if (existingItem) {
+                const newQty = Math.min(existingItem.quantity + quantity, stockLimit);
                 return prevItems.map(item =>
                     item.product.id === product.id
-                        ? { ...item, quantity: item.quantity + quantity }
+                        ? { ...item, quantity: newQty }
                         : item
                 );
             } else {
-                return [...prevItems, { product, quantity }];
+                const clampedQty = Math.min(quantity, stockLimit);
+                return [...prevItems, { product, quantity: clampedQty }];
             }
         });
     };
@@ -68,11 +72,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
             removeFromCart(productId);
         } else {
             setItems(prevItems =>
-                prevItems.map(item =>
-                    item.product.id === productId
-                        ? { ...item, quantity }
-                        : item
-                )
+                prevItems.map(item => {
+                    if (item.product.id !== productId) return item;
+                    const stockLimit = item.product.status === "IN_STOCK"
+                        ? item.product.stockQuantity
+                        : Infinity;
+                    return { ...item, quantity: Math.min(quantity, stockLimit) };
+                })
             );
         }
     };
