@@ -538,12 +538,12 @@ export default async function Home() {
                                 textAlign: "center",
                                 minWidth: "180px",
                             }}>
-                                {/* Paystack official logo — CC BY-SA 4.0, via Wikimedia Commons */}
+                                {/* Paystack official logo — public domain, via Wikimedia Commons */}
                                 <img
-                                    src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Paystack_Logo.png"
+                                    src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Paystack_Logo.svg"
                                     alt="Paystack"
                                     style={{
-                                        height: "32px",
+                                        height: "36px",
                                         width: "auto",
                                         objectFit: "contain",
                                     }}
