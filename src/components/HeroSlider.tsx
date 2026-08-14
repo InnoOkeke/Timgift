@@ -48,6 +48,17 @@ const SLIDES = [
         image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=700&h=500&fit=crop&auto=format",
         accent: "#C084FC",
     },
+    {
+        id: 5,
+        tag: "Buy & Sell",
+        title: "Got a Device\nto Sell? We Buy.",
+        subtitle: "Trade in your old gadgets or sell directly to us. Fast payment, fair prices, zero hassle. Chat with us on WhatsApp now.",
+        cta: { label: "Chat on WhatsApp", href: "https://wa.me/2348090529117?text=Hi%20TimGift%2C%20I%27d%20like%20to%20enquire%20about%20buying%20or%20selling%20a%20device." },
+        ctaSecondary: { label: "Browse Products", href: "/products" },
+        bg: "linear-gradient(135deg, #064e3b 0%, #065f46 50%, #059669 100%)",
+        image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&h=500&fit=crop&auto=format",
+        accent: "#34D399",
+    },
 ];
 
 export default function HeroSlider() {
@@ -104,14 +115,25 @@ export default function HeroSlider() {
                             </p>
 
                             <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-                                <Link href={slide.cta.href} style={{ display: "inline-flex", alignItems: "center", gap: "7px", padding: "11px 20px", borderRadius: "8px", backgroundColor: "#FFFFFF", color: "#111827", fontWeight: 700, fontSize: "13.5px", textDecoration: "none" }}
-                                    onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
-                                    onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}>
-                                    {slide.cta.label}
-                                    <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                    </svg>
-                                </Link>
+                                {slide.cta.href.startsWith("http") ? (
+                                    <a href={slide.cta.href} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "7px", padding: "11px 20px", borderRadius: "8px", backgroundColor: "#FFFFFF", color: "#111827", fontWeight: 700, fontSize: "13.5px", textDecoration: "none" }}
+                                        onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
+                                        onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}>
+                                        {slide.cta.label}
+                                        <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                        </svg>
+                                    </a>
+                                ) : (
+                                    <Link href={slide.cta.href} style={{ display: "inline-flex", alignItems: "center", gap: "7px", padding: "11px 20px", borderRadius: "8px", backgroundColor: "#FFFFFF", color: "#111827", fontWeight: 700, fontSize: "13.5px", textDecoration: "none" }}
+                                        onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
+                                        onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}>
+                                        {slide.cta.label}
+                                        <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                        </svg>
+                                    </Link>
+                                )}
                                 <Link href={slide.ctaSecondary.href} style={{ display: "inline-flex", alignItems: "center", padding: "11px 20px", borderRadius: "8px", backgroundColor: "rgba(255,255,255,0.1)", color: "white", fontWeight: 600, fontSize: "13.5px", textDecoration: "none", border: "1px solid rgba(255,255,255,0.2)" }}
                                     onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.18)")}
                                     onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.1)")}>

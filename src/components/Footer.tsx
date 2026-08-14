@@ -111,7 +111,7 @@ export default function Footer() {
                         <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "12px" }}>
                             <li style={{ display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "13px", color: "var(--text-muted)" }}>
                                 <span style={{ flexShrink: 0 }}>📍</span>
-                                <span>5, Oshitelu St, GTBank Plaza, Ikeja Lagos</span>
+                                <span>Platinum Plaza Shop B097, Adepele Street, Computer Village Ikeja Lagos</span>
                             </li>
                             <li style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                                 <span>📞</span>
@@ -119,6 +119,14 @@ export default function Footer() {
                                     onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "var(--primary)")}
                                     onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "var(--text-muted)")}>
                                     08090529117
+                                </a>
+                            </li>
+                            <li style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
+                                <span>📞</span>
+                                <a href="tel:08025510110" style={{ color: "var(--text-muted)", textDecoration: "none", transition: "color 0.15s" }}
+                                    onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "var(--primary)")}
+                                    onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "var(--text-muted)")}>
+                                    08025510110
                                 </a>
                             </li>
                             <li style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>

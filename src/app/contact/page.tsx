@@ -125,12 +125,11 @@ export default function ContactPage() {
                                 <p style={{ fontSize: '15px', color: 'var(--text-secondary)', marginBottom: '20px', lineHeight: 1.6 }}>
                                     Prefer a voice conversation? Give us a call.
                                 </p>
-                                <div style={{
-                                    fontSize: '20px',
-                                    fontWeight: 700,
-                                    color: 'var(--primary)',
-                                }}>
+                                <div style={{ fontSize: '20px', fontWeight: 700, color: 'var(--primary)' }}>
                                     0809 052 9117
+                                </div>
+                                <div style={{ fontSize: '20px', fontWeight: 700, color: 'var(--primary)', marginTop: '8px' }}>
+                                    0802 551 0110
                                 </div>
                             </a>
 
@@ -156,9 +155,9 @@ export default function ContactPage() {
                                     color: 'var(--text)',
                                     lineHeight: 1.6
                                 }}>
-                                    5, Oshitelu Street<br />
-                                    GTBank Plaza, Ikeja<br />
-                                    Lagos, Nigeria
+                                    Platinum Plaza Shop B097<br />
+                                    Adepele Street, Computer Village<br />
+                                    Ikeja, Lagos, Nigeria
                                 </div>
                             </div>
                         </div>
