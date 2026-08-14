@@ -13,13 +13,16 @@ import { Product } from "@/types";
 export default function ProductDetailPage() {
     const params = useParams();
     const id = params.id as string;
-    const { addToCart } = useCart();
+    const { addToCart, items, updateQuantity: updateCartQuantity, removeFromCart } = useCart();
 
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState(true);
     const [quantity, setQuantity] = useState(1);
-    const [addedToCart, setAddedToCart] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+
+    // Cart state for this product
+    const cartItem = product ? items.find(item => item.product.id === product.id) : undefined;
+    const isInCart = !!cartItem;
 
     // Detect mobile viewport
     useEffect(() => {
@@ -50,8 +53,6 @@ export default function ProductDetailPage() {
     const handleAddToCart = () => {
         if (!product) return;
         addToCart(product, quantity);
-        setAddedToCart(true);
-        setTimeout(() => setAddedToCart(false), 2000);
     };
 
     if (loading) {
@@ -103,7 +104,6 @@ export default function ProductDetailPage() {
         );
     }
 
-    const totalPrice = product.price * quantity;
     const isInStock = product.status === 'IN_STOCK';
 
     return (
@@ -275,99 +275,220 @@ export default function ProductDetailPage() {
                                     padding: '28px',
                                     border: '1px solid var(--border)',
                                 }}>
-                                    {/* Quantity Row */}
-                                    <div style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'space-between',
-                                        marginBottom: '24px'
-                                    }}>
-                                        <div>
-                                            <span style={{
-                                                display: 'block',
-                                                fontSize: '13px',
-                                                fontWeight: 600,
-                                                color: 'var(--text-secondary)',
-                                                marginBottom: '12px'
+                                    {!isInCart ? (
+                                        <>
+                                            {/* Quantity Row */}
+                                            <div style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'space-between',
+                                                marginBottom: '24px'
                                             }}>
-                                                Quantity
-                                            </span>
-                                            <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
-                                        </div>
+                                                <div>
+                                                    <span style={{
+                                                        display: 'block',
+                                                        fontSize: '13px',
+                                                        fontWeight: 600,
+                                                        color: 'var(--text-secondary)',
+                                                        marginBottom: '12px'
+                                                    }}>
+                                                        Quantity
+                                                    </span>
+                                                    <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
+                                                </div>
+                                                <div style={{ textAlign: 'right' }}>
+                                                    <span style={{
+                                                        display: 'block',
+                                                        fontSize: '13px',
+                                                        fontWeight: 600,
+                                                        color: 'var(--text-secondary)',
+                                                        marginBottom: '8px'
+                                                    }}>
+                                                        Total
+                                                    </span>
+                                                    <span style={{
+                                                        fontSize: '28px',
+                                                        fontWeight: 700,
+                                                        color: 'var(--primary)',
+                                                        fontFamily: 'var(--font-display)',
+                                                    }}>
+                                                        ₦{(product.price * quantity).toLocaleString()}
+                                                    </span>
+                                                </div>
+                                            </div>
 
-                                        {/* Total */}
-                                        <div style={{ textAlign: 'right' }}>
-                                            <span style={{
-                                                display: 'block',
-                                                fontSize: '13px',
-                                                fontWeight: 600,
-                                                color: 'var(--text-secondary)',
-                                                marginBottom: '8px'
-                                            }}>
-                                                Total
-                                            </span>
-                                            <span style={{
-                                                fontSize: '28px',
-                                                fontWeight: 700,
-                                                color: 'var(--primary)',
-                                                fontFamily: 'var(--font-display)',
-                                            }}>
-                                                ₦{totalPrice.toLocaleString()}
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    {/* Add to Cart Button */}
-                                    <button
-                                        onClick={handleAddToCart}
-                                        style={{
-                                            width: '100%',
-                                            padding: '18px 32px',
-                                            fontSize: '16px',
-                                            fontWeight: 600,
-                                            backgroundColor: addedToCart ? '#22C55E' : 'var(--primary)',
-                                            color: 'white',
-                                            border: 'none',
-                                            borderRadius: '14px',
-                                            cursor: 'pointer',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            gap: '10px',
-                                            transition: 'all 0.2s ease',
-                                            boxShadow: addedToCart
-                                                ? '0 4px 20px rgba(34, 197, 94, 0.4)'
-                                                : '0 4px 20px rgba(22, 163, 74, 0.3)',
-                                        }}
-                                        onMouseEnter={(e) => {
-                                            if (!addedToCart) {
-                                                e.currentTarget.style.transform = 'translateY(-2px)';
-                                                e.currentTarget.style.boxShadow = '0 8px 30px rgba(22, 163, 74, 0.4)';
-                                            }
-                                        }}
-                                        onMouseLeave={(e) => {
-                                            e.currentTarget.style.transform = 'translateY(0)';
-                                            e.currentTarget.style.boxShadow = addedToCart
-                                                ? '0 4px 20px rgba(34, 197, 94, 0.4)'
-                                                : '0 4px 20px rgba(22, 163, 74, 0.3)';
-                                        }}
-                                    >
-                                        {addedToCart ? (
-                                            <>
-                                                <svg style={{ width: '22px', height: '22px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                                                </svg>
-                                                <span>Added to Cart!</span>
-                                            </>
-                                        ) : (
-                                            <>
+                                            {/* Add to Cart Button */}
+                                            <button
+                                                onClick={handleAddToCart}
+                                                style={{
+                                                    width: '100%',
+                                                    padding: '18px 32px',
+                                                    fontSize: '16px',
+                                                    fontWeight: 600,
+                                                    backgroundColor: 'var(--primary)',
+                                                    color: 'white',
+                                                    border: 'none',
+                                                    borderRadius: '14px',
+                                                    cursor: 'pointer',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    gap: '10px',
+                                                    transition: 'all 0.2s ease',
+                                                    boxShadow: '0 4px 20px rgba(22, 163, 74, 0.3)',
+                                                }}
+                                                onMouseEnter={(e) => {
+                                                    e.currentTarget.style.transform = 'translateY(-2px)';
+                                                    e.currentTarget.style.boxShadow = '0 8px 30px rgba(22, 163, 74, 0.4)';
+                                                    e.currentTarget.style.backgroundColor = 'var(--primary-hover)';
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    e.currentTarget.style.transform = 'translateY(0)';
+                                                    e.currentTarget.style.boxShadow = '0 4px 20px rgba(22, 163, 74, 0.3)';
+                                                    e.currentTarget.style.backgroundColor = 'var(--primary)';
+                                                }}
+                                            >
                                                 <svg style={{ width: '22px', height: '22px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                                                 </svg>
                                                 <span>Add to Cart</span>
-                                            </>
-                                        )}
-                                    </button>
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            {/* In-cart: qty controls + subtotal */}
+                                            <div style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'space-between',
+                                                marginBottom: '24px'
+                                            }}>
+                                                <div>
+                                                    <span style={{
+                                                        display: 'block',
+                                                        fontSize: '13px',
+                                                        fontWeight: 600,
+                                                        color: 'var(--text-secondary)',
+                                                        marginBottom: '12px'
+                                                    }}>
+                                                        In your cart
+                                                    </span>
+                                                    {/* Cart +/- controls */}
+                                                    <div style={{
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        gap: '12px',
+                                                        height: '44px',
+                                                        padding: '0 8px',
+                                                        borderRadius: '12px',
+                                                        backgroundColor: 'var(--bg)',
+                                                        border: '1.5px solid var(--border)',
+                                                        width: 'fit-content',
+                                                    }}>
+                                                        <button
+                                                            onClick={() => {
+                                                                if (cartItem.quantity > 1) {
+                                                                    updateCartQuantity(product!.id, cartItem.quantity - 1);
+                                                                } else {
+                                                                    removeFromCart(product!.id);
+                                                                }
+                                                            }}
+                                                            style={{
+                                                                width: '30px', height: '30px',
+                                                                borderRadius: '8px',
+                                                                border: '1px solid var(--border)',
+                                                                backgroundColor: 'var(--bg-secondary)',
+                                                                color: 'var(--text)',
+                                                                cursor: 'pointer',
+                                                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                                fontSize: '18px', fontWeight: 500,
+                                                            }}
+                                                        >
+                                                            −
+                                                        </button>
+                                                        <span style={{
+                                                            fontSize: '17px', fontWeight: 700,
+                                                            color: 'var(--text)', minWidth: '24px', textAlign: 'center',
+                                                        }}>
+                                                            {cartItem.quantity}
+                                                        </span>
+                                                        <button
+                                                            onClick={() => updateCartQuantity(product!.id, cartItem.quantity + 1)}
+                                                            style={{
+                                                                width: '30px', height: '30px',
+                                                                borderRadius: '8px',
+                                                                border: '1px solid var(--border)',
+                                                                backgroundColor: 'var(--bg-secondary)',
+                                                                color: 'var(--text)',
+                                                                cursor: 'pointer',
+                                                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                                fontSize: '18px', fontWeight: 500,
+                                                            }}
+                                                        >
+                                                            +
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div style={{ textAlign: 'right' }}>
+                                                    <span style={{
+                                                        display: 'block',
+                                                        fontSize: '13px',
+                                                        fontWeight: 600,
+                                                        color: 'var(--text-secondary)',
+                                                        marginBottom: '8px'
+                                                    }}>
+                                                        Subtotal
+                                                    </span>
+                                                    <span style={{
+                                                        fontSize: '28px',
+                                                        fontWeight: 700,
+                                                        color: 'var(--primary)',
+                                                        fontFamily: 'var(--font-display)',
+                                                    }}>
+                                                        ₦{(product!.price * cartItem.quantity).toLocaleString()}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            {/* Proceed to Checkout */}
+                                            <Link
+                                                href="/checkout"
+                                                style={{
+                                                    width: '100%',
+                                                    padding: '18px 32px',
+                                                    fontSize: '16px',
+                                                    fontWeight: 600,
+                                                    backgroundColor: '#22C55E',
+                                                    color: 'white',
+                                                    border: 'none',
+                                                    borderRadius: '14px',
+                                                    cursor: 'pointer',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    gap: '10px',
+                                                    transition: 'all 0.2s ease',
+                                                    boxShadow: '0 4px 20px rgba(34, 197, 94, 0.4)',
+                                                    textDecoration: 'none',
+                                                }}
+                                                onMouseEnter={(e) => {
+                                                    (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)';
+                                                    (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 30px rgba(34, 197, 94, 0.5)';
+                                                    (e.currentTarget as HTMLElement).style.backgroundColor = '#16A34A';
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
+                                                    (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 20px rgba(34, 197, 94, 0.4)';
+                                                    (e.currentTarget as HTMLElement).style.backgroundColor = '#22C55E';
+                                                }}
+                                            >
+                                                <svg style={{ width: '22px', height: '22px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                                </svg>
+                                                <span>Proceed to Checkout</span>
+                                            </Link>
+                                        </>
+                                    )}
                                 </div>
 
                                 {/* Trust Badges */}

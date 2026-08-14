@@ -83,7 +83,7 @@ export default async function ProductsPage(props: {
                             </span>
                         </nav>
 
-                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", flexWrap: "wrap" }}>
+                        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "12px", flexWrap: "wrap" }}>
                             <div>
                                 <h1 style={{
                                     fontFamily: "var(--font-display)",
@@ -100,19 +100,20 @@ export default async function ProductsPage(props: {
                             </div>
 
                             {/* Status filter pills */}
-                            <div style={{ display: "flex", gap: "8px" }}>
+                            <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
                                 <Link
                                     href={category ? `/products?category=${encodeURIComponent(category)}` : "/products"}
                                     style={{
-                                        padding: "6px 14px",
+                                        padding: "5px 12px",
                                         borderRadius: "20px",
-                                        fontSize: "13px",
+                                        fontSize: "12px",
                                         fontWeight: 600,
                                         textDecoration: "none",
                                         border: "1.5px solid",
                                         borderColor: !status ? "var(--primary)" : "var(--border)",
                                         backgroundColor: !status ? "var(--primary-bg)" : "transparent",
                                         color: !status ? "var(--primary)" : "var(--text-secondary)",
+                                        whiteSpace: "nowrap",
                                     }}
                                 >
                                     All
@@ -120,15 +121,16 @@ export default async function ProductsPage(props: {
                                 <Link
                                     href={`/products${category ? `?category=${encodeURIComponent(category)}&status=IN_STOCK` : "?status=IN_STOCK"}`}
                                     style={{
-                                        padding: "6px 14px",
+                                        padding: "5px 12px",
                                         borderRadius: "20px",
-                                        fontSize: "13px",
+                                        fontSize: "12px",
                                         fontWeight: 600,
                                         textDecoration: "none",
                                         border: "1.5px solid",
                                         borderColor: status === "IN_STOCK" ? "var(--primary)" : "var(--border)",
                                         backgroundColor: status === "IN_STOCK" ? "var(--primary-bg)" : "transparent",
                                         color: status === "IN_STOCK" ? "var(--primary)" : "var(--text-secondary)",
+                                        whiteSpace: "nowrap",
                                     }}
                                 >
                                     In Stock
@@ -136,15 +138,16 @@ export default async function ProductsPage(props: {
                                 <Link
                                     href={`/products${category ? `?category=${encodeURIComponent(category)}&status=PRE_ORDER` : "?status=PRE_ORDER"}`}
                                     style={{
-                                        padding: "6px 14px",
+                                        padding: "5px 12px",
                                         borderRadius: "20px",
-                                        fontSize: "13px",
+                                        fontSize: "12px",
                                         fontWeight: 600,
                                         textDecoration: "none",
                                         border: "1.5px solid",
                                         borderColor: status === "PRE_ORDER" ? "#D97706" : "var(--border)",
                                         backgroundColor: status === "PRE_ORDER" ? "#FFFBEB" : "transparent",
                                         color: status === "PRE_ORDER" ? "#D97706" : "var(--text-secondary)",
+                                        whiteSpace: "nowrap",
                                     }}
                                 >
                                     Pre-Order
@@ -152,16 +155,17 @@ export default async function ProductsPage(props: {
                             </div>
                         </div>
 
-                {/* Category horizontal scroll */}
+                        {/* Category horizontal scroll */}
                         <div style={{
                             display: "flex",
-                            gap: "8px",
-                            marginTop: "16px",
+                            gap: "6px",
+                            marginTop: "14px",
                             overflowX: "auto",
                             overflowY: "visible",
                             scrollbarWidth: "none",
                             paddingBottom: "2px",
-                        }}>
+                            WebkitOverflowScrolling: "touch",
+                        } as React.CSSProperties}>
                             <Link
                                 href={status ? `/products?status=${status}` : "/products"}
                                 style={{
@@ -209,7 +213,7 @@ export default async function ProductsPage(props: {
                 </div>
 
                 {/* Listings */}
-                <div className="container" style={{ padding: "28px 0 60px" }}>
+                <div className="container" style={{ paddingTop: "24px", paddingBottom: "60px" }}>
 
                     {/* In Stock */}
                     {!showOnlyPreOrder && (
