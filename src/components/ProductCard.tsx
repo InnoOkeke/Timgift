@@ -171,18 +171,6 @@ export default function ProductCard({ product }: ProductCardProps) {
                                 Unavailable
                             </span>
                         )}
-                        {isInStock && product.stockQuantity <= 5 && product.stockQuantity > 0 && (
-                            <span style={{
-                                padding: "3px 8px",
-                                borderRadius: "20px",
-                                fontSize: "10px",
-                                fontWeight: 700,
-                                backgroundColor: "rgba(220,38,38,0.85)",
-                                color: "white",
-                            }}>
-                                Only {product.stockQuantity} left!
-                            </span>
-                        )}
                     </div>
                 </div>
             </Link>
@@ -228,11 +216,6 @@ export default function ProductCard({ product }: ProductCardProps) {
                     }}>
                         ₦{product.price.toLocaleString()}
                     </span>
-                    {product.status === "IN_STOCK" && product.stockQuantity > 0 && (
-                        <span style={{ fontSize: "11px", color: "var(--text-muted)", marginLeft: "6px" }}>
-                            {product.stockQuantity} available
-                        </span>
-                    )}
                 </div>
 
                 {/* Action row */}
