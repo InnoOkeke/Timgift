@@ -277,7 +277,7 @@ export default function ProductDetailPage() {
                                 }}>
                                     {!isInCart ? (
                                         <>
-                                            {/* Quantity Row */}
+                                            {/* Quantity Row — cap selector at available stock */}
                                             <div style={{
                                                 display: 'flex',
                                                 alignItems: 'center',
@@ -293,8 +293,23 @@ export default function ProductDetailPage() {
                                                         marginBottom: '12px'
                                                     }}>
                                                         Quantity
+                                                        {isInStock && product.stockQuantity > 0 && (
+                                                            <span style={{ fontWeight: 400, color: 'var(--text-muted)', marginLeft: '8px' }}>
+                                                                ({product.stockQuantity} available)
+                                                            </span>
+                                                        )}
                                                     </span>
-                                                    <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
+                                                    <QuantitySelector
+                                                        quantity={quantity}
+                                                        setQuantity={(q) => {
+                                                            if (isInStock) {
+                                                                setQuantity(Math.min(q, product.stockQuantity));
+                                                            } else {
+                                                                setQuantity(q);
+                                                            }
+                                                        }}
+                                                        max={isInStock ? product.stockQuantity : undefined}
+                                                    />
                                                 </div>
                                                 <div style={{ textAlign: 'right' }}>
                                                     <span style={{
@@ -317,42 +332,50 @@ export default function ProductDetailPage() {
                                                 </div>
                                             </div>
 
-                                            {/* Add to Cart Button */}
-                                            <button
-                                                onClick={handleAddToCart}
-                                                style={{
-                                                    width: '100%',
-                                                    padding: '18px 32px',
-                                                    fontSize: '16px',
-                                                    fontWeight: 600,
-                                                    backgroundColor: 'var(--primary)',
-                                                    color: 'white',
-                                                    border: 'none',
-                                                    borderRadius: '14px',
-                                                    cursor: 'pointer',
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                    gap: '10px',
-                                                    transition: 'all 0.2s ease',
-                                                    boxShadow: '0 4px 20px rgba(22, 163, 74, 0.3)',
-                                                }}
-                                                onMouseEnter={(e) => {
-                                                    e.currentTarget.style.transform = 'translateY(-2px)';
-                                                    e.currentTarget.style.boxShadow = '0 8px 30px rgba(22, 163, 74, 0.4)';
-                                                    e.currentTarget.style.backgroundColor = 'var(--primary-hover)';
-                                                }}
-                                                onMouseLeave={(e) => {
-                                                    e.currentTarget.style.transform = 'translateY(0)';
-                                                    e.currentTarget.style.boxShadow = '0 4px 20px rgba(22, 163, 74, 0.3)';
-                                                    e.currentTarget.style.backgroundColor = 'var(--primary)';
-                                                }}
-                                            >
-                                                <svg style={{ width: '22px', height: '22px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                                                </svg>
-                                                <span>Add to Cart</span>
-                                            </button>
+                                            {/* Add to Cart Button — disabled when out of stock */}
+                                            {(() => {
+                                                const atStockLimit = isInStock && product.stockQuantity <= 0;
+                                                return (
+                                                    <button
+                                                        onClick={handleAddToCart}
+                                                        disabled={atStockLimit}
+                                                        style={{
+                                                            width: '100%',
+                                                            padding: '18px 32px',
+                                                            fontSize: '16px',
+                                                            fontWeight: 600,
+                                                            backgroundColor: atStockLimit ? 'var(--border)' : 'var(--primary)',
+                                                            color: atStockLimit ? 'var(--text-muted)' : 'white',
+                                                            border: 'none',
+                                                            borderRadius: '14px',
+                                                            cursor: atStockLimit ? 'not-allowed' : 'pointer',
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            gap: '10px',
+                                                            transition: 'all 0.2s ease',
+                                                            boxShadow: atStockLimit ? 'none' : '0 4px 20px rgba(22, 163, 74, 0.3)',
+                                                        }}
+                                                        onMouseEnter={(e) => {
+                                                            if (!atStockLimit) {
+                                                                e.currentTarget.style.transform = 'translateY(-2px)';
+                                                                e.currentTarget.style.boxShadow = '0 8px 30px rgba(22, 163, 74, 0.4)';
+                                                                e.currentTarget.style.backgroundColor = 'var(--primary-hover)';
+                                                            }
+                                                        }}
+                                                        onMouseLeave={(e) => {
+                                                            e.currentTarget.style.transform = 'translateY(0)';
+                                                            e.currentTarget.style.boxShadow = atStockLimit ? 'none' : '0 4px 20px rgba(22, 163, 74, 0.3)';
+                                                            e.currentTarget.style.backgroundColor = atStockLimit ? 'var(--border)' : 'var(--primary)';
+                                                        }}
+                                                    >
+                                                        <svg style={{ width: '22px', height: '22px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                                                        </svg>
+                                                        <span>{atStockLimit ? 'Out of Stock' : 'Add to Cart'}</span>
+                                                    </button>
+                                                );
+                                            })()}
                                         </>
                                     ) : (
                                         <>
@@ -373,7 +396,7 @@ export default function ProductDetailPage() {
                                                     }}>
                                                         In your cart
                                                     </span>
-                                                    {/* Cart +/- controls */}
+                                                    {/* Cart +/- controls — + greyed at stock limit */}
                                                     <div style={{
                                                         display: 'flex',
                                                         alignItems: 'center',
@@ -412,22 +435,38 @@ export default function ProductDetailPage() {
                                                         }}>
                                                             {cartItem.quantity}
                                                         </span>
-                                                        <button
-                                                            onClick={() => updateCartQuantity(product!.id, cartItem.quantity + 1)}
-                                                            style={{
-                                                                width: '30px', height: '30px',
-                                                                borderRadius: '8px',
-                                                                border: '1px solid var(--border)',
-                                                                backgroundColor: 'var(--bg-secondary)',
-                                                                color: 'var(--text)',
-                                                                cursor: 'pointer',
-                                                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                                fontSize: '18px', fontWeight: 500,
-                                                            }}
-                                                        >
-                                                            +
-                                                        </button>
+                                                        {(() => {
+                                                            const atLimit = isInStock && cartItem.quantity >= product!.stockQuantity;
+                                                            return (
+                                                                <button
+                                                                    onClick={() => {
+                                                                        if (!atLimit) updateCartQuantity(product!.id, cartItem.quantity + 1);
+                                                                    }}
+                                                                    disabled={atLimit}
+                                                                    title={atLimit ? `Max stock reached (${product!.stockQuantity})` : 'Add one more'}
+                                                                    style={{
+                                                                        width: '30px', height: '30px',
+                                                                        borderRadius: '8px',
+                                                                        border: '1px solid var(--border)',
+                                                                        backgroundColor: atLimit ? 'var(--bg-hover)' : 'var(--bg-secondary)',
+                                                                        color: atLimit ? 'var(--text-muted)' : 'var(--text)',
+                                                                        cursor: atLimit ? 'not-allowed' : 'pointer',
+                                                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                                        fontSize: '18px', fontWeight: 500,
+                                                                        opacity: atLimit ? 0.45 : 1,
+                                                                    }}
+                                                                >
+                                                                    +
+                                                                </button>
+                                                            );
+                                                        })()}
                                                     </div>
+                                                    {/* Stock limit hint */}
+                                                    {isInStock && cartItem.quantity >= product!.stockQuantity && (
+                                                        <p style={{ fontSize: '11px', color: '#D97706', marginTop: '6px', fontWeight: 500 }}>
+                                                            Max available qty reached
+                                                        </p>
+                                                    )}
                                                 </div>
                                                 <div style={{ textAlign: 'right' }}>
                                                     <span style={{
