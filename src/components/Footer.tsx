@@ -111,7 +111,7 @@ export default function Footer() {
                         <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "12px" }}>
                             <li style={{ display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "13px", color: "var(--text-muted)" }}>
                                 <span style={{ flexShrink: 0 }}>📍</span>
-                                <span>Platinum Plaza Shop B097, Adepele Street, Computer Village Ikeja Lagos</span>
+                                <span>Platinum Plaza<br /> Shop B09<br />7 Adepele Street<br />Ikeja Lagos</span>
                             </li>
                             <li style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                                 <span>📞</span>

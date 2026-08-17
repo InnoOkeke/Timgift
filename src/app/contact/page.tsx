@@ -155,8 +155,9 @@ export default function ContactPage() {
                                     color: 'var(--text)',
                                     lineHeight: 1.6
                                 }}>
-                                    Platinum Plaza Shop B097<br />
-                                    Adepele Street, Computer Village<br />
+                                    Platinum Plaza<br />
+                                    Shop B09<br />
+                                    7 Adepele Street<br />
                                     Ikeja, Lagos, Nigeria
                                 </div>
                             </div>
