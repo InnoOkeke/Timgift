@@ -131,7 +131,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                                         borderRadius: "6px",
                                         overflow: "hidden",
                                         flexShrink: 0,
-                                        backgroundColor: "var(--bg)",
+                                        backgroundColor: "#f8f8f8",
                                     }}>
                                         {item.product.media && item.product.media.length > 0 ? (
                                             <img
@@ -140,7 +140,9 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                                                 style={{
                                                     width: "100%",
                                                     height: "100%",
-                                                    objectFit: "cover",
+                                                    objectFit: "contain",
+                                                    padding: "4px",
+                                                    backgroundColor: "#f8f8f8",
                                                 }}
                                                 onError={(e) => {
                                                     (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=400&fit=crop";

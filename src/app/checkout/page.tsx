@@ -221,12 +221,12 @@ export default function CheckoutPage() {
                                                         borderRadius: '10px',
                                                         overflow: 'hidden',
                                                         flexShrink: 0,
-                                                        backgroundColor: 'var(--bg-secondary)'
+                                                        backgroundColor: '#f8f8f8'
                                                     }}>
                                                         <img
                                                             src={imageUrl}
                                                             alt={item.product.name}
-                                                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                                            style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '4px', backgroundColor: '#f8f8f8' }}
                                                             onError={(e) => {
                                                                 const target = e.target as HTMLImageElement;
                                                                 target.src = fallbackImage;

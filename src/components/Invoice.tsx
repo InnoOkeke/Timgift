@@ -177,7 +177,7 @@ export default function Invoice({ customerName, customerAddress, items, totalAmo
                                         <img
                                             src={imageUrl}
                                             alt={item.product.name}
-                                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                            style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '4px', backgroundColor: '#f8f8f8' }}
                                             onError={(e) => {
                                                 const target = e.target as HTMLImageElement;
                                                 target.src = "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=100&h=100&fit=crop";

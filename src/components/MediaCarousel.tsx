@@ -23,13 +23,16 @@ export default function MediaCarousel({ media, productName }: MediaCarouselProps
                 <div style={{
                     borderRadius: "20px",
                     overflow: "hidden",
-                    backgroundColor: "var(--bg-secondary)",
+                    backgroundColor: "#f8f8f8",
                     aspectRatio: "1/1",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                 }}>
                     <img
                         src={fallbackImage}
                         alt={productName}
-                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                        style={{ width: "100%", height: "100%", objectFit: "contain", padding: "16px" }}
                     />
                 </div>
             </div>
@@ -47,9 +50,12 @@ export default function MediaCarousel({ media, productName }: MediaCarouselProps
                 position: "relative",
                 borderRadius: "20px",
                 overflow: "hidden",
-                backgroundColor: "var(--bg-secondary)",
+                backgroundColor: "#f8f8f8",
                 aspectRatio: "1/1",
                 border: "1px solid var(--border)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
             }}>
                 {currentMedia.type === "image" ? (
                     <img
@@ -58,7 +64,8 @@ export default function MediaCarousel({ media, productName }: MediaCarouselProps
                         style={{
                             width: "100%",
                             height: "100%",
-                            objectFit: "cover",
+                            objectFit: "contain",
+                            padding: "16px",
                             transition: "opacity 0.2s ease",
                         }}
                         onError={(e) => { (e.target as HTMLImageElement).src = fallbackImage; }}
@@ -179,9 +186,12 @@ export default function MediaCarousel({ media, productName }: MediaCarouselProps
                                 opacity: index === currentIndex ? 1 : 0.55,
                                 cursor: "pointer",
                                 padding: 0,
-                                background: "var(--bg-secondary)",
+                                background: "#f8f8f8",
                                 transition: "opacity 0.15s, border-color 0.15s, transform 0.15s",
                                 transform: index === currentIndex ? "scale(1.05)" : "scale(1)",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
                             }}
                             onMouseEnter={(e) => {
                                 if (index !== currentIndex) {
@@ -200,7 +210,7 @@ export default function MediaCarousel({ media, productName }: MediaCarouselProps
                                 <img
                                     src={item.url}
                                     alt={`${productName} thumbnail ${index + 1}`}
-                                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                                    style={{ width: "100%", height: "100%", objectFit: "contain", padding: "4px" }}
                                     onError={(e) => { (e.target as HTMLImageElement).src = fallbackImage; }}
                                 />
                             ) : (
