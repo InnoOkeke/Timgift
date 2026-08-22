@@ -331,7 +331,7 @@ export default function AdminOrders() {
                                                                      alt={item.name}
                                                                      width={36}
                                                                      height={36}
-                                                                     style={{ width: "36px", height: "36px", objectFit: "cover", display: "block" }}
+                                                                     style={{ width: "36px", height: "36px", objectFit: "contain", padding: "3px", display: "block", backgroundColor: "#f8f8f8" }}
                                                                  />
                                                              ) : (
                                                                  <div className="w-full h-full flex items-center justify-center" style={{ color: "var(--text-muted)" }}>
