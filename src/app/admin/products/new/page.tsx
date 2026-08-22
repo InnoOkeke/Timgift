@@ -212,7 +212,7 @@ export default function NewProduct() {
                                                 }}
                                             >
                                                 {item.type === "image" ? (
-                                                    <img src={item.url} alt="Preview" className="w-full h-full object-cover" />
+                                                    <img src={item.url} alt="Preview" className="w-full h-full" style={{ objectFit: "contain", padding: "4px" }} />
                                                 ) : (
                                                     <video src={item.url} className="w-full h-full object-cover" />
                                                 )}

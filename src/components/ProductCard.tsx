@@ -88,10 +88,13 @@ export default function ProductCard({ product }: ProductCardProps) {
             {/* Product Image */}
             <Link href={`/product/${product.id}`} style={{ display: "block", position: "relative" }}>
                 <div style={{
-                    aspectRatio: "4/3",
+                    aspectRatio: "1/1",
                     overflow: "hidden",
-                    backgroundColor: "var(--bg-secondary)",
+                    backgroundColor: "#f8f8f8",
                     position: "relative",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                 }}>
                     <img
                         src={imageUrl}
@@ -99,7 +102,8 @@ export default function ProductCard({ product }: ProductCardProps) {
                         style={{
                             width: "100%",
                             height: "100%",
-                            objectFit: "cover",
+                            objectFit: "contain",
+                            padding: "8px",
                             transition: "transform 0.3s ease",
                             filter: isOutOfStock ? "grayscale(0.4)" : "none",
                         }}

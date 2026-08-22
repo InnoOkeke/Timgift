@@ -285,12 +285,13 @@ export default function AdminProducts() {
                             >
                                 {/* Media Container */}
                                 <div>
-                                    <div className="relative aspect-square w-full overflow-hidden bg-white/5 border-b" style={{ borderColor: "var(--border)" }}>
-                                        <Link href={`/admin/products/${product.id}`} className="block w-full h-full">
+                                    <div className="relative aspect-square w-full overflow-hidden border-b" style={{ borderColor: "var(--border)", backgroundColor: "#f8f8f8", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                        <Link href={`/admin/products/${product.id}`} className="block w-full h-full flex items-center justify-center">
                                             <img
                                                 src={product.media?.[0]?.url || "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=400&fit=crop"}
                                                 alt={product.name}
-                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                                className="w-full h-full transition-transform duration-500 group-hover:scale-105"
+                                                style={{ objectFit: "contain", padding: "8px" }}
                                                 onError={(e) => (e.currentTarget as HTMLImageElement).src = "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=400&fit=crop"}
                                             />
                                         </Link>
