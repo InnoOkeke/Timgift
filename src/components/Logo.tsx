@@ -35,6 +35,7 @@ export default function Logo({
             <svg
                 width={config.icon}
                 height={config.icon}
+                style={{ width: `${config.icon}px`, height: `${config.icon}px`, minWidth: `${config.icon}px`, minHeight: `${config.icon}px` }}
                 viewBox="125 405 210 210"
                 className="shrink-0"
                 xmlns="http://www.w3.org/2000/svg"

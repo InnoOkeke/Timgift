@@ -9,6 +9,8 @@ import BuySellBanner from "@/components/BuySellBanner";
 import FeatureCard from "@/components/FeatureCard";
 import { getFeaturedProducts, getPreOrderProducts, getLatestProducts, getBestSellers, getLimitedTimeDeals } from "@/lib/data";
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
     const FEATURED_PRODUCTS = await getFeaturedProducts();
     const PRE_ORDER_PRODUCTS = await getPreOrderProducts();

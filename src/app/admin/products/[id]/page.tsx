@@ -76,7 +76,7 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (mediaItems.length === 0) {
-            showToast("Please upload at least one product image.", "error");
+            showToast("Please upload at least one product image or video.", "error");
             return;
         }
         setSaving(true);
@@ -108,524 +108,429 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
         }
     };
 
-    // Apple-inspired input styles
-    const inputStyle: React.CSSProperties = {
-        width: '100%',
-        padding: '14px 18px',
-        fontSize: '15px',
-        fontWeight: 400,
-        backgroundColor: 'var(--bg)',
-        border: '1px solid var(--border)',
-        borderRadius: '12px',
-        color: 'var(--text)',
-        transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-        outline: 'none',
-    };
-
-    const labelStyle: React.CSSProperties = {
-        display: 'block',
-        fontSize: '13px',
-        fontWeight: 600,
-        color: 'var(--text-secondary)',
-        marginBottom: '8px',
-        letterSpacing: '-0.01em',
-    };
-
-    const cardStyle: React.CSSProperties = {
-        backgroundColor: 'var(--bg-secondary)',
-        borderRadius: '20px',
-        border: '1px solid var(--border)',
-        padding: '32px',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
-    };
-
-    const sectionTitleStyle: React.CSSProperties = {
-        fontSize: '11px',
-        fontWeight: 700,
-        textTransform: 'uppercase' as const,
-        letterSpacing: '0.08em',
-        color: 'var(--text-muted)',
-        marginBottom: '24px',
-    };
-
     if (loading) {
         return (
-            <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: 'var(--bg)' }}>
+            <div className="flex min-h-screen" style={{ backgroundColor: "var(--bg)" }}>
                 <AdminSidebar />
-                <main style={{
-                    flex: 1,
-                    marginLeft: '288px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}>
-                    <div style={{
-                        width: '48px',
-                        height: '48px',
-                        border: '3px solid var(--border)',
-                        borderTopColor: 'var(--primary)',
-                        borderRadius: '50%',
-                        animation: 'spin 1s linear infinite',
-                    }} />
-                    <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+                <main className="flex-1 ml-64 flex flex-col items-center justify-center p-12">
+                    <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mb-3"></div>
+                    <p className="text-xs font-semibold" style={{ color: "var(--text-muted)" }}>
+                        Loading gadget configuration...
+                    </p>
                 </main>
             </div>
         );
     }
 
     return (
-        <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: 'var(--bg)' }}>
+        <div className="flex min-h-screen" style={{ backgroundColor: "var(--bg)" }}>
             <AdminSidebar />
 
-            <main style={{ flex: 1, marginLeft: '288px', padding: '40px 56px' }}>
-                <div style={{ maxWidth: '1100px' }}>
-                    {/* Header */}
-                    <header style={{ marginBottom: '48px' }}>
-                        {/* Breadcrumb */}
-                        <nav style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            marginBottom: '20px',
-                            fontSize: '13px',
-                            fontWeight: 500,
-                        }}>
-                            <Link
-                                href="/admin/products"
-                                style={{
-                                    color: 'var(--text-muted)',
-                                    textDecoration: 'none',
-                                    transition: 'color 0.15s ease',
-                                }}
+            <main className="flex-1 ml-64 p-6 lg:p-8 max-w-6xl">
+                {/* Top Breadcrumbs & Title */}
+                <header className="mb-6 pb-6 border-b" style={{ borderColor: "var(--border)" }}>
+                    <nav className="flex items-center gap-2 mb-2 text-xs font-semibold" style={{ color: "var(--text-muted)" }}>
+                        <Link href="/admin/products" className="hover:underline" style={{ color: "var(--primary)" }}>
+                            Catalog
+                        </Link>
+                        <span className="opacity-40">/</span>
+                        <span style={{ color: "var(--text)" }}>Edit Gadget #{id}</span>
+                    </nav>
+
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h1
+                                className="text-2xl font-bold tracking-tight mb-0.5"
+                                style={{ fontFamily: "var(--font-display)", color: "var(--text)" }}
                             >
-                                Products
-                            </Link>
-                            <svg style={{ width: '14px', height: '14px', color: 'var(--text-muted)', opacity: 0.4 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                            <span style={{ color: 'var(--text)' }}>Edit Product</span>
-                        </nav>
+                                Edit Product Listing
+                            </h1>
+                            <p className="text-xs" style={{ color: "var(--text-secondary)" }}>
+                                Modify specifications, pricing, inventory stock, and media gallery.
+                            </p>
+                        </div>
+                    </div>
+                </header>
 
-                        <h1 style={{
-                            fontSize: '32px',
-                            fontWeight: 700,
-                            color: 'var(--text)',
-                            fontFamily: 'var(--font-display)',
-                            letterSpacing: '-0.025em',
-                            marginBottom: '8px',
-                        }}>
-                            Edit Product
-                        </h1>
-                        <p style={{
-                            fontSize: '15px',
-                            color: 'var(--text-secondary)',
-                            fontWeight: 400,
-                        }}>
-                            Update the details for this product listing.
-                        </p>
-                    </header>
-
-                    <form onSubmit={handleSubmit}>
-                        <div style={{
-                            display: 'grid',
-                            gridTemplateColumns: '1fr 380px',
-                            gap: '32px',
-                            alignItems: 'start',
-                        }}>
-                            {/* Left Column - Main Details */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                                {/* Product Information Card */}
-                                <div style={cardStyle}>
-                                    <h3 style={sectionTitleStyle}>Product Information</h3>
-
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                                        <div>
-                                            <label style={labelStyle}>Product Name</label>
-                                            <input
-                                                required
-                                                type="text"
-                                                name="name"
-                                                placeholder="Enter product name"
-                                                style={inputStyle}
-                                                value={formData.name}
-                                                onChange={handleChange}
-                                                onFocus={(e) => {
-                                                    e.target.style.borderColor = 'var(--primary)';
-                                                    e.target.style.boxShadow = '0 0 0 4px rgba(22, 163, 74, 0.1)';
-                                                }}
-                                                onBlur={(e) => {
-                                                    e.target.style.borderColor = 'var(--border)';
-                                                    e.target.style.boxShadow = 'none';
-                                                }}
-                                            />
-                                        </div>
-
-                                        <div>
-                                            <label style={labelStyle}>Description</label>
-                                            <textarea
-                                                required
-                                                name="description"
-                                                rows={5}
-                                                placeholder="Describe your product..."
-                                                style={{
-                                                    ...inputStyle,
-                                                    resize: 'none',
-                                                    lineHeight: 1.6,
-                                                }}
-                                                value={formData.description}
-                                                onChange={handleChange}
-                                                onFocus={(e) => {
-                                                    e.target.style.borderColor = 'var(--primary)';
-                                                    e.target.style.boxShadow = '0 0 0 4px rgba(22, 163, 74, 0.1)';
-                                                }}
-                                                onBlur={(e) => {
-                                                    e.target.style.borderColor = 'var(--border)';
-                                                    e.target.style.boxShadow = 'none';
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
+                <form onSubmit={handleSubmit}>
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                        {/* Left Column: General Info & Media (7 cols) */}
+                        <div className="lg:col-span-7 space-y-6">
+                            {/* Product Information Card */}
+                            <div
+                                className="p-7 rounded-3xl border shadow-sm"
+                                style={{ backgroundColor: "var(--bg-secondary)", borderColor: "var(--border)" }}
+                            >
+                                <div className="flex items-center gap-2 mb-5">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                    <h2 className="text-xs font-bold uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>
+                                        General Information
+                                    </h2>
                                 </div>
 
-                                {/* Media Card */}
-                                <div style={cardStyle}>
-                                    <h3 style={sectionTitleStyle}>Product Media</h3>
+                                <div className="space-y-5">
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: "var(--text-secondary)" }}>
+                                            Product Name <span className="text-rose-500">*</span>
+                                        </label>
+                                        <input
+                                            required
+                                            type="text"
+                                            name="name"
+                                            placeholder="e.g. Apple iPhone 15 Pro Max 256GB"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                            className="w-full px-4 py-3 rounded-xl text-sm font-medium border outline-none transition-all"
+                                            style={{
+                                                backgroundColor: "var(--bg)",
+                                                borderColor: "var(--border)",
+                                                color: "var(--text)"
+                                            }}
+                                            onFocus={(e) => {
+                                                e.target.style.borderColor = "var(--primary)";
+                                                e.target.style.boxShadow = "0 0 0 3px rgba(22, 163, 74, 0.15)";
+                                            }}
+                                            onBlur={(e) => {
+                                                e.target.style.borderColor = "var(--border)";
+                                                e.target.style.boxShadow = "none";
+                                            }}
+                                        />
+                                    </div>
 
-                                    <div style={{
-                                        display: 'grid',
-                                        gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))',
-                                        gap: '12px',
-                                        marginBottom: mediaItems.length > 0 ? '20px' : '0',
-                                    }}>
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: "var(--text-secondary)" }}>
+                                            Description & Specs <span className="text-rose-500">*</span>
+                                        </label>
+                                        <textarea
+                                            required
+                                            name="description"
+                                            rows={6}
+                                            placeholder="Highlight device condition, battery health, accessories included, storage capacity, and warranty..."
+                                            value={formData.description}
+                                            onChange={handleChange}
+                                            className="w-full px-4 py-3 rounded-xl text-sm font-medium border outline-none transition-all resize-none leading-relaxed"
+                                            style={{
+                                                backgroundColor: "var(--bg)",
+                                                borderColor: "var(--border)",
+                                                color: "var(--text)"
+                                            }}
+                                            onFocus={(e) => {
+                                                e.target.style.borderColor = "var(--primary)";
+                                                e.target.style.boxShadow = "0 0 0 3px rgba(22, 163, 74, 0.15)";
+                                            }}
+                                            onBlur={(e) => {
+                                                e.target.style.borderColor = "var(--border)";
+                                                e.target.style.boxShadow = "none";
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Media Assets Card */}
+                            <div
+                                className="p-7 rounded-3xl border shadow-sm"
+                                style={{ backgroundColor: "var(--bg-secondary)", borderColor: "var(--border)" }}
+                            >
+                                <div className="flex items-center justify-between mb-5">
+                                    <div className="flex items-center gap-2">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                        <h2 className="text-xs font-bold uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>
+                                            Media Gallery ({mediaItems.length})
+                                        </h2>
+                                    </div>
+                                    <span className="text-[11px] font-medium" style={{ color: "var(--text-muted)" }}>
+                                        First image is primary
+                                    </span>
+                                </div>
+
+                                {mediaItems.length > 0 && (
+                                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 mb-5">
                                         {mediaItems.map((item, index) => (
                                             <div
                                                 key={index}
+                                                className="group relative aspect-square rounded-2xl overflow-hidden border shadow-sm"
                                                 style={{
-                                                    position: 'relative',
-                                                    aspectRatio: '1',
-                                                    borderRadius: '12px',
-                                                    overflow: 'hidden',
-                                                    border: '1px solid var(--border)',
-                                                    backgroundColor: 'var(--bg)',
+                                                    borderColor: index === 0 ? "var(--primary)" : "var(--border)",
+                                                    backgroundColor: "var(--bg)"
                                                 }}
                                             >
-                                                {item.type === 'image' ? (
-                                                    <img src={item.url} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                {item.type === "image" ? (
+                                                    <img src={item.url} alt="Preview" className="w-full h-full object-cover" />
                                                 ) : (
-                                                    <video src={item.url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                    <video src={item.url} className="w-full h-full object-cover" />
                                                 )}
+
+                                                {index === 0 && (
+                                                    <span className="absolute bottom-1.5 left-1.5 px-1.5 py-0.5 rounded text-[8px] font-bold uppercase tracking-wider bg-primary text-white shadow-sm pointer-events-none">
+                                                        Cover
+                                                    </span>
+                                                )}
+
                                                 <button
                                                     type="button"
                                                     onClick={() => removeMedia(index)}
-                                                    style={{
-                                                        position: 'absolute',
-                                                        top: '6px',
-                                                        right: '6px',
-                                                        width: '24px',
-                                                        height: '24px',
-                                                        borderRadius: '50%',
-                                                        backgroundColor: 'rgba(0,0,0,0.6)',
-                                                        color: 'white',
-                                                        border: 'none',
-                                                        cursor: 'pointer',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        fontSize: '12px',
-                                                        transition: 'background-color 0.15s ease',
-                                                    }}
-                                                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#EF4444'}
-                                                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.6)'}
+                                                    className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-rose-500 text-white flex items-center justify-center shadow-md opacity-90 hover:opacity-100 hover:scale-110 transition-all text-xs"
+                                                    title="Remove asset"
                                                 >
                                                     ✕
                                                 </button>
                                             </div>
                                         ))}
                                     </div>
+                                )}
 
-                                    <MediaUploader onUploadComplete={handleUploadComplete} />
-
-                                    <p style={{
-                                        fontSize: '12px',
-                                        color: 'var(--text-muted)',
-                                        marginTop: '16px',
-                                        opacity: 0.7,
-                                    }}>
-                                        Recommended: High-quality images (max 2MB), Videos (max 5MB)
-                                    </p>
-                                </div>
+                                <MediaUploader onUploadComplete={handleUploadComplete} />
                             </div>
+                        </div>
 
-                            {/* Right Column - Sidebar */}
-                            <div style={{
-                                position: 'sticky',
-                                top: '40px',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: '24px'
-                            }}>
-                                {/* Inventory & Pricing Card */}
-                                <div style={cardStyle}>
-                                    <h3 style={sectionTitleStyle}>Inventory & Pricing</h3>
+                        {/* Right Column: Pricing, Inventory & Settings (5 cols) */}
+                        <div className="lg:col-span-5 space-y-6">
+                            {/* Pricing & Stock Card */}
+                            <div
+                                className="p-7 rounded-3xl border shadow-sm"
+                                style={{ backgroundColor: "var(--bg-secondary)", borderColor: "var(--border)" }}
+                            >
+                                <div className="flex items-center gap-2 mb-5">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                    <h2 className="text-xs font-bold uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>
+                                        Inventory & Pricing
+                                    </h2>
+                                </div>
 
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                                        {/* Status */}
-                                        <div>
-                                            <label style={labelStyle}>Status</label>
-                                            <div style={{ position: 'relative' }}>
-                                                <select
-                                                    name="status"
-                                                    style={{
-                                                        ...inputStyle,
-                                                        appearance: 'none',
-                                                        cursor: 'pointer',
-                                                        paddingRight: '44px',
-                                                    }}
-                                                    value={formData.status}
-                                                    onChange={handleChange}
-                                                >
-                                                    <option value="IN_STOCK">In Stock</option>
-                                                    <option value="PRE_ORDER">Pre-Order</option>
-                                                </select>
-                                                <div style={{
-                                                    position: 'absolute',
-                                                    right: '16px',
-                                                    top: '50%',
-                                                    transform: 'translateY(-50%)',
-                                                    pointerEvents: 'none',
-                                                    color: 'var(--text-muted)',
-                                                }}>
-                                                    <svg style={{ width: '16px', height: '16px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Category */}
-                                        <div>
-                                            <label style={labelStyle}>Category</label>
-                                            <div style={{ position: 'relative' }}>
-                                                <select
-                                                    name="category"
-                                                    style={{
-                                                        ...inputStyle,
-                                                        appearance: 'none',
-                                                        cursor: 'pointer',
-                                                        paddingRight: '44px',
-                                                    }}
-                                                    value={formData.category}
-                                                    onChange={handleChange}
-                                                >
-                                                    {CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
-                                                </select>
-                                                <div style={{
-                                                    position: 'absolute',
-                                                    right: '16px',
-                                                    top: '50%',
-                                                    transform: 'translateY(-50%)',
-                                                    pointerEvents: 'none',
-                                                    color: 'var(--text-muted)',
-                                                }}>
-                                                    <svg style={{ width: '16px', height: '16px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div style={{ height: '1px', backgroundColor: 'var(--border)', margin: '4px 0' }} />
-
-                                        {/* Stock */}
-                                        <div>
-                                            <label style={labelStyle}>Stock Quantity</label>
-                                            <input
-                                                required
-                                                type="number"
-                                                name="stockQuantity"
-                                                placeholder="0"
-                                                style={inputStyle}
-                                                value={formData.stockQuantity}
-                                                onChange={handleChange}
-                                                onFocus={(e) => {
-                                                    e.target.style.borderColor = 'var(--primary)';
-                                                    e.target.style.boxShadow = '0 0 0 4px rgba(22, 163, 74, 0.1)';
-                                                }}
-                                                onBlur={(e) => {
-                                                    e.target.style.borderColor = 'var(--border)';
-                                                    e.target.style.boxShadow = 'none';
-                                                }}
-                                            />
-                                        </div>
-
-                                        {/* Price */}
-                                        <div>
-                                            <label style={labelStyle}>Price (₦)</label>
+                                <div className="space-y-5">
+                                    {/* Price Input */}
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: "var(--text-secondary)" }}>
+                                            Price (₦ Naira) <span className="text-rose-500">*</span>
+                                        </label>
+                                        <div className="relative">
+                                            <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-sm" style={{ color: "var(--text-muted)" }}>
+                                                ₦
+                                            </span>
                                             <input
                                                 required
                                                 type="number"
                                                 name="price"
                                                 placeholder="0.00"
-                                                style={{
-                                                    ...inputStyle,
-                                                    fontSize: '20px',
-                                                    fontWeight: 600,
-                                                    textAlign: 'center',
-                                                    padding: '18px',
-                                                }}
                                                 value={formData.price}
                                                 onChange={handleChange}
+                                                className="w-full pl-9 pr-4 py-3 rounded-xl font-bold text-lg border outline-none transition-all"
+                                                style={{
+                                                    backgroundColor: "var(--bg)",
+                                                    borderColor: "var(--border)",
+                                                    color: "var(--text)"
+                                                }}
                                                 onFocus={(e) => {
-                                                    e.target.style.borderColor = 'var(--primary)';
-                                                    e.target.style.boxShadow = '0 0 0 4px rgba(22, 163, 74, 0.1)';
+                                                    e.target.style.borderColor = "var(--primary)";
+                                                    e.target.style.boxShadow = "0 0 0 3px rgba(22, 163, 74, 0.15)";
                                                 }}
                                                 onBlur={(e) => {
-                                                    e.target.style.borderColor = 'var(--border)';
-                                                    e.target.style.boxShadow = 'none';
+                                                    e.target.style.borderColor = "var(--border)";
+                                                    e.target.style.boxShadow = "none";
                                                 }}
                                             />
                                         </div>
+                                    </div>
 
-                                        <div style={{ height: '1px', backgroundColor: 'var(--border)', margin: '4px 0' }} />
-
-                                        {/* Featured Toggle */}
-                                        <div
-                                            onClick={() => setFormData(prev => ({ ...prev, featured: !prev.featured }))}
+                                    {/* Stock Quantity */}
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: "var(--text-secondary)" }}>
+                                            Stock Quantity Available <span className="text-rose-500">*</span>
+                                        </label>
+                                        <input
+                                            required
+                                            type="number"
+                                            name="stockQuantity"
+                                            placeholder="10"
+                                            value={formData.stockQuantity}
+                                            onChange={handleChange}
+                                            className="w-full px-4 py-3 rounded-xl text-sm font-semibold border outline-none transition-all"
                                             style={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'space-between',
-                                                cursor: 'pointer',
-                                                padding: '8px 0',
+                                                backgroundColor: "var(--bg)",
+                                                borderColor: "var(--border)",
+                                                color: "var(--text)"
                                             }}
-                                        >
-                                            <div>
-                                                <p style={{ fontSize: '14px', fontWeight: 500, color: 'var(--text)', marginBottom: '2px' }}>
-                                                    Featured Product
-                                                </p>
-                                                <p style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
-                                                    Show in Trending Now
-                                                </p>
-                                            </div>
-                                            <div style={{
-                                                width: '44px', height: '26px', borderRadius: '13px',
-                                                backgroundColor: formData.featured ? 'var(--primary)' : 'var(--border)',
-                                                position: 'relative', transition: 'background-color 0.2s ease',
-                                            }}>
-                                                <div style={{
-                                                    position: 'absolute', top: '3px',
-                                                    left: formData.featured ? '21px' : '3px',
-                                                    width: '20px', height: '20px', borderRadius: '50%',
-                                                    backgroundColor: 'white', boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-                                                    transition: 'left 0.2s ease',
-                                                }} />
-                                                <input type="checkbox" name="featured" checked={formData.featured} onChange={handleChange} style={{ display: 'none' }} />
-                                            </div>
+                                            onFocus={(e) => {
+                                                e.target.style.borderColor = "var(--primary)";
+                                                e.target.style.boxShadow = "0 0 0 3px rgba(22, 163, 74, 0.15)";
+                                            }}
+                                            onBlur={(e) => {
+                                                e.target.style.borderColor = "var(--border)";
+                                                e.target.style.boxShadow = "none";
+                                            }}
+                                        />
+                                    </div>
+
+                                    {/* Category Select */}
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: "var(--text-secondary)" }}>
+                                            Category
+                                        </label>
+                                        <div className="relative">
+                                            <select
+                                                name="category"
+                                                value={formData.category}
+                                                onChange={handleChange}
+                                                className="w-full px-4 py-3 pr-10 rounded-xl text-sm font-semibold border outline-none transition-all appearance-none cursor-pointer"
+                                                style={{
+                                                    backgroundColor: "var(--bg)",
+                                                    borderColor: "var(--border)",
+                                                    color: "var(--text)"
+                                                }}
+                                            >
+                                                {CATEGORIES.map(cat => (
+                                                    <option key={cat} value={cat}>{cat}</option>
+                                                ))}
+                                            </select>
+                                            <svg className="w-4 h-4 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                                            </svg>
                                         </div>
+                                    </div>
 
-                                        {/* Limited Time Deal Toggle */}
-                                        <div
-                                            onClick={() => setFormData(prev => ({ ...prev, limitedTimeDeal: !prev.limitedTimeDeal }))}
-                                            style={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'space-between',
-                                                cursor: 'pointer',
-                                                padding: '8px 0',
-                                            }}
-                                        >
-                                            <div>
-                                                <p style={{ fontSize: '14px', fontWeight: 500, color: 'var(--text)', marginBottom: '2px' }}>
-                                                    🔥 Limited Time Deal
-                                                </p>
-                                                <p style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
-                                                    Show in Limited Time Deals
-                                                </p>
-                                            </div>
-                                            <div style={{
-                                                width: '44px', height: '26px', borderRadius: '13px',
-                                                backgroundColor: formData.limitedTimeDeal ? '#DC2626' : 'var(--border)',
-                                                position: 'relative', transition: 'background-color 0.2s ease',
-                                            }}>
-                                                <div style={{
-                                                    position: 'absolute', top: '3px',
-                                                    left: formData.limitedTimeDeal ? '21px' : '3px',
-                                                    width: '20px', height: '20px', borderRadius: '50%',
-                                                    backgroundColor: 'white', boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-                                                    transition: 'left 0.2s ease',
-                                                }} />
-                                                <input type="checkbox" name="limitedTimeDeal" checked={formData.limitedTimeDeal} onChange={handleChange} style={{ display: 'none' }} />
-                                            </div>
+                                    {/* Status Select */}
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: "var(--text-secondary)" }}>
+                                            Listing Status
+                                        </label>
+                                        <div className="relative">
+                                            <select
+                                                name="status"
+                                                value={formData.status}
+                                                onChange={handleChange}
+                                                className="w-full px-4 py-3 pr-10 rounded-xl text-sm font-semibold border outline-none transition-all appearance-none cursor-pointer"
+                                                style={{
+                                                    backgroundColor: "var(--bg)",
+                                                    borderColor: "var(--border)",
+                                                    color: "var(--text)"
+                                                }}
+                                            >
+                                                <option value="IN_STOCK">In Stock (Immediate Dispatch)</option>
+                                                <option value="PRE_ORDER">Pre-Order (Book in Advance)</option>
+                                            </select>
+                                            <svg className="w-4 h-4 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                                            </svg>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                {/* Action Buttons */}
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                                    <button
-                                        type="submit"
-                                        disabled={saving}
-                                        style={{
-                                            width: '100%',
-                                            padding: '16px 24px',
-                                            fontSize: '15px',
-                                            fontWeight: 600,
-                                            backgroundColor: 'var(--primary)',
-                                            color: 'white',
-                                            border: 'none',
-                                            borderRadius: '12px',
-                                            cursor: saving ? 'not-allowed' : 'pointer',
-                                            opacity: saving ? 0.7 : 1,
-                                            transition: 'all 0.2s ease',
-                                            boxShadow: '0 4px 12px rgba(22, 163, 74, 0.3)',
-                                        }}
-                                        onMouseEnter={(e) => {
-                                            if (!saving) {
-                                                e.currentTarget.style.transform = 'translateY(-1px)';
-                                                e.currentTarget.style.boxShadow = '0 6px 20px rgba(22, 163, 74, 0.4)';
-                                            }
-                                        }}
-                                        onMouseLeave={(e) => {
-                                            e.currentTarget.style.transform = 'translateY(0)';
-                                            e.currentTarget.style.boxShadow = '0 4px 12px rgba(22, 163, 74, 0.3)';
-                                        }}
-                                    >
-                                        {saving ? "Saving..." : "Save Changes"}
-                                    </button>
+                            {/* Visibility & Badges Card */}
+                            <div
+                                className="p-7 rounded-3xl border shadow-sm space-y-4"
+                                style={{ backgroundColor: "var(--bg-secondary)", borderColor: "var(--border)" }}
+                            >
+                                <div className="flex items-center gap-2 mb-2">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                    <h2 className="text-xs font-bold uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>
+                                        Promotional Badges
+                                    </h2>
+                                </div>
 
-                                    <Link
-                                        href="/admin/products"
-                                        style={{
-                                            display: 'block',
-                                            width: '100%',
-                                            padding: '14px 24px',
-                                            fontSize: '14px',
-                                            fontWeight: 500,
-                                            color: 'var(--text-secondary)',
-                                            textAlign: 'center',
-                                            textDecoration: 'none',
-                                            borderRadius: '12px',
-                                            border: '1px solid var(--border)',
-                                            transition: 'all 0.15s ease',
-                                            backgroundColor: 'transparent',
-                                        }}
-                                        onMouseEnter={(e) => {
-                                            e.currentTarget.style.backgroundColor = 'var(--bg-secondary)';
-                                            e.currentTarget.style.borderColor = 'var(--text-muted)';
-                                        }}
-                                        onMouseLeave={(e) => {
-                                            e.currentTarget.style.backgroundColor = 'transparent';
-                                            e.currentTarget.style.borderColor = 'var(--border)';
-                                        }}
+                                {/* Featured Toggle */}
+                                <div
+                                    onClick={() => setFormData(prev => ({ ...prev, featured: !prev.featured }))}
+                                    className="flex items-center justify-between p-3 rounded-2xl border cursor-pointer transition-all hover:bg-black/5 dark:hover:bg-white/5"
+                                    style={{
+                                        borderColor: formData.featured ? "rgba(22, 163, 74, 0.4)" : "var(--border)",
+                                        backgroundColor: formData.featured ? "rgba(22, 163, 74, 0.05)" : "var(--bg)"
+                                    }}
+                                >
+                                    <div>
+                                        <p className="text-xs font-bold flex items-center gap-1.5" style={{ color: "var(--text)" }}>
+                                            <svg className="w-3.5 h-3.5 text-amber-500 fill-current" viewBox="0 0 24 24">
+                                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                                            </svg>
+                                            <span>Featured Product</span>
+                                        </p>
+                                        <p className="text-[11px]" style={{ color: "var(--text-muted)" }}>Highlight in Trending & Homepage</p>
+                                    </div>
+                                    <div
+                                        className="w-11 h-6 rounded-full transition-colors relative flex-shrink-0"
+                                        style={{ backgroundColor: formData.featured ? "var(--primary)" : "var(--border)" }}
                                     >
-                                        Cancel
-                                    </Link>
+                                        <div
+                                            className="w-5 h-5 rounded-full bg-white shadow-md absolute top-0.5 transition-all"
+                                            style={{ left: formData.featured ? "22px" : "2px" }}
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Limited Time Deal Toggle */}
+                                <div
+                                    onClick={() => setFormData(prev => ({ ...prev, limitedTimeDeal: !prev.limitedTimeDeal }))}
+                                    className="flex items-center justify-between p-3 rounded-2xl border cursor-pointer transition-all hover:bg-black/5 dark:hover:bg-white/5"
+                                    style={{
+                                        borderColor: formData.limitedTimeDeal ? "rgba(220, 38, 38, 0.4)" : "var(--border)",
+                                        backgroundColor: formData.limitedTimeDeal ? "rgba(220, 38, 38, 0.05)" : "var(--bg)"
+                                    }}
+                                >
+                                    <div>
+                                        <p className="text-xs font-bold flex items-center gap-1.5" style={{ color: "var(--text)" }}>
+                                            <svg className="w-3.5 h-3.5 text-rose-500 fill-current" viewBox="0 0 24 24">
+                                                <path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z" />
+                                            </svg>
+                                            <span>Limited Time Deal</span>
+                                        </p>
+                                        <p className="text-[11px]" style={{ color: "var(--text-muted)" }}>Showcase in Flash Sale Deals</p>
+                                    </div>
+                                    <div
+                                        className="w-11 h-6 rounded-full transition-colors relative flex-shrink-0"
+                                        style={{ backgroundColor: formData.limitedTimeDeal ? "#DC2626" : "var(--border)" }}
+                                    >
+                                        <div
+                                            className="w-5 h-5 rounded-full bg-white shadow-md absolute top-0.5 transition-all"
+                                            style={{ left: formData.limitedTimeDeal ? "22px" : "2px" }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
+
+                            {/* Action Buttons */}
+                            <div className="space-y-3 pt-2">
+                                <button
+                                    type="submit"
+                                    disabled={saving}
+                                    className="w-full py-4 px-6 rounded-2xl font-bold text-sm text-white shadow-lg flex items-center justify-center gap-2 transition-all active:scale-[0.99] disabled:opacity-50"
+                                    style={{
+                                        background: "linear-gradient(135deg, var(--primary) 0%, #15803D 100%)",
+                                        boxShadow: "0 8px 24px -4px rgba(22, 163, 74, 0.45)"
+                                    }}
+                                >
+                                    {saving ? (
+                                        <>
+                                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                            <span>Saving Updates...</span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                                            </svg>
+                                            <span>Save Changes</span>
+                                        </>
+                                    )}
+                                </button>
+
+                                <Link
+                                    href="/admin/products"
+                                    className="w-full py-3.5 px-6 rounded-2xl font-semibold text-xs border text-center block transition-all hover:bg-black/5 dark:hover:bg-white/5"
+                                    style={{
+                                        borderColor: "var(--border)",
+                                        backgroundColor: "transparent",
+                                        color: "var(--text-secondary)"
+                                    }}
+                                >
+                                    Cancel & Return
+                                </Link>
+                            </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </main>
         </div>
     );
 }
+

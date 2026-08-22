@@ -11,6 +11,7 @@ export interface Product {
     media: { type: 'image' | 'video'; url: string }[];
     stockQuantity: number;
     featured?: boolean;
+    limitedTimeDeal?: boolean;
 }
 
 export interface OrderItem {
