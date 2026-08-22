@@ -1,5 +1,6 @@
 import prisma from "./prisma";
 import { Product } from "@/types";
+import { unstable_noStore as noStore } from "next/cache";
 
 // Maps legacy/old category values → current category names.
 // If a product is saved with an old name, it will still appear under the right category.
@@ -23,6 +24,7 @@ function parseProduct(p: { media: string; category: string; [key: string]: unkno
 }
 
 export const getProducts = async () => {
+    noStore();
     try {
         const products = await prisma.product.findMany({
             orderBy: { createdAt: 'desc' }
@@ -35,6 +37,7 @@ export const getProducts = async () => {
 };
 
 export const getProductById = async (id: string | number) => {
+    noStore();
     try {
         const product = await prisma.product.findUnique({
             where: { id: Number(id) }
@@ -48,6 +51,7 @@ export const getProductById = async (id: string | number) => {
 };
 
 export const getFeaturedProducts = async () => {
+    noStore();
     try {
         const products = await prisma.product.findMany({
             where: { featured: true },
@@ -62,6 +66,7 @@ export const getFeaturedProducts = async () => {
 };
 
 export const getPreOrderProducts = async () => {
+    noStore();
     try {
         const products = await prisma.product.findMany({
             where: { status: 'PRE_ORDER' },
@@ -75,6 +80,7 @@ export const getPreOrderProducts = async () => {
 };
 
 export const getLatestProducts = async (limit: number = 8) => {
+    noStore();
     try {
         const products = await prisma.product.findMany({
             where: { status: 'IN_STOCK', featured: false },
@@ -101,6 +107,7 @@ export const getLatestProducts = async (limit: number = 8) => {
 };
 
 export const getLimitedTimeDeals = async (limit: number = 8) => {
+    noStore();
     try {
         const products = await prisma.product.findMany({
             where: { limitedTimeDeal: true },
@@ -115,6 +122,7 @@ export const getLimitedTimeDeals = async (limit: number = 8) => {
 };
 
 export const getBestSellers = async (limit: number = 8) => {
+    noStore();
     try {
         const products = await prisma.product.findMany({
             where: { status: 'IN_STOCK' },

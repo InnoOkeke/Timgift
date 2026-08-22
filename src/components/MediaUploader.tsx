@@ -8,13 +8,11 @@ interface MediaUploaderProps {
 
 export default function MediaUploader({ onUploadComplete }: MediaUploaderProps) {
     const [isUploading, setIsUploading] = useState(false);
+    const [isDragging, setIsDragging] = useState(false);
     const [error, setError] = useState("");
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-
+    const processFile = async (file: File) => {
         setError("");
 
         // Validation
@@ -52,18 +50,42 @@ export default function MediaUploader({ onUploadComplete }: MediaUploaderProps) 
 
             onUploadComplete(data.url, isVideo ? "video" : "image");
         } catch (err: any) {
-            setError(err.message);
+            setError(err.message || "Failed to upload file");
         } finally {
             setIsUploading(false);
             if (fileInputRef.current) fileInputRef.current.value = "";
         }
     };
 
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        processFile(file);
+    };
+
+    const handleDrop = (e: React.DragEvent) => {
+        e.preventDefault();
+        setIsDragging(false);
+        const file = e.dataTransfer.files?.[0];
+        if (file) processFile(file);
+    };
+
     return (
         <div className="w-full">
             <div
                 onClick={() => fileInputRef.current?.click()}
-                className={`border border-dashed border-gray-300 dark:border-gray-700 rounded-xl px-4 py-8 text-center cursor-pointer transition-all hover:border-primary hover:bg-primary/5 ${isUploading ? 'opacity-50 pointer-events-none' : ''}`}
+                onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+                onDragLeave={() => setIsDragging(false)}
+                onDrop={handleDrop}
+                className={`group border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-all duration-200 ${
+                    isDragging
+                        ? "border-primary bg-primary/10 scale-[1.01]"
+                        : "hover:border-primary/60 hover:bg-black/5 dark:hover:bg-white/5"
+                } ${isUploading ? "opacity-60 pointer-events-none" : ""}`}
+                style={{
+                    borderColor: isDragging ? "var(--primary)" : "var(--border)",
+                    backgroundColor: "var(--bg)",
+                }}
             >
                 <input
                     type="file"
@@ -74,25 +96,43 @@ export default function MediaUploader({ onUploadComplete }: MediaUploaderProps) 
                 />
 
                 {isUploading ? (
-                    <div className="flex flex-col items-center py-1">
-                        <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin mb-2"></div>
-                        <p className="text-xs font-medium">Uploading...</p>
+                    <div className="flex flex-col items-center py-4">
+                        <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mb-3"></div>
+                        <p className="text-xs font-bold" style={{ color: "var(--text)" }}>Uploading Media Asset...</p>
+                        <p className="text-[11px]" style={{ color: "var(--text-muted)" }}>Optimizing to Cloud Storage</p>
                     </div>
                 ) : (
-                    <div className="flex flex-col items-center justify-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center text-gray-600 dark:text-gray-200 group-hover:text-primary transition-colors">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
+                    <div className="flex flex-col items-center justify-center gap-2 py-2">
+                        <div
+                            className="w-12 h-12 rounded-2xl flex items-center justify-center transition-all group-hover:scale-110 shadow-sm"
+                            style={{
+                                backgroundColor: "var(--bg-secondary)",
+                                border: "1px solid var(--border)",
+                                color: "var(--primary)"
+                            }}
+                        >
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                         </div>
                         <div>
-                            <p className="text-xs font-medium text-text">Add Media</p>
-                            <p className="text-[10px] text-text-muted mt-1">Images or Video</p>
+                            <p className="text-xs font-bold tracking-tight" style={{ color: "var(--text)" }}>
+                                Click to Upload or Drag & Drop
+                            </p>
+                            <p className="text-[11px] mt-0.5" style={{ color: "var(--text-muted)" }}>
+                                PNG, JPG, WebP (Max 2MB) or MP4 (Max 10MB)
+                            </p>
                         </div>
                     </div>
                 )}
             </div>
-            {error && <p className="text-red-500 text-xs mt-2 text-center">{error}</p>}
+
+            {error && (
+                <div className="mt-2.5 p-2 rounded-xl text-xs font-semibold text-rose-500 bg-rose-500/10 border border-rose-500/20 text-center">
+                    {error}
+                </div>
+            )}
         </div>
     );
 }
+

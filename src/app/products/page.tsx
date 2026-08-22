@@ -5,6 +5,8 @@ import { Product } from "@/types";
 import Link from "next/link";
 import { getProducts } from "@/lib/data";
 
+export const dynamic = 'force-dynamic';
+
 const CATEGORIES = [
     { name: "IPHONE",               label: "iPhone" },
     { name: "ANDROID",              label: "Android" },
