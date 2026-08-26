@@ -6,21 +6,46 @@
  * Uses existing local images from public/images/categories/ as product media.
  */
 
+import { readFileSync, existsSync, unlinkSync, createWriteStream } from "fs";
 import { v2 as cloudinary } from "cloudinary";
 import { PrismaClient } from "@prisma/client";
 import path from "path";
 import { fileURLToPath } from "url";
-import { existsSync, unlinkSync, createWriteStream } from "fs";
 import https from "https";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
 
+// ── Load Environment Variables ───────────────────────────────────────────────
+function loadEnvFile(filePath) {
+  if (!existsSync(filePath)) return;
+  try {
+    const content = readFileSync(filePath, "utf8");
+    for (const line of content.split("\n")) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith("#")) continue;
+      const match = trimmed.match(/^([^=]+)=(.*)$/);
+      if (match) {
+        const key = match[1].trim();
+        const value = match[2].trim().replace(/^["']|["']$/g, "");
+        if (!process.env[key]) {
+          process.env[key] = value;
+        }
+      }
+    }
+  } catch (err) {
+    console.warn(`Could not read ${filePath}:`, err.message);
+  }
+}
+
+loadEnvFile(path.join(ROOT, ".env.local"));
+loadEnvFile(path.join(ROOT, ".env"));
+
 // ── Cloudinary config ─────────────────────────────────────────────────────────
 cloudinary.config({
-  cloud_name: "dmltyy3sx",
-  api_key: "REDACTED_API_KEY",
-  api_secret: "REDACTED_API_SECRET",
+  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 const prisma = new PrismaClient();
