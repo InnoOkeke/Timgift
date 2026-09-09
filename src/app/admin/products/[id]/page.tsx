@@ -25,7 +25,7 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
         limitedTimeDeal: false,
     });
 
-    const CATEGORIES = ["IPHONE", "ANDROID", "MACBOOK", "IPAD", "VIDEO GAMES CONSOLES", "SMARTWATCHES", "WINDOWS LAPTOPS", "AIRPODS"];
+    const CATEGORIES = ["IPHONE", "ANDROID", "MACBOOK", "IPAD", "ACCESSORIES", "SMARTWATCHES", "WINDOWS LAPTOPS", "AIRPODS"];
 
     useEffect(() => {
         fetchProduct();

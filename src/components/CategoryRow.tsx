@@ -10,14 +10,14 @@ type Category = {
 };
 
 const CATEGORIES: Category[] = [
-    { name: "IPHONE",               label: "iPhone",    image: "/images/categories/iphone.png" },
-    { name: "WINDOWS LAPTOPS",      label: "Laptops",   image: "/images/categories/windowslaptop.png" },
-    { name: "IPAD",                 label: "Tablets",   image: "/images/categories/Ipad.png" },
-    { name: "SMARTWATCHES",         label: "Watches",   image: "/images/categories/smartwatch (2).png" },
-    { name: "ANDROID",              label: "Android",   image: "/images/categories/android.png" },
-    { name: "MACBOOK",              label: "MacBook",   image: "/images/categories/macbook.png" },
-    { name: "AIRPODS",              label: "AirPods",   image: "/images/categories/airpds.png" },
-    { name: "VIDEO GAMES CONSOLES", label: "Gaming",    image: "/images/categories/ps5.png" },
+    { name: "IPHONE",               label: "iPhone",      image: "/images/categories/iphone.png?v=2" },
+    { name: "WINDOWS LAPTOPS",      label: "Laptops",     image: "/images/categories/windowslaptop.png?v=2" },
+    { name: "IPAD",                 label: "Tablets",     image: "/images/categories/ipad.png?v=2" },
+    { name: "SMARTWATCHES",         label: "Watches",     image: "/images/categories/smartwatch.png?v=2" },
+    { name: "ANDROID",              label: "Android",     image: "/images/categories/android.png?v=2" },
+    { name: "MACBOOK",              label: "MacBook",     image: "/images/categories/macbook.png?v=2" },
+    { name: "AIRPODS",              label: "AirPods",     image: "/images/categories/airpods.png?v=2" },
+    { name: "ACCESSORIES",          label: "Accessories", image: "/images/categories/accessories.png?v=2" },
 ];
 
 export default function CategoryRow() {

@@ -25,7 +25,7 @@ export default function AdminProducts() {
         { id: "WINDOWS LAPTOPS", label: "Windows Laptops", icon: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
         { id: "SMARTWATCHES", label: "Smartwatches", icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
         { id: "AIRPODS", label: "AirPods & Audio", icon: "M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" },
-        { id: "VIDEO GAMES CONSOLES", label: "Gaming Consoles", icon: "M15 5v2m0 4v2m0-6h2a2 2 0 012 2v2a2 2 0 01-2 2h-2m-6 0H7a2 2 0 01-2-2V7a2 2 0 012-2h2m0 0V3m0 2h6M6 10H4m16 0h-2" },
+        { id: "ACCESSORIES", label: "Accessories", icon: "M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" },
     ];
 
     const categoryCounts = useMemo(() => {

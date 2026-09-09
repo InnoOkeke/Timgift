@@ -23,7 +23,7 @@ export default function NewProduct() {
         limitedTimeDeal: false,
     });
 
-    const CATEGORIES = ["IPHONE", "ANDROID", "MACBOOK", "IPAD", "VIDEO GAMES CONSOLES", "SMARTWATCHES", "WINDOWS LAPTOPS", "AIRPODS"];
+    const CATEGORIES = ["IPHONE", "ANDROID", "MACBOOK", "IPAD", "ACCESSORIES", "SMARTWATCHES", "WINDOWS LAPTOPS", "AIRPODS"];
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const target = e.target;

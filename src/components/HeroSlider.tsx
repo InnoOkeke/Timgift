@@ -28,13 +28,13 @@ const SLIDES = [
     },
     {
         id: 3,
-        tag: "Gaming",
-        title: "Game at the\nHighest Level.",
-        subtitle: "PS5, Xbox, controllers and accessories. In stock, ready to ship. Order via WhatsApp in minutes.",
-        cta: { label: "Shop Consoles", href: "/products?category=VIDEO%20GAMES%20CONSOLES" },
+        tag: "Accessories",
+        title: "Style Meets\nProtection.",
+        subtitle: "Phone pouches, stylish covers, MagSafe cases, and everyday carry essentials. In stock, ready to ship.",
+        cta: { label: "Shop Accessories", href: "/products?category=ACCESSORIES" },
         ctaSecondary: { label: "All Products", href: "/products" },
         bg: "linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%)",
-        image: "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=700&h=500&fit=crop&auto=format",
+        image: "https://images.unsplash.com/photo-1601593346740-925612772716?w=700&h=500&fit=crop&auto=format",
         accent: "#818CF8",
     },
     {

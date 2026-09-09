@@ -13,7 +13,7 @@ const CATEGORIES = [
     { name: "ANDROID", label: "Android" },
     { name: "MACBOOK", label: "MacBook" },
     { name: "IPAD", label: "iPad" },
-    { name: "VIDEO GAMES CONSOLES", label: "Consoles" },
+    { name: "ACCESSORIES", label: "Accessories" },
     { name: "SMARTWATCHES", label: "Smartwatches" },
     { name: "WINDOWS LAPTOPS", label: "Laptops" },
     { name: "AIRPODS", label: "AirPods" },
