@@ -57,7 +57,7 @@ export default function Footer() {
                                 { label: "All Products", href: "/products" },
                                 { label: "In Stock", href: "/products?status=IN_STOCK" },
                                 { label: "Pre-Order", href: "/products?status=PRE_ORDER" },
-                                { label: "iPhone", href: "/products?category=IPHONE" },
+                                { label: "iPhones", href: "/products?category=IPHONES" },
                                 { label: "MacBook", href: "/products?category=MACBOOK" },
                                 { label: "Laptops", href: "/products?category=WINDOWS%20LAPTOPS" },
                             ].map((link) => (

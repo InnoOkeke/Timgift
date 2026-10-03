@@ -9,6 +9,8 @@ export const CATEGORY_ALIASES: Record<string, string> = {
     "SMART GADGETS": "AIRPODS",
     "COMPUTERS":     "WINDOWS LAPTOPS",
     "FASHION":       "ANDROID",
+    "IPAD":          "TABLETS",
+    "IPHONE":        "IPHONES",
 };
 
 // Normalise a stored category value to its canonical display name

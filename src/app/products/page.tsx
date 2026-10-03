@@ -8,10 +8,10 @@ import { getProducts } from "@/lib/data";
 export const dynamic = 'force-dynamic';
 
 const CATEGORIES = [
-    { name: "IPHONE",               label: "iPhone" },
+    { name: "IPHONES",              label: "iPhones" },
     { name: "ANDROID",              label: "Android" },
     { name: "MACBOOK",              label: "MacBook" },
-    { name: "IPAD",                 label: "iPad" },
+    { name: "TABLETS",              label: "Tablets" },
     { name: "ACCESSORIES",          label: "Accessories" },
     { name: "SMARTWATCHES",         label: "Smartwatches" },
     { name: "WINDOWS LAPTOPS",      label: "Laptops" },
@@ -27,11 +27,19 @@ export default async function ProductsPage(props: {
 
     const baseFilter = (products: Product[]) =>
         products.filter((p) => {
-            const matchCat = category ? p.category.toLowerCase() === category.toLowerCase() : true;
+            const pCat = p.category.toLowerCase();
+            const cat = category?.toLowerCase();
+            const matchCat = cat
+                ? pCat === cat ||
+                  (cat === "tablets" && pCat === "ipad") ||
+                  (cat === "ipad" && pCat === "tablets") ||
+                  (cat === "iphones" && pCat === "iphone") ||
+                  (cat === "iphone" && pCat === "iphones")
+                : true;
             const matchSearch = search
                 ? p.name.toLowerCase().includes(search.toLowerCase()) ||
                   p.description.toLowerCase().includes(search.toLowerCase()) ||
-                  p.category.toLowerCase().includes(search.toLowerCase())
+                  pCat.includes(search.toLowerCase())
                 : true;
             const matchStatus = status ? p.status === status : true;
             return matchCat && matchSearch && matchStatus;
@@ -43,10 +51,20 @@ export default async function ProductsPage(props: {
     const showOnlyInStock = status === "IN_STOCK";
     const showOnlyPreOrder = status === "PRE_ORDER";
 
+    const activeCatObj = category
+        ? CATEGORIES.find(c =>
+            c.name.toLowerCase() === category.toLowerCase() ||
+            (c.name === "TABLETS" && category.toLowerCase() === "ipad") ||
+            (c.name === "IPHONES" && category.toLowerCase() === "iphone")
+          )
+        : null;
+
     const pageTitle = search
         ? `Results for "${search}"`
+        : activeCatObj
+        ? activeCatObj.label
         : category
-        ? category.charAt(0).toUpperCase() + category.slice(1).toLowerCase()
+        ? (category.toUpperCase() === "IPAD" ? "Tablets" : category.toUpperCase() === "IPHONE" ? "iPhones" : category.charAt(0).toUpperCase() + category.slice(1).toLowerCase())
         : status
         ? status === "PRE_ORDER"
             ? "Pre-Order Products"
@@ -81,7 +99,7 @@ export default async function ProductsPage(props: {
                             <Link href="/" style={{ color: "var(--text-muted)", textDecoration: "none" }}>Home</Link>
                             <span>›</span>
                             <span style={{ color: "var(--text)" }}>
-                                {category ? `${category.charAt(0)}${category.slice(1).toLowerCase()}` : "Products"}
+                                {activeCatObj ? activeCatObj.label : category ? `${category.charAt(0)}${category.slice(1).toLowerCase()}` : "Products"}
                             </span>
                         </nav>
 
@@ -187,7 +205,9 @@ export default async function ProductsPage(props: {
                                 All
                             </Link>
                             {CATEGORIES.map((cat) => {
-                                const isActive = category?.toLowerCase() === cat.name.toLowerCase();
+                                const isActive = category?.toLowerCase() === cat.name.toLowerCase() ||
+                                    (cat.name === "IPHONES" && category?.toLowerCase() === "iphone") ||
+                                    (cat.name === "TABLETS" && category?.toLowerCase() === "ipad");
                                 return (
                                     <Link
                                         key={cat.name}

@@ -14,7 +14,7 @@ export default function NewProduct() {
     const [mediaItems, setMediaItems] = useState<{ url: string; type: "image" | "video" }[]>([]);
     const [formData, setFormData] = useState({
         name: "",
-        category: "IPHONE",
+        category: "IPHONES",
         price: "",
         description: "",
         status: "IN_STOCK",
@@ -23,7 +23,7 @@ export default function NewProduct() {
         limitedTimeDeal: false,
     });
 
-    const CATEGORIES = ["IPHONE", "ANDROID", "MACBOOK", "IPAD", "ACCESSORIES", "SMARTWATCHES", "WINDOWS LAPTOPS", "AIRPODS"];
+    const CATEGORIES = ["IPHONES", "ANDROID", "MACBOOK", "TABLETS", "ACCESSORIES", "SMARTWATCHES", "WINDOWS LAPTOPS", "AIRPODS"];
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const target = e.target;

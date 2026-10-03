@@ -3,6 +3,8 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { requireAdminSession } from "@/lib/auth";
 
+import { normaliseCategory } from "@/lib/data";
+
 // GET /api/products - Fetch all products (public)
 export async function GET() {
     try {
@@ -12,6 +14,7 @@ export async function GET() {
 
         const formattedProducts = products.map((p) => ({
             ...p,
+            category: normaliseCategory(p.category),
             media: p.media ? JSON.parse(p.media) : []
         }));
 

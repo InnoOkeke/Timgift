@@ -16,7 +16,7 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
     const [mediaItems, setMediaItems] = useState<{ url: string; type: "image" | "video" }[]>([]);
     const [formData, setFormData] = useState({
         name: "",
-        category: "IPHONE",
+        category: "IPHONES",
         price: "",
         description: "",
         status: "IN_STOCK",
@@ -25,7 +25,7 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
         limitedTimeDeal: false,
     });
 
-    const CATEGORIES = ["IPHONE", "ANDROID", "MACBOOK", "IPAD", "ACCESSORIES", "SMARTWATCHES", "WINDOWS LAPTOPS", "AIRPODS"];
+    const CATEGORIES = ["IPHONES", "ANDROID", "MACBOOK", "TABLETS", "ACCESSORIES", "SMARTWATCHES", "WINDOWS LAPTOPS", "AIRPODS"];
 
     useEffect(() => {
         fetchProduct();
@@ -36,9 +36,13 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
             const res = await fetch(`/api/products/${id}`);
             if (res.ok) {
                 const data = await res.json();
+                let productCategory = data.category;
+                if (productCategory === "IPAD") productCategory = "TABLETS";
+                if (productCategory === "IPHONE") productCategory = "IPHONES";
+
                 setFormData({
                     name: data.name,
-                    category: data.category,
+                    category: productCategory,
                     price: data.price.toString(),
                     description: data.description,
                     status: data.status,

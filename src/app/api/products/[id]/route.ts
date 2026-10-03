@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { requireAdminSession } from "@/lib/auth";
+import { normaliseCategory } from "@/lib/data";
 
 // GET /api/products/[id] - Fetch a single product (public)
 export async function GET(
@@ -23,6 +24,7 @@ export async function GET(
 
         return NextResponse.json({
             ...product,
+            category: normaliseCategory(product.category),
             media: product.media ? JSON.parse(product.media) : []
         });
     } catch (error) {

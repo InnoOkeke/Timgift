@@ -18,10 +18,10 @@ export default function AdminProducts() {
 
     const CATEGORIES = [
         { id: "ALL", label: "All Items", icon: "M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" },
-        { id: "IPHONE", label: "iPhone", icon: "M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" },
+        { id: "IPHONES", label: "iPhones", icon: "M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" },
         { id: "ANDROID", label: "Android", icon: "M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" },
         { id: "MACBOOK", label: "MacBook", icon: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
-        { id: "IPAD", label: "iPad", icon: "M12 18h.01M6 3h12a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2z" },
+        { id: "TABLETS", label: "Tablets", icon: "M12 18h.01M6 3h12a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2z" },
         { id: "WINDOWS LAPTOPS", label: "Windows Laptops", icon: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
         { id: "SMARTWATCHES", label: "Smartwatches", icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
         { id: "AIRPODS", label: "AirPods & Audio", icon: "M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" },
@@ -31,7 +31,9 @@ export default function AdminProducts() {
     const categoryCounts = useMemo(() => {
         const counts: Record<string, number> = { ALL: products.length };
         products.forEach(p => {
-            const cat = p.category?.toUpperCase() || "";
+            let cat = p.category?.toUpperCase() || "";
+            if (cat === "IPAD") cat = "TABLETS";
+            if (cat === "IPHONE") cat = "IPHONES";
             counts[cat] = (counts[cat] || 0) + 1;
         });
         return counts;
@@ -84,9 +86,13 @@ export default function AdminProducts() {
                 p.name.toLowerCase().includes(searchLower) ||
                 p.category.toLowerCase().includes(searchLower);
 
+            let pCat = p.category.toUpperCase();
+            if (pCat === "IPAD") pCat = "TABLETS";
+            if (pCat === "IPHONE") pCat = "IPHONES";
+
             const matchesCategory =
                 selectedCategory === "ALL" ||
-                p.category.toUpperCase() === selectedCategory.toUpperCase();
+                pCat === selectedCategory.toUpperCase();
 
             const matchesStatus =
                 selectedStatus === "ALL" ||
@@ -349,7 +355,7 @@ export default function AdminProducts() {
                                     <div className="p-4">
                                         <div className="flex justify-between items-center mb-1">
                                             <span className="text-[9px] font-bold uppercase tracking-wider truncate max-w-[100px]" style={{ color: "var(--primary)" }}>
-                                                {product.category}
+                                                {product.category === "IPAD" ? "TABLETS" : product.category === "IPHONE" ? "IPHONES" : product.category}
                                             </span>
                                             <span
                                                 className="text-[10px] font-bold"

@@ -10,9 +10,9 @@ type Category = {
 };
 
 const CATEGORIES: Category[] = [
-    { name: "IPHONE",               label: "iPhone",      image: "/images/categories/iphone.png?v=2" },
+    { name: "IPHONES",              label: "iPhones",     image: "/images/categories/iphone.png?v=2" },
     { name: "WINDOWS LAPTOPS",      label: "Laptops",     image: "/images/categories/windowslaptop.png?v=2" },
-    { name: "IPAD",                 label: "Tablets",     image: "/images/categories/ipad.png?v=2" },
+    { name: "TABLETS",              label: "Tablets",     image: "/images/categories/ipad.png?v=2" },
     { name: "SMARTWATCHES",         label: "Watches",     image: "/images/categories/smartwatch.png?v=2" },
     { name: "ANDROID",              label: "Android",     image: "/images/categories/android.png?v=2" },
     { name: "MACBOOK",              label: "MacBook",     image: "/images/categories/macbook.png?v=2" },

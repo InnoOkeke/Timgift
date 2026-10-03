@@ -9,10 +9,10 @@ import Logo from "./Logo";
 import MiniCart from "./MiniCart";
 
 const CATEGORIES = [
-    { name: "IPHONE", label: "iPhone" },
+    { name: "IPHONES", label: "iPhones" },
     { name: "ANDROID", label: "Android" },
     { name: "MACBOOK", label: "MacBook" },
-    { name: "IPAD", label: "iPad" },
+    { name: "TABLETS", label: "Tablets" },
     { name: "ACCESSORIES", label: "Accessories" },
     { name: "SMARTWATCHES", label: "Smartwatches" },
     { name: "WINDOWS LAPTOPS", label: "Laptops" },
@@ -193,7 +193,9 @@ export default function Navbar() {
                                 All
                             </Link>
                             {CATEGORIES.map((cat) => {
-                                const isActive = activeCategory?.toLowerCase() === cat.name.toLowerCase();
+                                const isActive = activeCategory?.toLowerCase() === cat.name.toLowerCase() ||
+                                    (cat.name === "IPHONES" && activeCategory?.toLowerCase() === "iphone") ||
+                                    (cat.name === "TABLETS" && activeCategory?.toLowerCase() === "ipad");
                                 return (
                                     <Link key={cat.name} href={`/products?category=${encodeURIComponent(cat.name)}`}
                                         style={{ display: "flex", alignItems: "center", height: "100%", padding: "0 14px", fontSize: "13px", fontWeight: isActive ? 600 : 500, color: isActive ? "var(--primary)" : "var(--text-secondary)", borderBottom: isActive ? "2px solid var(--primary)" : "2px solid transparent", whiteSpace: "nowrap", textDecoration: "none", transition: "color 0.15s" }}
@@ -259,7 +261,9 @@ export default function Navbar() {
                             </p>
                             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px" }}>
                                 {CATEGORIES.map((cat) => {
-                                    const isActive = activeCategory?.toLowerCase() === cat.name.toLowerCase();
+                                    const isActive = activeCategory?.toLowerCase() === cat.name.toLowerCase() ||
+                                        (cat.name === "IPHONES" && activeCategory?.toLowerCase() === "iphone") ||
+                                        (cat.name === "TABLETS" && activeCategory?.toLowerCase() === "ipad");
                                     return (
                                         <Link key={cat.name} href={`/products?category=${encodeURIComponent(cat.name)}`}
                                             onClick={() => setMobileMenuOpen(false)}
