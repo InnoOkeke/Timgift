@@ -1,44 +1,33 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import AdminSidebar from "@/components/AdminSidebar";
+import AdminNavbar from "@/components/AdminNavbar";
 import Link from "next/link";
 
+interface Product {
+    id: number;
+    stockQuantity: number;
+}
+
+interface OrderItem {
+    name: string;
+    quantity: number;
+    price: number;
+    media?: { url: string }[];
+}
+
+interface Order {
+    id: number;
+    customerName: string;
+    customerPhone: string;
+    customerAddress?: string;
+    status: string;
+    totalAmount: number;
+    items?: OrderItem[];
+    createdAt: string;
+}
+
 export default function AdminDashboard() {
-    interface Product {
-        id: number;
-        stockQuantity: number;
-    }
-
-    interface OrderItem {
-        name: string;
-        quantity: number;
-        price: number;
-        media?: { url: string }[];
-    }
-
-    interface Order {
-        id: number;
-        customerName: string;
-        customerPhone: string;
-        customerAddress?: string;
-        status: string;
-        totalAmount: number;
-        items?: OrderItem[];
-        createdAt: string;
-    }
-
-    interface StatCardProps {
-        title: string;
-        value: string | number;
-        subtext: string;
-        icon: React.ReactNode;
-        color: string;
-        badge?: string;
-        badgeColor?: string;
-        link?: string;
-    }
-
     const [stats, setStats] = useState({
         totalSales: 0,
         activeOrders: 0,
@@ -76,7 +65,7 @@ export default function AdminDashboard() {
                         totalProducts: totalInventory,
                         totalOrdersCount: orders.length,
                     });
-                    setRecentOrders(orders.slice(0, 6));
+                    setRecentOrders(orders.slice(0, 8));
                 }
             } catch (error) {
                 console.error("Dashboard Fetch Error:", error);
@@ -88,348 +77,749 @@ export default function AdminDashboard() {
         fetchDashboardData();
     }, []);
 
-    // Customer initials helper
     const getInitials = (name: string) => {
         if (!name) return "TG";
         return name
             .split(" ")
             .map((n) => n[0])
+            .filter(Boolean)
             .slice(0, 2)
             .join("")
             .toUpperCase();
     };
 
-    const StatCard = ({ title, value, subtext, icon, color, badge, badgeColor, link }: StatCardProps) => {
-        const cardContent = (
-            <div
-                className="group relative p-5 rounded-2xl border transition-all duration-200 hover:shadow-md"
-                style={{
-                    backgroundColor: "var(--bg-secondary)",
-                    borderColor: "var(--border)",
-                }}
-            >
-                <div className="flex justify-between items-start mb-3">
-                    <div
-                        className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-                        style={{
-                            backgroundColor: `${color}15`,
-                            color: color,
-                            border: `1px solid ${color}25`
-                        }}
-                    >
-                        {icon}
-                    </div>
-                    {badge && (
-                        <span
-                            className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border"
-                            style={{
-                                backgroundColor: badgeColor ? `${badgeColor}12` : "rgba(22, 163, 74, 0.1)",
-                                color: badgeColor || "var(--primary)",
-                                borderColor: badgeColor ? `${badgeColor}25` : "rgba(22, 163, 74, 0.2)"
-                            }}
-                        >
-                            {badge}
-                        </span>
-                    )}
-                </div>
-
-                <h3 className="text-[11px] font-bold uppercase tracking-wider mb-1" style={{ color: "var(--text-muted)" }}>
-                    {title}
-                </h3>
-                <p
-                    className="text-2xl font-extrabold tracking-tight mb-1"
-                    style={{ color: "var(--text)", fontFamily: "var(--font-display)" }}
-                >
-                    {value}
-                </p>
-                <p className="text-xs font-normal" style={{ color: "var(--text-secondary)" }}>
-                    {subtext}
-                </p>
-            </div>
-        );
-
-        if (link) {
-            return <Link href={link} className="block">{cardContent}</Link>;
-        }
-        return cardContent;
-    };
-
     return (
-        <div className="flex min-h-screen" style={{ backgroundColor: "var(--bg)" }}>
-            <AdminSidebar />
+        <div className="min-h-screen flex flex-col" style={{ backgroundColor: "var(--bg)" }}>
+            <AdminNavbar />
 
-            <main className="flex-1 min-w-0 w-full ml-0 lg:ml-64 pt-20 lg:pt-6 pb-24 lg:pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-                {/* Top Welcome Header */}
-                <header className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b" style={{ borderColor: "var(--border)" }}>
-                    <div>
-                        <div className="flex items-center gap-2 mb-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                            <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "var(--primary)" }}>
-                                Admin Console
-                            </span>
-                            <span className="text-xs" style={{ color: "var(--text-muted)" }}>•</span>
-                            <span className="text-xs font-medium" style={{ color: "var(--text-muted)" }}>
-                                {new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}
-                            </span>
+            <main
+                className="flex-1 w-full px-4 sm:px-6 lg:px-8 py-8 pb-24 lg:pb-16"
+                style={{ maxWidth: "1280px", marginLeft: "auto", marginRight: "auto" }}
+            >
+                {/* Executive Header */}
+                <header
+                    style={{
+                        marginBottom: "32px",
+                        paddingBottom: "24px",
+                        borderBottom: "1px solid var(--border)",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "16px"
+                    }}
+                >
+                    <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: "16px" }}>
+                        <div>
+                            {/* Eyebrow Status Pill */}
+                            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px", flexWrap: "wrap" }}>
+                                <span
+                                    style={{
+                                        width: "8px",
+                                        height: "8px",
+                                        borderRadius: "9999px",
+                                        backgroundColor: "#16A34A",
+                                        display: "inline-block",
+                                        boxShadow: "0 0 0 3px rgba(22, 163, 74, 0.2)",
+                                        flexShrink: 0
+                                    }}
+                                />
+                                <span style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.08em", color: "#16A34A" }}>
+                                    Operations Headquarters
+                                </span>
+                                <span style={{ color: "var(--border-strong)", fontSize: "11px" }}>•</span>
+                                <span style={{ fontSize: "12px", fontWeight: "600", color: "var(--text-muted)" }}>
+                                    {new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}
+                                </span>
+                            </div>
+
+                            <h1
+                                style={{
+                                    fontSize: "26px",
+                                    fontWeight: "900",
+                                    letterSpacing: "-0.03em",
+                                    color: "var(--text)",
+                                    fontFamily: "var(--font-display)",
+                                    margin: "0 0 6px 0"
+                                }}
+                            >
+                                Executive Dashboard
+                            </h1>
+                            <p style={{ fontSize: "13px", color: "var(--text-secondary)", margin: 0, maxWidth: "620px" }}>
+                                Store overview, revenue analytics, inventory levels, and active fulfillment requests.
+                            </p>
                         </div>
-                        <h1
-                            className="text-2xl sm:text-3xl font-bold tracking-tight mb-0.5"
-                            style={{ fontFamily: "var(--font-display)", color: "var(--text)" }}
-                        >
-                            Dashboard
-                        </h1>
-                        <p className="text-xs sm:text-sm font-normal" style={{ color: "var(--text-secondary)" }}>
-                            Store overview, sales metrics, and active orders.
-                        </p>
-                    </div>
 
-                    {/* Quick Header Actions */}
-                    <div className="flex items-center gap-2.5 self-start sm:self-auto">
-                        <Link
-                            href="/company/admin/products/new"
-                            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-bold text-xs text-white transition-all active:scale-95 shadow-xs"
-                            style={{
-                                backgroundColor: "var(--primary)",
-                            }}
-                        >
-                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 4v16m8-8H4" />
-                            </svg>
-                            <span>Add Product</span>
-                        </Link>
-                        <Link
-                            href="/company/admin/orders"
-                            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-semibold text-xs border transition-colors hover:bg-black/5 dark:hover:bg-white/5"
-                            style={{
-                                borderColor: "var(--border)",
-                                backgroundColor: "var(--bg-secondary)",
-                                color: "var(--text)"
-                            }}
-                        >
-                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                            </svg>
-                            <span>Orders Queue</span>
-                        </Link>
+                        {/* Top Header Actions (Executive-Tier Buttons) */}
+                        <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                            {/* Add Product Button (Primary Luxury Emerald) */}
+                            <Link
+                                href="/company/admin/products/new"
+                                style={{
+                                    display: "inline-flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    gap: "8px",
+                                    height: "42px",
+                                    padding: "0 18px",
+                                    borderRadius: "12px",
+                                    fontSize: "13px",
+                                    fontWeight: "700",
+                                    letterSpacing: "-0.01em",
+                                    color: "#FFFFFF",
+                                    background: "linear-gradient(180deg, #16A34A 0%, #15803D 100%)",
+                                    border: "1px solid rgba(22, 163, 74, 0.9)",
+                                    boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 4px 14px -1px rgba(22, 163, 74, 0.38), 0 1px 2px rgba(0, 0, 0, 0.06)",
+                                    textDecoration: "none",
+                                    cursor: "pointer",
+                                    transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
+                                    userSelect: "none"
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.transform = "translateY(-1px)";
+                                    e.currentTarget.style.boxShadow = "inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 6px 18px -1px rgba(22, 163, 74, 0.45)";
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = "translateY(0)";
+                                    e.currentTarget.style.boxShadow = "inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 4px 14px -1px rgba(22, 163, 74, 0.38), 0 1px 2px rgba(0, 0, 0, 0.06)";
+                                }}
+                            >
+                                <svg style={{ width: "16px", height: "16px", flexShrink: 0 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.4} d="M12 4v16m8-8H4" />
+                                </svg>
+                                <span>Add Product</span>
+                            </Link>
+
+                            {/* Orders Queue Button (Secondary Luxury Frosted Glass with Live Badge) */}
+                            <Link
+                                href="/company/admin/orders"
+                                style={{
+                                    display: "inline-flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    gap: "8px",
+                                    height: "42px",
+                                    padding: "0 18px",
+                                    borderRadius: "12px",
+                                    fontSize: "13px",
+                                    fontWeight: "700",
+                                    letterSpacing: "-0.01em",
+                                    color: "var(--text)",
+                                    backgroundColor: "var(--bg-secondary)",
+                                    border: "1px solid var(--border)",
+                                    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04)",
+                                    textDecoration: "none",
+                                    cursor: "pointer",
+                                    transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
+                                    userSelect: "none"
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.transform = "translateY(-1px)";
+                                    e.currentTarget.style.backgroundColor = "var(--bg-hover)";
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = "translateY(0)";
+                                    e.currentTarget.style.backgroundColor = "var(--bg-secondary)";
+                                }}
+                            >
+                                <svg style={{ width: "16px", height: "16px", flexShrink: 0, color: "var(--text-muted)" }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                </svg>
+                                <span>Orders Queue</span>
+                                {stats.activeOrders > 0 && (
+                                    <span
+                                        style={{
+                                            marginLeft: "2px",
+                                            padding: "2px 7px",
+                                            borderRadius: "9999px",
+                                            fontSize: "10px",
+                                            fontWeight: "800",
+                                            backgroundColor: "rgba(234, 179, 8, 0.15)",
+                                            color: "#D97706",
+                                            border: "1px solid rgba(234, 179, 8, 0.3)"
+                                        }}
+                                    >
+                                        {stats.activeOrders}
+                                    </span>
+                                )}
+                            </Link>
+                        </div>
                     </div>
                 </header>
 
                 {loading ? (
-                    <div className="space-y-6">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {[1, 2, 3].map(i => (
-                                <div key={i} className="h-32 rounded-2xl animate-pulse" style={{ backgroundColor: "var(--bg-secondary)" }}></div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "16px" }}>
+                            {[1, 2, 3, 4].map(i => (
+                                <div key={i} style={{ height: "140px", borderRadius: "18px", backgroundColor: "var(--bg-secondary)", border: "1px solid var(--border)" }} />
                             ))}
                         </div>
-                        <div className="h-72 rounded-2xl animate-pulse" style={{ backgroundColor: "var(--bg-secondary)" }}></div>
+                        <div style={{ height: "320px", borderRadius: "18px", backgroundColor: "var(--bg-secondary)", border: "1px solid var(--border)" }} />
                     </div>
                 ) : (
                     <>
-                        {/* Bento Grid Metrics */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-                            {/* Revenue Stat Card */}
-                            <StatCard
-                                title="Total Revenue"
-                                value={`₦${stats.totalSales.toLocaleString()}`}
-                                subtext={`${stats.completedOrders} completed sales`}
-                                icon={
-                                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                }
-                                color="var(--primary)"
-                                badge="Sales"
-                                badgeColor="#10B981"
-                                link="/company/admin/orders"
-                            />
+                        {/* Luxury KPI Metrics Cards */}
+                        <div
+                            style={{
+                                display: "grid",
+                                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                                gap: "16px",
+                                marginBottom: "32px"
+                            }}
+                        >
+                            {/* Card 1: Total Revenue */}
+                            <div
+                                style={{
+                                    position: "relative",
+                                    overflow: "hidden",
+                                    padding: "20px 22px",
+                                    borderRadius: "18px",
+                                    backgroundColor: "var(--bg-secondary)",
+                                    border: "1px solid var(--border)",
+                                    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px -2px rgba(0, 0, 0, 0.02)"
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        position: "absolute",
+                                        top: 0,
+                                        left: 0,
+                                        right: 0,
+                                        height: "3.5px",
+                                        background: "linear-gradient(90deg, #10B981 0%, #059669 60%, #14B8A6 100%)"
+                                    }}
+                                />
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
+                                    <span style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--text-muted)" }}>
+                                        Realized Revenue
+                                    </span>
+                                    <div
+                                        style={{
+                                            width: "36px",
+                                            height: "36px",
+                                            borderRadius: "10px",
+                                            backgroundColor: "rgba(16, 185, 129, 0.1)",
+                                            border: "1px solid rgba(16, 185, 129, 0.25)",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            flexShrink: 0
+                                        }}
+                                    >
+                                        <svg style={{ width: "18px", height: "18px", color: "#10B981" }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div
+                                    style={{
+                                        fontSize: "26px",
+                                        fontWeight: "900",
+                                        lineHeight: "1.1",
+                                        marginTop: "14px",
+                                        marginBottom: "10px",
+                                        color: "var(--text)",
+                                        fontFamily: "var(--font-display)",
+                                        letterSpacing: "-0.03em"
+                                    }}
+                                >
+                                    ₦{stats.totalSales.toLocaleString()}
+                                </div>
+                                <div
+                                    style={{
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                        gap: "6px",
+                                        padding: "3px 9px",
+                                        borderRadius: "9999px",
+                                        backgroundColor: "rgba(16, 185, 129, 0.08)",
+                                        border: "1px solid rgba(16, 185, 129, 0.2)"
+                                    }}
+                                >
+                                    <span style={{ fontSize: "11px", fontWeight: "700", color: "#10B981" }}>
+                                        {stats.completedOrders} completed orders
+                                    </span>
+                                </div>
+                            </div>
 
-                            {/* Active Orders Stat Card */}
-                            <StatCard
-                                title="Pending Orders"
-                                value={stats.activeOrders}
-                                subtext={stats.activeOrders > 0 ? "Requires fulfillment" : "All orders fulfilled"}
-                                icon={
-                                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                                    </svg>
-                                }
-                                color="#D97706"
-                                badge={stats.activeOrders > 0 ? "Action" : "Clear"}
-                                badgeColor="#D97706"
-                                link="/company/admin/orders"
-                            />
+                            {/* Card 2: Pending Orders (Interactive Tile) */}
+                            <Link
+                                href="/company/admin/orders"
+                                style={{
+                                    position: "relative",
+                                    overflow: "hidden",
+                                    padding: "20px 22px",
+                                    borderRadius: "18px",
+                                    backgroundColor: "var(--bg-secondary)",
+                                    border: "1px solid var(--border)",
+                                    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px -2px rgba(0, 0, 0, 0.02)",
+                                    textDecoration: "none",
+                                    display: "block",
+                                    transition: "all 0.18s cubic-bezier(0.16, 1, 0.3, 1)"
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.transform = "translateY(-2px)";
+                                    e.currentTarget.style.boxShadow = "0 6px 20px -2px rgba(245, 158, 11, 0.25)";
+                                    e.currentTarget.style.borderColor = "rgba(245, 158, 11, 0.4)";
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = "translateY(0)";
+                                    e.currentTarget.style.boxShadow = "0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px -2px rgba(0, 0, 0, 0.02)";
+                                    e.currentTarget.style.borderColor = "var(--border)";
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        position: "absolute",
+                                        top: 0,
+                                        left: 0,
+                                        right: 0,
+                                        height: "3.5px",
+                                        background: "linear-gradient(90deg, #F59E0B 0%, #D97706 100%)"
+                                    }}
+                                />
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
+                                    <span style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--text-muted)" }}>
+                                        Pending Orders
+                                    </span>
+                                    <div
+                                        style={{
+                                            width: "36px",
+                                            height: "36px",
+                                            borderRadius: "10px",
+                                            backgroundColor: "rgba(245, 158, 11, 0.1)",
+                                            border: "1px solid rgba(245, 158, 11, 0.25)",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            flexShrink: 0
+                                        }}
+                                    >
+                                        <svg style={{ width: "18px", height: "18px", color: "#F59E0B" }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div
+                                    style={{
+                                        fontSize: "30px",
+                                        fontWeight: "900",
+                                        lineHeight: "1.1",
+                                        marginTop: "14px",
+                                        marginBottom: "10px",
+                                        color: "#D97706",
+                                        fontFamily: "var(--font-display)",
+                                        letterSpacing: "-0.03em"
+                                    }}
+                                >
+                                    {stats.activeOrders}
+                                </div>
+                                <div
+                                    style={{
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                        gap: "6px",
+                                        padding: "3px 9px",
+                                        borderRadius: "9999px",
+                                        backgroundColor: "rgba(245, 158, 11, 0.08)",
+                                        border: "1px solid rgba(245, 158, 11, 0.2)"
+                                    }}
+                                >
+                                    <span style={{ fontSize: "11px", fontWeight: "700", color: "#D97706" }}>
+                                        {stats.activeOrders > 0 ? "Awaiting customer dispatch" : "All orders fulfilled"}
+                                    </span>
+                                </div>
+                            </Link>
 
-                            {/* Catalog Inventory Stat Card */}
-                            <StatCard
-                                title="Live Catalog"
-                                value={`${stats.totalProducts} Units`}
-                                subtext="Available inventory in store"
-                                icon={
-                                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                                    </svg>
-                                }
-                                color="#6366F1"
-                                badge="Stock"
-                                badgeColor="#6366F1"
-                                link="/company/admin/products"
-                            />
+                            {/* Card 3: Completed Orders */}
+                            <div
+                                style={{
+                                    position: "relative",
+                                    overflow: "hidden",
+                                    padding: "20px 22px",
+                                    borderRadius: "18px",
+                                    backgroundColor: "var(--bg-secondary)",
+                                    border: "1px solid var(--border)",
+                                    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px -2px rgba(0, 0, 0, 0.02)"
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        position: "absolute",
+                                        top: 0,
+                                        left: 0,
+                                        right: 0,
+                                        height: "3.5px",
+                                        background: "linear-gradient(90deg, #3B82F6 0%, #06B6D4 100%)"
+                                    }}
+                                />
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
+                                    <span style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--text-muted)" }}>
+                                        Completed Deliveries
+                                    </span>
+                                    <div
+                                        style={{
+                                            width: "36px",
+                                            height: "36px",
+                                            borderRadius: "10px",
+                                            backgroundColor: "rgba(59, 130, 246, 0.1)",
+                                            border: "1px solid rgba(59, 130, 246, 0.25)",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            flexShrink: 0
+                                        }}
+                                    >
+                                        <svg style={{ width: "18px", height: "18px", color: "#3B82F6" }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.4} d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div
+                                    style={{
+                                        fontSize: "30px",
+                                        fontWeight: "900",
+                                        lineHeight: "1.1",
+                                        marginTop: "14px",
+                                        marginBottom: "10px",
+                                        color: "var(--text)",
+                                        fontFamily: "var(--font-display)",
+                                        letterSpacing: "-0.03em"
+                                    }}
+                                >
+                                    {stats.completedOrders}
+                                </div>
+                                <div
+                                    style={{
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                        gap: "6px",
+                                        padding: "3px 9px",
+                                        borderRadius: "9999px",
+                                        backgroundColor: "rgba(59, 130, 246, 0.08)",
+                                        border: "1px solid rgba(59, 130, 246, 0.2)"
+                                    }}
+                                >
+                                    <span style={{ fontSize: "11px", fontWeight: "700", color: "#3B82F6" }}>
+                                        Out of {stats.totalOrdersCount} total orders
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Card 4: Total Gadgets in Stock (Interactive Tile) */}
+                            <Link
+                                href="/company/admin/products"
+                                style={{
+                                    position: "relative",
+                                    overflow: "hidden",
+                                    padding: "20px 22px",
+                                    borderRadius: "18px",
+                                    backgroundColor: "var(--bg-secondary)",
+                                    border: "1px solid var(--border)",
+                                    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px -2px rgba(0, 0, 0, 0.02)",
+                                    textDecoration: "none",
+                                    display: "block",
+                                    transition: "all 0.18s cubic-bezier(0.16, 1, 0.3, 1)"
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.transform = "translateY(-2px)";
+                                    e.currentTarget.style.boxShadow = "0 6px 20px -2px rgba(139, 92, 246, 0.25)";
+                                    e.currentTarget.style.borderColor = "rgba(139, 92, 246, 0.4)";
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = "translateY(0)";
+                                    e.currentTarget.style.boxShadow = "0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px -2px rgba(0, 0, 0, 0.02)";
+                                    e.currentTarget.style.borderColor = "var(--border)";
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        position: "absolute",
+                                        top: 0,
+                                        left: 0,
+                                        right: 0,
+                                        height: "3.5px",
+                                        background: "linear-gradient(90deg, #8B5CF6 0%, #A855F7 100%)"
+                                    }}
+                                />
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
+                                    <span style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--text-muted)" }}>
+                                        Catalog Inventory
+                                    </span>
+                                    <div
+                                        style={{
+                                            width: "36px",
+                                            height: "36px",
+                                            borderRadius: "10px",
+                                            backgroundColor: "rgba(139, 92, 246, 0.1)",
+                                            border: "1px solid rgba(139, 92, 246, 0.25)",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            flexShrink: 0
+                                        }}
+                                    >
+                                        <svg style={{ width: "18px", height: "18px", color: "#8B5CF6" }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div
+                                    style={{
+                                        fontSize: "30px",
+                                        fontWeight: "900",
+                                        lineHeight: "1.1",
+                                        marginTop: "14px",
+                                        marginBottom: "10px",
+                                        color: "var(--text)",
+                                        fontFamily: "var(--font-display)",
+                                        letterSpacing: "-0.03em"
+                                    }}
+                                >
+                                    {stats.totalProducts}
+                                </div>
+                                <div
+                                    style={{
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                        gap: "6px",
+                                        padding: "3px 9px",
+                                        borderRadius: "9999px",
+                                        backgroundColor: "rgba(139, 92, 246, 0.08)",
+                                        border: "1px solid rgba(139, 92, 246, 0.2)"
+                                    }}
+                                >
+                                    <span style={{ fontSize: "11px", fontWeight: "700", color: "#8B5CF6" }}>
+                                        Units in stock • Manage
+                                    </span>
+                                </div>
+                            </Link>
                         </div>
 
-                        {/* Recent Orders Section */}
+                        {/* Recent Orders Queue Section */}
                         <div
-                            className="rounded-2xl border shadow-xs overflow-hidden"
-                            style={{ backgroundColor: "var(--bg-secondary)", borderColor: "var(--border)" }}
+                            style={{
+                                borderRadius: "18px",
+                                border: "1px solid var(--border)",
+                                backgroundColor: "var(--bg-secondary)",
+                                boxShadow: "0 1px 3px rgba(0, 0, 0, 0.03), 0 8px 24px -4px rgba(0, 0, 0, 0.02)",
+                                overflow: "hidden"
+                            }}
                         >
-                            <div className="px-6 py-4 border-b flex flex-col sm:flex-row justify-between sm:items-center gap-2" style={{ borderColor: "var(--border)" }}>
+                            <div
+                                style={{
+                                    padding: "18px 24px",
+                                    borderBottom: "1px solid var(--border)",
+                                    backgroundColor: "var(--bg)",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    flexWrap: "wrap",
+                                    gap: "12px"
+                                }}
+                            >
                                 <div>
-                                    <h2 className="font-bold text-sm tracking-tight" style={{ color: "var(--text)" }}>
-                                        Recent Purchases
+                                    <h2 style={{ fontSize: "15px", fontWeight: "800", color: "var(--text)", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
+                                        <span style={{ width: "8px", height: "8px", borderRadius: "9999px", backgroundColor: "#16A34A", display: "inline-block", flexShrink: 0 }} />
+                                        Recent Orders Queue
                                     </h2>
-                                    <p className="text-[11px]" style={{ color: "var(--text-muted)" }}>
-                                        Latest customer orders from the storefront
+                                    <p style={{ fontSize: "12px", color: "var(--text-muted)", margin: "3px 0 0 0" }}>
+                                        Live transactions and customer shipment requests
                                     </p>
                                 </div>
                                 <Link
                                     href="/company/admin/orders"
-                                    className="text-xs font-semibold hover:underline"
-                                    style={{ color: "var(--primary)" }}
+                                    style={{
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                        gap: "6px",
+                                        height: "34px",
+                                        padding: "0 14px",
+                                        borderRadius: "10px",
+                                        fontSize: "12px",
+                                        fontWeight: "700",
+                                        backgroundColor: "rgba(22, 163, 74, 0.1)",
+                                        color: "#16A34A",
+                                        border: "1px solid rgba(22, 163, 74, 0.25)",
+                                        textDecoration: "none",
+                                        transition: "all 0.15s ease"
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.backgroundColor = "#16A34A";
+                                        e.currentTarget.style.color = "#FFFFFF";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.backgroundColor = "rgba(22, 163, 74, 0.1)";
+                                        e.currentTarget.style.color = "#16A34A";
+                                    }}
                                 >
-                                    View All Orders →
+                                    <span>View full queue</span>
+                                    <span>→</span>
                                 </Link>
                             </div>
 
                             {recentOrders.length === 0 ? (
-                                <div className="p-12 text-center">
+                                <div style={{ padding: "64px 20px", textAlign: "center" }}>
                                     <div
-                                        className="w-12 h-12 mx-auto mb-3 rounded-xl flex items-center justify-center"
-                                        style={{ backgroundColor: "var(--bg)", border: "1px solid var(--border)", color: "var(--text-muted)" }}
+                                        style={{
+                                            width: "56px",
+                                            height: "56px",
+                                            margin: "0 auto 14px auto",
+                                            borderRadius: "16px",
+                                            backgroundColor: "var(--bg)",
+                                            border: "1px solid var(--border)",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            color: "var(--text-muted)"
+                                        }}
                                     >
-                                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                                        <svg style={{ width: "24px", height: "24px" }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                                         </svg>
                                     </div>
-                                    <h3 className="text-sm font-bold mb-0.5" style={{ color: "var(--text)" }}>
-                                        No recent orders
-                                    </h3>
-                                    <p className="text-xs max-w-sm mx-auto" style={{ color: "var(--text-muted)" }}>
-                                        Customer orders will appear here automatically when items are purchased.
+                                    <p style={{ fontSize: "14px", fontWeight: "600", color: "var(--text-muted)", margin: 0 }}>
+                                        No customer orders recorded yet.
                                     </p>
                                 </div>
                             ) : (
-                                <div className="overflow-x-auto">
-                                    <table className="w-full text-left border-collapse">
+                                <div style={{ overflowX: "auto" }}>
+                                    <table style={{ width: "100%", textAlign: "left", borderCollapse: "collapse", minWidth: "860px" }}>
                                         <thead>
                                             <tr
-                                                className="text-[10px] font-bold uppercase tracking-widest border-b"
                                                 style={{
-                                                    color: "var(--text-muted)",
-                                                    borderColor: "var(--border)",
-                                                    backgroundColor: "rgba(0,0,0,0.01)"
+                                                    backgroundColor: "var(--bg)",
+                                                    borderBottom: "1px solid var(--border)"
                                                 }}
                                             >
-                                                <th className="px-8 py-3.5">Customer</th>
-                                                <th className="px-6 py-3.5">Items</th>
-                                                <th className="px-6 py-3.5">Status</th>
-                                                <th className="px-6 py-3.5">Total Amount</th>
-                                                <th className="px-8 py-3.5 text-right">Date</th>
+                                                <th style={{ padding: "12px 20px", fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--text-muted)" }}>Customer</th>
+                                                <th style={{ padding: "12px 20px", fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--text-muted)" }}>Phone & WhatsApp</th>
+                                                <th style={{ padding: "12px 20px", fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--text-muted)" }}>Total Paid</th>
+                                                <th style={{ padding: "12px 20px", fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--text-muted)" }}>Status</th>
+                                                <th style={{ padding: "12px 20px", fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--text-muted)" }}>Date</th>
+                                                <th style={{ padding: "12px 20px", fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--text-muted)", textAlign: "right" }}>Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody className="divide-y" style={{ borderColor: "var(--border)" }}>
-                                            {recentOrders.map((order) => (
-                                                <tr
-                                                    key={order.id}
-                                                    className="hover:bg-black/5 dark:hover:bg-white/5 transition-colors group"
-                                                >
-                                                    {/* Customer Column */}
-                                                    <td className="px-8 py-4">
-                                                        <div className="flex items-center gap-3">
-                                                            <div
-                                                                className="w-9 h-9 rounded-xl flex items-center justify-center text-xs font-bold text-white shadow-sm flex-shrink-0"
+                                        <tbody>
+                                            {recentOrders.map((order) => {
+                                                const isCompleted = order.status === 'COMPLETED';
+                                                return (
+                                                    <tr
+                                                        key={order.id}
+                                                        style={{
+                                                            borderBottom: "1px solid var(--border)",
+                                                            transition: "background-color 0.15s ease"
+                                                        }}
+                                                        onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "var(--bg)"; }}
+                                                        onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; }}
+                                                    >
+                                                        <td style={{ padding: "16px 20px" }}>
+                                                            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                                                                <div
+                                                                    style={{
+                                                                        width: "38px",
+                                                                        height: "38px",
+                                                                        borderRadius: "11px",
+                                                                        background: "linear-gradient(135deg, #16A34A 0%, #15803D 100%)",
+                                                                        color: "#FFFFFF",
+                                                                        display: "flex",
+                                                                        alignItems: "center",
+                                                                        justifyContent: "center",
+                                                                        fontSize: "12px",
+                                                                        fontWeight: "900",
+                                                                        flexShrink: 0,
+                                                                        boxShadow: "0 2px 6px rgba(22, 163, 74, 0.25)"
+                                                                    }}
+                                                                >
+                                                                    {getInitials(order.customerName)}
+                                                                </div>
+                                                                <div style={{ minWidth: 0 }}>
+                                                                    <span style={{ fontSize: "13px", fontWeight: "800", color: "var(--text)", display: "block" }}>
+                                                                        {order.customerName}
+                                                                    </span>
+                                                                    <span style={{ fontSize: "11px", color: "var(--text-muted)" }}>
+                                                                        Order #{order.id}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td style={{ padding: "16px 20px" }}>
+                                                            <a
+                                                                href={`https://wa.me/${order.customerPhone.replace(/[^0-9]/g, '')}`}
+                                                                target="_blank"
+                                                                rel="noreferrer"
                                                                 style={{
-                                                                    background: "linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)"
+                                                                    display: "inline-flex",
+                                                                    alignItems: "center",
+                                                                    gap: "5px",
+                                                                    fontSize: "12px",
+                                                                    fontWeight: "700",
+                                                                    color: "#16A34A",
+                                                                    textDecoration: "none"
                                                                 }}
                                                             >
-                                                                {getInitials(order.customerName)}
-                                                            </div>
-                                                            <div className="min-w-0">
-                                                                <p className="font-bold text-sm truncate" style={{ color: "var(--text)" }}>
-                                                                    {order.customerName}
-                                                                </p>
-                                                                <p className="text-xs truncate" style={{ color: "var(--text-muted)" }}>
-                                                                    {order.customerPhone}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-
-                                                    {/* Items Column */}
-                                                    <td className="px-6 py-4">
-                                                        <span className="text-xs font-medium truncate block max-w-xs" style={{ color: "var(--text-secondary)" }}>
-                                                            {order.items && order.items.length > 0
-                                                                ? order.items.map(i => `${i.quantity}× ${i.name}`).join(', ')
-                                                                : 'Standard Order'}
-                                                        </span>
-                                                    </td>
-
-                                                    {/* Status Column */}
-                                                    <td className="px-6 py-4">
-                                                        <span
-                                                            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border shadow-sm"
-                                                            style={{
-                                                                backgroundColor:
-                                                                    order.status === 'COMPLETED'
-                                                                        ? 'rgba(34, 197, 94, 0.12)'
-                                                                        : order.status === 'CANCELLED'
-                                                                        ? 'rgba(239, 68, 68, 0.12)'
-                                                                        : 'rgba(234, 179, 8, 0.12)',
-                                                                color:
-                                                                    order.status === 'COMPLETED'
-                                                                        ? '#16A34A'
-                                                                        : order.status === 'CANCELLED'
-                                                                        ? '#EF4444'
-                                                                        : '#D97706',
-                                                                borderColor:
-                                                                    order.status === 'COMPLETED'
-                                                                        ? 'rgba(34, 197, 94, 0.25)'
-                                                                        : order.status === 'CANCELLED'
-                                                                        ? 'rgba(239, 68, 68, 0.25)'
-                                                                        : 'rgba(234, 179, 8, 0.25)'
-                                                                    }}
-                                                        >
+                                                                <span>{order.customerPhone}</span>
+                                                            </a>
+                                                        </td>
+                                                        <td style={{ padding: "16px 20px", whiteSpace: "nowrap" }}>
+                                                            <span style={{ fontSize: "15px", fontWeight: "900", color: "var(--text)", fontFamily: "var(--font-display)" }}>
+                                                                ₦{order.totalAmount.toLocaleString()}
+                                                            </span>
+                                                        </td>
+                                                        <td style={{ padding: "16px 20px", whiteSpace: "nowrap" }}>
                                                             <span
-                                                                className="w-1.5 h-1.5 rounded-full"
                                                                 style={{
-                                                                    backgroundColor:
-                                                                        order.status === 'COMPLETED'
-                                                                            ? '#16A34A'
-                                                                            : order.status === 'CANCELLED'
-                                                                            ? '#EF4444'
-                                                                            : '#D97706'
+                                                                    fontSize: "11px",
+                                                                    fontWeight: "800",
+                                                                    textTransform: "uppercase",
+                                                                    letterSpacing: "0.06em",
+                                                                    padding: "4px 10px",
+                                                                    borderRadius: "8px",
+                                                                    backgroundColor: isCompleted ? "rgba(22, 163, 74, 0.12)" : "rgba(217, 119, 6, 0.12)",
+                                                                    color: isCompleted ? "#16A34A" : "#D97706",
+                                                                    border: `1px solid ${isCompleted ? "rgba(22, 163, 74, 0.25)" : "rgba(217, 119, 6, 0.25)"}`
                                                                 }}
-                                                            />
-                                                            <span>{order.status}</span>
-                                                        </span>
-                                                    </td>
-
-                                                    {/* Total Amount Column */}
-                                                    <td className="px-6 py-4">
-                                                        <span className="font-extrabold text-sm tracking-tight" style={{ color: "var(--text)" }}>
-                                                            ₦{order.totalAmount.toLocaleString()}
-                                                        </span>
-                                                    </td>
-
-                                                    {/* Date Column */}
-                                                    <td className="px-8 py-4 text-right">
-                                                        <p className="text-xs font-semibold" style={{ color: "var(--text)" }}>
-                                                            {new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                                                        </p>
-                                                        <p className="text-[11px]" style={{ color: "var(--text-muted)" }}>
-                                                            {new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                                        </p>
-                                                    </td>
-                                                </tr>
-                                            ))}
+                                                            >
+                                                                {order.status}
+                                                            </span>
+                                                        </td>
+                                                        <td style={{ padding: "16px 20px", whiteSpace: "nowrap" }}>
+                                                            <span style={{ fontSize: "12px", fontWeight: "600", color: "var(--text-muted)" }}>
+                                                                {new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                                                            </span>
+                                                        </td>
+                                                        <td style={{ padding: "16px 20px", textAlign: "right", whiteSpace: "nowrap" }}>
+                                                            <Link
+                                                                href="/company/admin/orders"
+                                                                style={{
+                                                                    display: "inline-flex",
+                                                                    alignItems: "center",
+                                                                    justifyContent: "center",
+                                                                    height: "32px",
+                                                                    padding: "0 12px",
+                                                                    borderRadius: "9px",
+                                                                    fontSize: "12px",
+                                                                    fontWeight: "700",
+                                                                    border: "1px solid var(--border)",
+                                                                    backgroundColor: "var(--bg)",
+                                                                    color: "var(--text)",
+                                                                    textDecoration: "none",
+                                                                    boxShadow: "0 1px 2px rgba(0, 0, 0, 0.03)",
+                                                                    transition: "all 0.15s ease"
+                                                                }}
+                                                                onMouseEnter={(e) => {
+                                                                    e.currentTarget.style.backgroundColor = "var(--bg-hover)";
+                                                                    e.currentTarget.style.borderColor = "var(--border-strong)";
+                                                                }}
+                                                                onMouseLeave={(e) => {
+                                                                    e.currentTarget.style.backgroundColor = "var(--bg)";
+                                                                    e.currentTarget.style.borderColor = "var(--border)";
+                                                                }}
+                                                            >
+                                                                Manage
+                                                            </Link>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
                                         </tbody>
                                     </table>
                                 </div>
@@ -441,4 +831,3 @@ export default function AdminDashboard() {
         </div>
     );
 }
-
