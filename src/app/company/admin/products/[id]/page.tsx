@@ -13,6 +13,8 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
     const { id } = use(params);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [deleting, setDeleting] = useState(false);
     const [mediaItems, setMediaItems] = useState<{ url: string; type: "image" | "video" }[]>([]);
     const [formData, setFormData] = useState({
         name: "",
@@ -99,7 +101,7 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
 
             if (res.ok) {
                 showToast("Product updated successfully", "success");
-                router.push('/admin/products');
+                router.push('/company/admin/products');
                 router.refresh();
             } else {
                 showToast("Failed to update product", "error");
@@ -112,11 +114,30 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
         }
     };
 
+    const handleDelete = async () => {
+        setDeleting(true);
+        try {
+            const res = await fetch(`/api/products/${id}`, { method: 'DELETE' });
+            if (res.ok) {
+                showToast("Product deleted successfully", "success");
+                router.push('/company/admin/products');
+                router.refresh();
+            } else {
+                showToast("Failed to delete product", "error");
+            }
+        } catch (error) {
+            console.error("Delete Error:", error);
+            showToast("Failed to delete product", "error");
+        } finally {
+            setDeleting(false);
+        }
+    };
+
     if (loading) {
         return (
             <div className="flex min-h-screen" style={{ backgroundColor: "var(--bg)" }}>
                 <AdminSidebar />
-                <main className="flex-1 ml-64 flex flex-col items-center justify-center p-12">
+                <main className="flex-1 min-w-0 w-full ml-0 lg:ml-64 pt-20 lg:pt-6 pb-24 lg:pb-8 flex flex-col items-center justify-center p-8">
                     <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mb-3"></div>
                     <p className="text-xs font-semibold" style={{ color: "var(--text-muted)" }}>
                         Loading gadget configuration...
@@ -130,28 +151,43 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
         <div className="flex min-h-screen" style={{ backgroundColor: "var(--bg)" }}>
             <AdminSidebar />
 
-            <main className="flex-1 ml-64 p-6 lg:p-8 max-w-6xl">
+            <main className="flex-1 min-w-0 w-full ml-0 lg:ml-64 pt-20 lg:pt-6 pb-24 lg:pb-8 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
                 {/* Top Breadcrumbs & Title */}
                 <header className="mb-6 pb-6 border-b" style={{ borderColor: "var(--border)" }}>
                     <nav className="flex items-center gap-2 mb-2 text-xs font-semibold" style={{ color: "var(--text-muted)" }}>
-                        <Link href="/admin/products" className="hover:underline" style={{ color: "var(--primary)" }}>
+                        <Link href="/company/admin/products" className="hover:underline" style={{ color: "var(--primary)" }}>
                             Catalog
                         </Link>
                         <span className="opacity-40">/</span>
                         <span style={{ color: "var(--text)" }}>Edit Gadget #{id}</span>
                     </nav>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div>
                             <h1
-                                className="text-2xl font-bold tracking-tight mb-0.5"
+                                className="text-2xl sm:text-3xl font-bold tracking-tight mb-0.5"
                                 style={{ fontFamily: "var(--font-display)", color: "var(--text)" }}
                             >
                                 Edit Product Listing
                             </h1>
-                            <p className="text-xs" style={{ color: "var(--text-secondary)" }}>
+                            <p className="text-xs sm:text-sm" style={{ color: "var(--text-secondary)" }}>
                                 Modify specifications, pricing, inventory stock, and media gallery.
                             </p>
+                        </div>
+
+                        {/* Prominent Header Action: Delete Product Button */}
+                        <div className="flex items-center gap-2.5 self-start sm:self-auto">
+                            <button
+                                type="button"
+                                onClick={() => setDeleteModalOpen(true)}
+                                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-rose-600 hover:bg-rose-700 shadow-md transition-all active:scale-95 border border-rose-500"
+                                title="Delete this gadget from catalog"
+                            >
+                                <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                                <span>Delete Product</span>
+                            </button>
                         </div>
                     </div>
                 </header>
@@ -519,7 +555,7 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
                                 </button>
 
                                 <Link
-                                    href="/admin/products"
+                                    href="/company/admin/products"
                                     className="w-full py-3.5 px-6 rounded-2xl font-semibold text-xs border text-center block transition-all hover:bg-black/5 dark:hover:bg-white/5"
                                     style={{
                                         borderColor: "var(--border)",
@@ -529,10 +565,98 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
                                 >
                                     Cancel & Return
                                 </Link>
+
+                                {/* Dedicated Danger Zone for product deletion */}
+                                <div
+                                    className="p-4 sm:p-5 rounded-2xl border border-rose-300 dark:border-rose-900/60 mt-4 space-y-3"
+                                    style={{ backgroundColor: "rgba(239, 68, 68, 0.05)" }}
+                                >
+                                    <div className="flex items-center gap-2 text-rose-600">
+                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                        </svg>
+                                        <h3 className="text-xs font-bold uppercase tracking-wider">Danger Zone</h3>
+                                    </div>
+                                    <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+                                        Permanently delete this product listing from the active catalog. This action cannot be reversed.
+                                    </p>
+                                    <button
+                                        type="button"
+                                        onClick={() => setDeleteModalOpen(true)}
+                                        className="w-full py-3 px-4 rounded-xl font-bold text-xs bg-rose-600 hover:bg-rose-700 text-white shadow-md flex items-center justify-center gap-2 transition-all active:scale-95"
+                                    >
+                                        <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                        <span>Delete Product Permanently</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </form>
+
+                {/* Delete Confirmation Modal */}
+                {deleteModalOpen && (
+                    <div
+                        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200"
+                        onClick={() => !deleting && setDeleteModalOpen(false)}
+                    >
+                        <div
+                            className="w-full max-w-md p-6 rounded-3xl border shadow-2xl relative"
+                            style={{
+                                backgroundColor: "var(--bg)",
+                                borderColor: "var(--border)"
+                            }}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="w-14 h-14 rounded-2xl bg-rose-500/10 text-rose-600 flex items-center justify-center mx-auto mb-4 border border-rose-500/20">
+                                <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </div>
+
+                            <h3 className="text-xl font-bold text-center mb-1.5" style={{ color: "var(--text)" }}>
+                                Delete Product #{id}?
+                            </h3>
+                            <p className="text-xs text-center mb-5" style={{ color: "var(--text-muted)" }}>
+                                Are you sure you want to delete <span className="font-bold text-foreground">"{formData.name || 'this gadget'}"</span>? This will permanently erase it and its media.
+                            </p>
+
+                            <div className="flex gap-3">
+                                <button
+                                    type="button"
+                                    onClick={() => setDeleteModalOpen(false)}
+                                    disabled={deleting}
+                                    className="flex-1 py-3 rounded-xl text-xs font-bold border transition-colors hover:bg-black/5 dark:hover:bg-white/5 disabled:opacity-50"
+                                    style={{ borderColor: "var(--border)", color: "var(--text)" }}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={handleDelete}
+                                    disabled={deleting}
+                                    className="flex-1 py-3 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-lg transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2"
+                                >
+                                    {deleting ? (
+                                        <>
+                                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                            <span>Deleting...</span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                            <span>Yes, Delete</span>
+                                        </>
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </main>
         </div>
     );

@@ -85,9 +85,9 @@ export default function AdminOrders() {
         <div className="flex min-h-screen" style={{ backgroundColor: "var(--bg)" }}>
             <AdminSidebar />
 
-            <main className="flex-1 ml-64 p-6 lg:p-8 max-w-7xl">
+            <main className="flex-1 min-w-0 w-full ml-0 lg:ml-64 pt-20 lg:pt-6 pb-24 lg:pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
                 {/* Header */}
-                <header className="mb-6 pb-6 border-b flex flex-col md:flex-row md:items-center md:justify-between gap-4" style={{ borderColor: "var(--border)" }}>
+                <header className="mb-6 pb-6 border-b flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" style={{ borderColor: "var(--border)" }}>
                     <div>
                         <div className="flex items-center gap-2 mb-1.5">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
@@ -96,19 +96,19 @@ export default function AdminOrders() {
                             </span>
                         </div>
                         <h1
-                            className="text-2xl font-bold tracking-tight mb-0.5"
+                            className="text-2xl sm:text-3xl font-bold tracking-tight mb-0.5"
                             style={{ fontFamily: "var(--font-display)", color: "var(--text)" }}
                         >
                             Order Management
                         </h1>
-                        <p className="text-xs font-normal" style={{ color: "var(--text-secondary)" }}>
+                        <p className="text-xs sm:text-sm font-normal" style={{ color: "var(--text-secondary)" }}>
                             Review, fulfill, and update live customer orders across all channels.
                         </p>
                     </div>
 
                     <button
                         onClick={fetchOrders}
-                        className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl font-semibold text-xs border transition-colors hover:bg-black/5 dark:hover:bg-white/5 active:scale-95"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-semibold text-xs border transition-colors hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 self-start sm:self-auto"
                         style={{
                             borderColor: "var(--border)",
                             backgroundColor: "var(--bg-secondary)",

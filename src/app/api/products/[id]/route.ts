@@ -79,7 +79,7 @@ export async function PUT(
         revalidatePath('/');
         revalidatePath('/products');
         revalidatePath(`/product/${id}`);
-        revalidatePath('/admin/products');
+        revalidatePath('/company/admin/products');
 
         return NextResponse.json(product);
     } catch (error) {
@@ -107,7 +107,7 @@ export async function DELETE(
 
         revalidatePath('/');
         revalidatePath('/products');
-        revalidatePath('/admin/products');
+        revalidatePath('/company/admin/products');
 
         return NextResponse.json({ success: true });
     } catch (error) {

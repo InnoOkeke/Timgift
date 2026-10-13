@@ -65,7 +65,7 @@ export default function NewProduct() {
 
             if (res.ok) {
                 showToast("Product created successfully", "success");
-                router.push('/admin/products');
+                router.push('/company/admin/products');
                 router.refresh();
             } else {
                 showToast("Failed to create product", "error");
@@ -82,26 +82,26 @@ export default function NewProduct() {
         <div className="flex min-h-screen" style={{ backgroundColor: "var(--bg)" }}>
             <AdminSidebar />
 
-            <main className="flex-1 ml-64 p-6 lg:p-8 max-w-6xl">
+            <main className="flex-1 min-w-0 w-full ml-0 lg:ml-64 pt-20 lg:pt-6 pb-24 lg:pb-8 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
                 {/* Top Breadcrumbs & Title */}
                 <header className="mb-6 pb-6 border-b" style={{ borderColor: "var(--border)" }}>
                     <nav className="flex items-center gap-2 mb-2 text-xs font-semibold" style={{ color: "var(--text-muted)" }}>
-                        <Link href="/admin/products" className="hover:underline" style={{ color: "var(--primary)" }}>
+                        <Link href="/company/admin/products" className="hover:underline" style={{ color: "var(--primary)" }}>
                             Catalog
                         </Link>
                         <span className="opacity-40">/</span>
                         <span style={{ color: "var(--text)" }}>Add New Product</span>
                     </nav>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div>
                             <h1
-                                className="text-2xl font-bold tracking-tight mb-0.5"
+                                className="text-2xl sm:text-3xl font-bold tracking-tight mb-0.5"
                                 style={{ fontFamily: "var(--font-display)", color: "var(--text)" }}
                             >
                                 New Gadget Listing
                             </h1>
-                            <p className="text-xs" style={{ color: "var(--text-secondary)" }}>
+                            <p className="text-xs sm:text-sm" style={{ color: "var(--text-secondary)" }}>
                                 Publish a new device or accessory to your storefront catalog.
                             </p>
                         </div>
@@ -471,7 +471,7 @@ export default function NewProduct() {
                                 </button>
 
                                 <Link
-                                    href="/admin/products"
+                                    href="/company/admin/products"
                                     className="w-full py-3.5 px-6 rounded-2xl font-semibold text-xs border text-center block transition-all hover:bg-black/5 dark:hover:bg-white/5"
                                     style={{
                                         borderColor: "var(--border)",

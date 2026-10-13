@@ -158,9 +158,9 @@ export default function AdminDashboard() {
         <div className="flex min-h-screen" style={{ backgroundColor: "var(--bg)" }}>
             <AdminSidebar />
 
-            <main className="flex-1 ml-64 p-6 lg:p-8 max-w-7xl">
+            <main className="flex-1 min-w-0 w-full ml-0 lg:ml-64 pt-20 lg:pt-6 pb-24 lg:pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
                 {/* Top Welcome Header */}
-                <header className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-6 border-b" style={{ borderColor: "var(--border)" }}>
+                <header className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b" style={{ borderColor: "var(--border)" }}>
                     <div>
                         <div className="flex items-center gap-2 mb-1.5">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
@@ -173,20 +173,20 @@ export default function AdminDashboard() {
                             </span>
                         </div>
                         <h1
-                            className="text-2xl font-bold tracking-tight mb-0.5"
+                            className="text-2xl sm:text-3xl font-bold tracking-tight mb-0.5"
                             style={{ fontFamily: "var(--font-display)", color: "var(--text)" }}
                         >
                             Dashboard
                         </h1>
-                        <p className="text-xs font-normal" style={{ color: "var(--text-secondary)" }}>
+                        <p className="text-xs sm:text-sm font-normal" style={{ color: "var(--text-secondary)" }}>
                             Store overview, sales metrics, and active orders.
                         </p>
                     </div>
 
                     {/* Quick Header Actions */}
-                    <div className="flex items-center gap-2.5">
+                    <div className="flex items-center gap-2.5 self-start sm:self-auto">
                         <Link
-                            href="/admin/products/new"
+                            href="/company/admin/products/new"
                             className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-bold text-xs text-white transition-all active:scale-95 shadow-xs"
                             style={{
                                 backgroundColor: "var(--primary)",
@@ -198,7 +198,7 @@ export default function AdminDashboard() {
                             <span>Add Product</span>
                         </Link>
                         <Link
-                            href="/admin/orders"
+                            href="/company/admin/orders"
                             className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-semibold text-xs border transition-colors hover:bg-black/5 dark:hover:bg-white/5"
                             style={{
                                 borderColor: "var(--border)",
@@ -216,7 +216,7 @@ export default function AdminDashboard() {
 
                 {loading ? (
                     <div className="space-y-6">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                             {[1, 2, 3].map(i => (
                                 <div key={i} className="h-32 rounded-2xl animate-pulse" style={{ backgroundColor: "var(--bg-secondary)" }}></div>
                             ))}
@@ -226,7 +226,7 @@ export default function AdminDashboard() {
                 ) : (
                     <>
                         {/* Bento Grid Metrics */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
                             {/* Revenue Stat Card */}
                             <StatCard
                                 title="Total Revenue"
@@ -240,7 +240,7 @@ export default function AdminDashboard() {
                                 color="var(--primary)"
                                 badge="Sales"
                                 badgeColor="#10B981"
-                                link="/admin/orders"
+                                link="/company/admin/orders"
                             />
 
                             {/* Active Orders Stat Card */}
@@ -256,7 +256,7 @@ export default function AdminDashboard() {
                                 color="#D97706"
                                 badge={stats.activeOrders > 0 ? "Action" : "Clear"}
                                 badgeColor="#D97706"
-                                link="/admin/orders"
+                                link="/company/admin/orders"
                             />
 
                             {/* Catalog Inventory Stat Card */}
@@ -272,7 +272,7 @@ export default function AdminDashboard() {
                                 color="#6366F1"
                                 badge="Stock"
                                 badgeColor="#6366F1"
-                                link="/admin/products"
+                                link="/company/admin/products"
                             />
                         </div>
 
@@ -291,7 +291,7 @@ export default function AdminDashboard() {
                                     </p>
                                 </div>
                                 <Link
-                                    href="/admin/orders"
+                                    href="/company/admin/orders"
                                     className="text-xs font-semibold hover:underline"
                                     style={{ color: "var(--primary)" }}
                                 >

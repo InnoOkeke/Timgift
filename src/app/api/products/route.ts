@@ -67,7 +67,7 @@ export async function POST(request: Request) {
 
         revalidatePath('/');
         revalidatePath('/products');
-        revalidatePath('/admin/products');
+        revalidatePath('/company/admin/products');
 
         return NextResponse.json(product);
     } catch (error) {
