@@ -120,7 +120,7 @@ export default function AdminProducts() {
         <div className="min-h-screen flex flex-col" style={{ backgroundColor: "var(--bg)" }}>
             <AdminNavbar />
 
-            <main className="flex-1 w-full px-4 sm:px-6 lg:px-8 py-8 pb-28 md:pb-16" style={{ maxWidth: "1280px", marginLeft: "auto", marginRight: "auto" }}>
+            <main className="flex-1 w-full px-4 sm:px-6 lg:px-8 py-8" style={{ maxWidth: "1280px", marginLeft: "auto", marginRight: "auto" }}>
                 {/* Header Title & Actions */}
                 <header className="mb-8 pb-6 border-b flex flex-col md:flex-row md:items-center md:justify-between gap-4" style={{ borderColor: "var(--border)" }}>
                     <div>

@@ -61,15 +61,15 @@ export default function AdminNavbar() {
     return (
         <>
             <header
-                className="sticky top-0 left-0 right-0 z-40 border-b backdrop-blur-2xl transition-all"
+                className="sticky top-0 left-0 right-0 z-40 border-b transition-all"
                 style={{
-                    backgroundColor: "rgba(var(--bg-rgb, 255, 255, 255), 0.88)",
+                    backgroundColor: "var(--bg-secondary)",
                     borderColor: "var(--border)",
-                    boxShadow: "0 4px 20px -2px rgba(0, 0, 0, 0.03)"
+                    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04)"
                 }}
             >
                 <div className="w-full px-4 sm:px-6 lg:px-8" style={{ maxWidth: "1280px", marginLeft: "auto", marginRight: "auto" }}>
-                    <div className="flex items-center justify-between h-20">
+                    <div className="flex items-center justify-between h-16 sm:h-20">
                         {/* Left: Brand Logo & Admin Status Pill */}
                         <div className="flex items-center gap-6 sm:gap-8">
                             <Link href="/company/admin" className="flex items-center gap-3 group transition-transform active:scale-98">
@@ -124,25 +124,25 @@ export default function AdminNavbar() {
                         </nav>
 
                         {/* Right: Luxury Actions Toolbar */}
-                        <div className="flex items-center gap-2.5 sm:gap-3">
+                        <div className="flex items-center gap-2 sm:gap-3">
                             {/* Primary "+ Add Product" Button */}
                             <Link
                                 href="/company/admin/products/new"
-                                className="px-2.5 sm:px-4"
                                 style={{
                                     display: "inline-flex",
                                     alignItems: "center",
                                     justifyContent: "center",
-                                    gap: "8px",
-                                    height: "40px",
-                                    borderRadius: "12px",
-                                    fontSize: "13px",
-                                    fontWeight: "700",
+                                    gap: "6px",
+                                    height: "38px",
+                                    padding: "0 13px",
+                                    borderRadius: "11px",
+                                    fontSize: "12px",
+                                    fontWeight: "800",
                                     letterSpacing: "-0.01em",
                                     color: "#FFFFFF",
-                                    background: "linear-gradient(180deg, #16A34A 0%, #15803D 100%)",
+                                    background: "linear-gradient(135deg, #16A34A 0%, #15803D 100%)",
                                     border: "1px solid rgba(22, 163, 74, 0.9)",
-                                    boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 4px 14px -1px rgba(22, 163, 74, 0.42), 0 1px 2px rgba(0, 0, 0, 0.06)",
+                                    boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 3px 10px rgba(22, 163, 74, 0.35)",
                                     textDecoration: "none",
                                     cursor: "pointer",
                                     transition: "all 0.18s cubic-bezier(0.16, 1, 0.3, 1)",
@@ -151,30 +151,30 @@ export default function AdminNavbar() {
                                 }}
                                 onMouseEnter={(e) => {
                                     e.currentTarget.style.transform = "translateY(-1px)";
-                                    e.currentTarget.style.boxShadow = "inset 0 1px 0 rgba(255, 255, 255, 0.36), 0 6px 20px -1px rgba(22, 163, 74, 0.52)";
+                                    e.currentTarget.style.boxShadow = "inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 6px 18px rgba(22, 163, 74, 0.45)";
                                 }}
                                 onMouseLeave={(e) => {
                                     e.currentTarget.style.transform = "translateY(0)";
-                                    e.currentTarget.style.boxShadow = "inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 4px 14px -1px rgba(22, 163, 74, 0.42), 0 1px 2px rgba(0, 0, 0, 0.06)";
+                                    e.currentTarget.style.boxShadow = "inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 3px 10px rgba(22, 163, 74, 0.35)";
                                 }}
                             >
                                 <span
                                     style={{
-                                        width: "20px",
-                                        height: "20px",
-                                        borderRadius: "6px",
-                                        backgroundColor: "rgba(255, 255, 255, 0.2)",
+                                        width: "18px",
+                                        height: "18px",
+                                        borderRadius: "5px",
+                                        backgroundColor: "rgba(255, 255, 255, 0.22)",
                                         display: "inline-flex",
                                         alignItems: "center",
                                         justifyContent: "center",
                                         flexShrink: 0
                                     }}
                                 >
-                                    <svg style={{ width: "12px", height: "12px" }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.8} d="M12 4v16m8-8H4" />
+                                    <svg style={{ width: "11px", height: "11px" }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 4v16m8-8H4" />
                                     </svg>
                                 </span>
-                                <span className="hidden sm:inline">Add Product</span>
+                                <span>Add Product</span>
                             </Link>
 
                             {/* Storefront Link */}
@@ -286,15 +286,26 @@ export default function AdminNavbar() {
                     </div>
                 </div>
 
-                {/* Mobile Dropdown Menu with Luxury Frosted Card */}
+                {/* Mobile Dropdown Menu with Executive Suite Design */}
                 {mobileMenuOpen && (
                     <div
-                        className="md:hidden border-t px-6 py-6 space-y-4 backdrop-blur-3xl animate-in slide-in-from-top-2 duration-150"
+                        className="md:hidden border-t px-4 py-4 space-y-3 animate-in slide-in-from-top-2 duration-150"
                         style={{
-                            backgroundColor: "var(--bg)",
-                            borderColor: "var(--border)"
+                            backgroundColor: "var(--bg-secondary)",
+                            borderColor: "var(--border)",
+                            boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.15)"
                         }}
                     >
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "4px 8px", marginBottom: "4px" }}>
+                            <span style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--text-muted)" }}>
+                                Navigation Menu
+                            </span>
+                            <span style={{ fontSize: "11px", fontWeight: "700", color: "#16A34A", display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                                <span style={{ width: "6px", height: "6px", borderRadius: "9999px", backgroundColor: "#16A34A" }} />
+                                Executive Portal
+                            </span>
+                        </div>
+
                         <div className="flex flex-col space-y-2">
                             {navLinks.map((link) => {
                                 const active = isActive(link.href);
@@ -303,146 +314,73 @@ export default function AdminNavbar() {
                                         key={link.href}
                                         href={link.href}
                                         onClick={() => setMobileMenuOpen(false)}
-                                        className={`flex items-center justify-between px-4 py-3.5 rounded-2xl text-base font-bold transition-all border ${
-                                            active
-                                                ? "text-white shadow-md shadow-emerald-600/20"
-                                                : "hover:bg-black/5 dark:hover:bg-white/5"
-                                        }`}
+                                        className="flex items-center justify-between px-4 py-3 rounded-xl transition-all"
                                         style={{
-                                            background: active ? "linear-gradient(135deg, var(--primary) 0%, #15803D 100%)" : "var(--bg-secondary)",
-                                            borderColor: active ? "var(--primary)" : "var(--border)",
-                                            color: active ? "#ffffff" : "var(--text)"
+                                            background: active
+                                                ? "linear-gradient(135deg, #16A34A 0%, #15803D 100%)"
+                                                : "var(--bg)",
+                                            border: active
+                                                ? "1px solid rgba(22, 163, 74, 0.8)"
+                                                : "1px solid var(--border)",
+                                            color: active ? "#ffffff" : "var(--text)",
+                                            boxShadow: active
+                                                ? "inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 4px 12px rgba(22, 163, 74, 0.28)"
+                                                : "0 1px 2px rgba(0, 0, 0, 0.02)",
+                                            fontWeight: "700",
+                                            fontSize: "13px"
                                         }}
                                     >
                                         <div className="flex items-center gap-3">
-                                            <span className={active ? "text-white" : "text-emerald-600 dark:text-emerald-400"}>
+                                            <span style={{ color: active ? "#FFFFFF" : "#16A34A" }}>
                                                 {link.icon}
                                             </span>
                                             <span>{link.label}</span>
                                         </div>
-                                        <svg className={`w-4 h-4 ${active ? "text-white/80" : "text-muted-foreground"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                        <svg style={{ width: "14px", height: "14px", opacity: active ? 0.9 : 0.4 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                                         </svg>
                                     </Link>
                                 );
                             })}
                         </div>
 
-                        <div className="pt-4 border-t grid grid-cols-2 gap-3" style={{ borderColor: "var(--border)" }}>
-                            <Link
-                                href="/"
-                                onClick={() => setMobileMenuOpen(false)}
-                                className="flex items-center justify-center gap-2 py-3 rounded-xl border text-sm font-bold transition-all shadow-xs"
-                                style={{
-                                    borderColor: "var(--border)",
-                                    backgroundColor: "var(--bg-secondary)",
-                                    color: "var(--text)"
-                                }}
-                            >
-                                <svg className="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                                </svg>
-                                <span>Storefront</span>
-                            </Link>
+                        <div style={{ paddingTop: "8px", borderTop: "1px solid var(--border)" }}>
+                            <div className="grid grid-cols-2 gap-2.5">
+                                <Link
+                                    href="/"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className="flex items-center justify-center gap-2 py-2.5 rounded-xl border text-xs font-bold transition-all"
+                                    style={{
+                                        borderColor: "var(--border)",
+                                        backgroundColor: "var(--bg)",
+                                        color: "var(--text)"
+                                    }}
+                                >
+                                    <svg style={{ width: "14px", height: "14px", color: "#16A34A" }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                    </svg>
+                                    <span>Storefront</span>
+                                </Link>
 
-                            <button
-                                onClick={handleSignOut}
-                                className="flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold border transition-all"
-                                style={{
-                                    borderColor: "rgba(239, 68, 68, 0.25)",
-                                    backgroundColor: "rgba(239, 68, 68, 0.08)",
-                                    color: "#EF4444"
-                                }}
-                            >
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                </svg>
-                                <span>Sign Out</span>
-                            </button>
+                                <button
+                                    onClick={handleSignOut}
+                                    className="flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold border transition-all"
+                                    style={{
+                                        borderColor: "rgba(239, 68, 68, 0.25)",
+                                        backgroundColor: "rgba(239, 68, 68, 0.08)",
+                                        color: "#EF4444"
+                                    }}
+                                >
+                                    <svg style={{ width: "14px", height: "14px" }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                    </svg>
+                                    <span>Sign Out</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 )}
             </header>
-
-            {/* Mobile Bottom Quick Navigation Bar (Luxury Frosted Dock) */}
-            <nav
-                className="md:hidden fixed bottom-0 left-0 right-0 h-16 border-t z-40 px-3 flex items-center justify-around backdrop-blur-2xl"
-                style={{
-                    backgroundColor: "rgba(var(--bg-rgb, 255, 255, 255), 0.94)",
-                    borderColor: "var(--border)",
-                    boxShadow: "0 -4px 20px rgba(0,0,0,0.06)"
-                }}
-            >
-                <Link
-                    href="/company/admin"
-                    className={`flex flex-col items-center justify-center flex-1 py-1 transition-all ${
-                        isActive("/company/admin") && pathname === "/company/admin" ? "font-bold scale-105" : "opacity-60"
-                    }`}
-                    style={{ color: isActive("/company/admin") && pathname === "/company/admin" ? "var(--primary)" : "var(--text)" }}
-                >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={isActive("/company/admin") && pathname === "/company/admin" ? 2.3 : 1.75} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                    </svg>
-                    <span className="text-[11px] mt-0.5 font-bold">Overview</span>
-                </Link>
-
-                <Link
-                    href="/company/admin/products"
-                    className={`flex flex-col items-center justify-center flex-1 py-1 transition-all ${
-                        isActive("/company/admin/products") && pathname !== "/company/admin/products/new" ? "font-bold scale-105" : "opacity-60"
-                    }`}
-                    style={{
-                        color: isActive("/company/admin/products") && pathname !== "/company/admin/products/new" ? "var(--primary)" : "var(--text)"
-                    }}
-                >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={isActive("/company/admin/products") && pathname !== "/company/admin/products/new" ? 2.3 : 1.75} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                    </svg>
-                    <span className="text-[11px] mt-0.5 font-bold">Products</span>
-                </Link>
-
-                {/* Elevated Floating Primary Action Button */}
-                <div className="flex-1 flex justify-center -mt-6">
-                    <Link
-                        href="/company/admin/products/new"
-                        className="w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-xl active:scale-95 transition-transform"
-                        style={{
-                            background: "linear-gradient(180deg, #16A34A 0%, #15803D 100%)",
-                            border: "1px solid rgba(255, 255, 255, 0.3)",
-                            boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 8px 20px -2px rgba(22, 163, 74, 0.5)"
-                        }}
-                        title="Add New Gadget"
-                    >
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
-                        </svg>
-                    </Link>
-                </div>
-
-                <Link
-                    href="/company/admin/orders"
-                    className={`flex flex-col items-center justify-center flex-1 py-1 transition-all ${
-                        isActive("/company/admin/orders") ? "font-bold scale-105" : "opacity-60"
-                    }`}
-                    style={{ color: isActive("/company/admin/orders") ? "var(--primary)" : "var(--text)" }}
-                >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={isActive("/company/admin/orders") ? 2.3 : 1.75} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                    </svg>
-                    <span className="text-[11px] mt-0.5 font-bold">Orders</span>
-                </Link>
-
-                <Link
-                    href="/"
-                    className="flex flex-col items-center justify-center flex-1 py-1 transition-all opacity-60 hover:opacity-100"
-                    style={{ color: "var(--text)" }}
-                >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-                    <span className="text-[11px] mt-0.5 font-bold">Store</span>
-                </Link>
-            </nav>
         </>
     );
 }
