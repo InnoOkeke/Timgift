@@ -245,7 +245,7 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
         <div className="min-h-screen flex flex-col" style={{ backgroundColor: "var(--bg)" }}>
             <AdminNavbar />
 
-            <main className="flex-1 w-full px-4 sm:px-6 lg:px-8 py-8 pb-24 lg:pb-16" style={{ maxWidth: "1280px", marginLeft: "auto", marginRight: "auto" }}>
+            <main className="flex-1 w-full px-4 sm:px-6 lg:px-8 py-8 pb-28 md:pb-16" style={{ maxWidth: "1280px", marginLeft: "auto", marginRight: "auto" }}>
                 {/* Header Breadcrumbs & Action Bar */}
                 <header
                     style={{
@@ -429,6 +429,7 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
                         <div style={{ display: "flex", flexDirection: "column", gap: "22px" }}>
                             {/* Card 1: Product Information */}
                             <div
+                                className="admin-form-card"
                                 style={{
                                     padding: "24px 28px",
                                     borderRadius: "18px",
@@ -682,6 +683,7 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
 
                             {/* Card 2: Media Assets & Studio Thumbnails */}
                             <div
+                                className="admin-form-card"
                                 style={{
                                     padding: "24px 28px",
                                     borderRadius: "18px",
@@ -817,6 +819,7 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
                         <div style={{ display: "flex", flexDirection: "column", gap: "22px" }}>
                             {/* Card 3: Pricing & Inventory */}
                             <div
+                                className="admin-form-card"
                                 style={{
                                     padding: "24px 28px",
                                     borderRadius: "18px",
@@ -1031,6 +1034,7 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
 
                             {/* Card 4: Store Merchandising Toggles */}
                             <div
+                                className="admin-form-card"
                                 style={{
                                     padding: "24px 28px",
                                     borderRadius: "18px",
@@ -1157,6 +1161,7 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
 
                             {/* Card 5: Danger Zone Card */}
                             <div
+                                className="admin-form-card"
                                 style={{
                                     padding: "20px 24px",
                                     borderRadius: "18px",

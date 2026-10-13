@@ -106,7 +106,7 @@ export default function AdminOrders() {
             <AdminNavbar />
 
             <main
-                className="flex-1 w-full px-4 sm:px-6 lg:px-8 py-8 pb-24 lg:pb-16"
+                className="flex-1 w-full px-4 sm:px-6 lg:px-8 py-8 pb-28 md:pb-16"
                 style={{ maxWidth: "1280px", marginLeft: "auto", marginRight: "auto" }}
             >
                 {/* Executive Header */}

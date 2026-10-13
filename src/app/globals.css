@@ -1453,5 +1453,18 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+/* Mobile Responsive Admin Enhancements */
+@media (max-width: 639px) {
+  .admin-form-card {
+    padding: 18px 16px !important;
+  }
+}
 
-
+/* Hide scrollbars cleanly for mobile horizontal scrollable capsules */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

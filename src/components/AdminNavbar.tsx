@@ -128,13 +128,13 @@ export default function AdminNavbar() {
                             {/* Primary "+ Add Product" Button */}
                             <Link
                                 href="/company/admin/products/new"
+                                className="px-2.5 sm:px-4"
                                 style={{
                                     display: "inline-flex",
                                     alignItems: "center",
                                     justifyContent: "center",
                                     gap: "8px",
                                     height: "40px",
-                                    padding: "0 16px",
                                     borderRadius: "12px",
                                     fontSize: "13px",
                                     fontWeight: "700",
@@ -174,7 +174,7 @@ export default function AdminNavbar() {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.8} d="M12 4v16m8-8H4" />
                                     </svg>
                                 </span>
-                                <span>Add Product</span>
+                                <span className="hidden sm:inline">Add Product</span>
                             </Link>
 
                             {/* Storefront Link */}
